@@ -9,6 +9,12 @@
   <a href="https://www.npmjs.com/package/@emotion/react"><img alt="@emotion/react version" src="https://img.shields.io/badge/@emotion/react-v11.11.0-DB7093?logoColor=DB7093"></a>
 </div>
 
+Cryptometer is a web application being developed to provide a web service that checks the current value of a bitcoin if I had bought it at a specific point in the past.
+
+## Deploy Link
+
+The application can be accessed at [https://cryptometer.netlify.app/](https://cryptometer.netlify.app/)
+
 ## Project Structure
 ```
 0-crypto-meter-team-leaders
@@ -21,9 +27,22 @@
 ├─ package.json
 ├─ public
 │  ├─ favicon.svg
+│  ├─ logo-mobile.svg
 │  └─ logo.svg
 ├─ src
 │  ├─ App.jsx
+│  ├─ assets
+│  │  ├─ close.png
+│  │  ├─ facebook.png
+│  │  ├─ filter.png
+│  │  ├─ gt.png
+│  │  ├─ kakaotalk.png
+│  │  ├─ lt.png
+│  │  ├─ order-ascending.png
+│  │  ├─ order-desending.png
+│  │  ├─ order-none.png
+│  │  ├─ restore.png
+│  │  └─ share.png
 │  ├─ components
 │  │  └─ GlobalStyle.jsx
 │  ├─ main.jsx
@@ -32,6 +51,15 @@
 └─ vite.config.js
 
 ```
+
+- public/: This folder is for storing static files.
+- src/: This folder is for storing source code.
+- src/api/: This folder is for storing fetch api files.
+- src/assets/: This folder is for storing static asset files.
+- src/components/: This folder is for storing react components.
+- src/pages/: This folder is for storing page components.
+- src/utils/: This folder is for storing utility functions and constants.
+
 
 ## License
 
