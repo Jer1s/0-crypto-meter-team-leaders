@@ -9,6 +9,10 @@
   <a href="https://www.npmjs.com/package/@emotion/react"><img alt="@emotion/react version" src="https://img.shields.io/badge/@emotion/react-v11.11.0-DB7093?logoColor=DB7093"></a>
 </div>
 
+## Deploy Link
+
+The application can be accessed at [https://cryptometer.netlify.app/](https://cryptometer.netlify.app/)
+
 ## Project Structure
 ```
 0-crypto-meter-team-leaders
