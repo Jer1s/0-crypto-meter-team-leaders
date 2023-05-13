@@ -27,6 +27,8 @@ Cryptometer is a web application being developed to provide a web service that c
 │  └─ logo.svg
 ├─ src
 │  ├─ App.jsx
+│  ├─ api
+│  │  └─ index.jsx
 │  ├─ assets
 │  │  ├─ close.png
 │  │  ├─ facebook.png
@@ -40,10 +42,18 @@ Cryptometer is a web application being developed to provide a web service that c
 │  │  ├─ restore.png
 │  │  └─ share.png
 │  ├─ components
-│  │  └─ GlobalStyle.jsx
+│  │  └─ index.jsx
 │  ├─ main.jsx
-│  └─ pages
-│     └─ HomePage.jsx
+│  ├─ pages
+│  │  └─ HomePage.jsx
+│  ├─ recoils
+│  │  ├─ atoms
+│  │  │  └─ localeCurrencyAtom.jsx
+│  │  └─ selectors
+│  ├─ styles
+│  │  └─ GlobalStyle.jsx
+│  └─ utils
+│     └─ index.jsx
 └─ vite.config.js
 
 ```
@@ -54,8 +64,9 @@ Cryptometer is a web application being developed to provide a web service that c
 - src/assets/: This folder is for storing static asset files.
 - src/components/: This folder is for storing react components.
 - src/pages/: This folder is for storing page components.
+- src/recoils/: This folder is for recoil atoms and selectors.
+- src/styles/: This folder is for storing style components.
 - src/utils/: This folder is for storing utility functions and constants.
-
 
 ## License
 
