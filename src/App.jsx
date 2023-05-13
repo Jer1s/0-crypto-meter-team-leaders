@@ -1,5 +1,5 @@
 import { RecoilRoot } from 'recoil';
-import GlobalStyle from 'components/GlobalStyle';
+import GlobalStyle from 'styles/GlobalStyle';
 import HomePage from 'pages/HomePage';
 
 const App = () => {
