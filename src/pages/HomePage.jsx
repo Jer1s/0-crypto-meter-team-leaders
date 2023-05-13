@@ -1,5 +1,7 @@
+import CoinDetails from 'components/CoinDetails';
+
 const HomePage = () => {
-  return <div />;
+  return <CoinDetails />;
 };
 
 export default HomePage;
