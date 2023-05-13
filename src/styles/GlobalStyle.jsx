@@ -15,6 +15,7 @@ const style = css`
     --gray7: #CED2DD;
     --gray8: #E7E9F0;
     --gray9: #F5F8F9;
+    --white: #ffffff;
     --background: #f5f8f9;
   }
 

@@ -6,7 +6,7 @@ const Contianer = styled.div`
   max-width: 137.9rem;
   max-height: 73.3rem;
   border-radius: 2.5rem;
-  background-color: #ffffff;
+  background-color: var(--white);
   padding: 3.6rem 4.8rem 8rem;
   margin-bottom: 2.4rem;
 `;
