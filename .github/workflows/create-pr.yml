@@ -31,7 +31,7 @@ jobs:
           # PR 제목을 브랜치 이름으로 설정합니다.
           echo "PR 제목: $branch_name" >> pr_title.txt
 
-      - name: Create PR
+      - name: Create PR title
         uses: peter-evans/create-pull-request@v3
         with:
           title: $(cat pr_title.txt)
