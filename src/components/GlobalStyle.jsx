@@ -7,7 +7,6 @@ const style = css`
     --primary-red: #fd493d;
     --primary-blue: #4c32ed;
     --black: #0b0e1b;
-    --white: #ffffff;
     --gray1: #161c2f;
     --gray2: #262a38;
     --gray3: #474b58;
