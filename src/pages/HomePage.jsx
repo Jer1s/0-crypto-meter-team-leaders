@@ -1,7 +1,7 @@
-import GlobalNav from 'components/GlobalNav';
+import Gnb from 'components/Gnb';
 
 const HomePage = () => {
-  return <GlobalNav />;
+  return <Gnb />;
 };
 
 export default HomePage;

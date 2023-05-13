@@ -38,6 +38,7 @@ const style = css`
   button {
     font-family: inherit;
     font-size: inherit;
+    background-color: transparent;
   }
 
   a {

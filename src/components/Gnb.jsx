@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
 import logoImage from 'assets/logo-image.png';
 import logoText from 'assets/logo-text.png';
+import RecalculateButton from './RecalculateButton';
+import SelectCrurencyButton from './SelectCrurencyButton';
+import SearchHistoryButton from './SearchHistoryButton';
 
 const Nav = styled.nav`
   display: flex;
@@ -51,15 +54,31 @@ const LogoText = styled.div`
   }
 `;
 
-const GlobalNav = () => {
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 33rem;
+
+  @media (max-width: 767px) {
+    width: 21rem;
+  }
+`;
+
+const Gnb = () => {
   return (
     <Nav>
       <Logo>
         <LogoImage />
         <LogoText />
       </Logo>
+      <ButtonContainer>
+        <RecalculateButton />
+        <SelectCrurencyButton />
+        <SearchHistoryButton />
+      </ButtonContainer>
     </Nav>
   );
 };
 
-export default GlobalNav;
+export default Gnb;
