@@ -1,0 +1,29 @@
+name: Set Pull Request Base Branch as Develop
+
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  set-base-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set base branch as 'develop'
+        run: |
+          git checkout ${{ github.event.pull_request.base.ref }}
+          git branch --set-upstream-to=origin/develop
+          git pull
+
+      - name: Create PR title
+        run: |
+          echo "PR 제목: ${{ github.event.pull_request.head.ref }}" >> pr_title.txt
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: $(cat pr_title.txt)
