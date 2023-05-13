@@ -1,3 +1,3 @@
-export const coinType = {
+export const coinType = Object.freeze({
   BITCOIN: 'Bitcoin',
-};
+});
