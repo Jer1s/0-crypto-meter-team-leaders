@@ -1,5 +1,7 @@
+import GlobalNav from 'components/GlobalNav';
+
 const HomePage = () => {
-  return <div />;
+  return <GlobalNav />;
 };
 
 export default HomePage;
