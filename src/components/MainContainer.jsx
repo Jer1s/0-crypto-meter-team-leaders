@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
 import React from 'react';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
 const Contianer = styled.div`
@@ -35,8 +35,8 @@ const MainContainer = ({ children }) => {
   );
 };
 
-MainContainer.PropsTypes = {
-  children: PropTypes.object.isRequired,
+MainContainer.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default MainContainer;
