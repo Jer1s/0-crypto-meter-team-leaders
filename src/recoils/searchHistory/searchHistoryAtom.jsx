@@ -1,6 +1,8 @@
 import { atom } from 'recoil';
 
-export const searchHistoryAtom = atom({
+const searchHistoryAtom = atom({
   key: 'searchHistory',
   default: [],
 });
+
+export default searchHistoryAtom;
