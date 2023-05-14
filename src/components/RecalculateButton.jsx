@@ -21,7 +21,7 @@ const imgStyle = css`
   }
 `;
 
-const spanStyle = css`
+const textStyle = css`
   @media (max-width: 767px) {
     display: none;
   }
@@ -31,7 +31,7 @@ const RecalculateButton = () => {
   return (
     <button type="button" css={[navButtonStyle, buttonStyle]}>
       <img css={imgStyle} src={restore} alt="Restore" />
-      <span css={spanStyle}>다시 계산하기</span>
+      <div css={textStyle}>다시 계산하기</div>
     </button>
   );
 };
