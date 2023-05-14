@@ -14,6 +14,10 @@ const popUpSelectorStyle = css`
   margin-top: 0.4rem;
   padding: 0.4rem;
   background-color: var(--gray9);
+
+  @media (max-width: 767px) {
+    padding: 0.4rem;
+  }
 `;
 
 const currencyDataStyle = css`
@@ -29,6 +33,20 @@ const currencyDataStyle = css`
 
 const highlightStyle = css`
   background-color: var(--gray7);
+`;
+
+const textStyle = css`
+  @media (max-width: 767px) {
+    display: none
+  }
+`;
+
+const mobileTextStyle = css`
+  display: none;
+
+  @media (max-width: 767px) {
+    display: flex;
+  }
 `;
 
 const LocaleCurrencyList = () => {
@@ -49,7 +67,8 @@ const LocaleCurrencyList = () => {
             onClick={() => { return handleClick(key); }}
             css={[currencyDataStyle, (key === localeCurrency) && highlightStyle]}
           >
-            {`${currencyUnit} (${currencySign})`}
+            <div css={textStyle}>{`${currencyUnit} (${currencySign})`}</div>
+            <div css={mobileTextStyle}>{`${currencySign}`}</div>
           </button>
         );
       })}

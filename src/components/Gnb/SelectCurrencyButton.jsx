@@ -51,7 +51,11 @@ const SelectCurrencyButton = () => {
 
   return (
     <div css={containerStyle}>
-      <button type="button" onClick={toggleCurrencySelector} css={[navButtonStyle, buttonStyle]}>
+      <button
+        type="button"
+        onClick={toggleCurrencySelector}
+        css={[navButtonStyle, buttonStyle]}
+      >
         <div css={textStyle}>{`${currencyUnit} (${currencySign})`}</div>
         <div css={mobileTextStyle}>{currencySign}</div>
         <img css={imgStyle} src={invertedTriangle} alt="Inverted Triangle" />
