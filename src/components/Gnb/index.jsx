@@ -9,7 +9,7 @@ import SearchHistoryButton from './SearchHistoryButton';
 const navStyle = css`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin: 0 auto;
   padding: 2.8rem 6rem 3.2rem 5.6rem;
   max-width: 192rem;
@@ -38,6 +38,7 @@ const logoStyle = css`
 const logoImageStyle = css`
   width: 3.4rem;
   height: 2.6rem;
+  margin-top: 0.6rem;
   background-image: url(${logoImage});
   background-size: 3.5rem 2.6rem;
   background-repeat: no-repeat;
@@ -58,7 +59,7 @@ const logoTextStyle = css`
 const buttonContainerStyle = css`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   width: 33rem;
 
   @media (max-width: 767px) {

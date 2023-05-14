@@ -1,11 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import invertedTriangle from 'assets/inverted-triangle.png';
-import localeCurrencySelector from 'recoils/selectors/localeCurrencySelector';
+import localeCurrencySelector from 'recoils/localeCurrency/localeCurrencySelector';
 import { useRecoilValue } from 'recoil';
 import { useState } from 'react';
 import { navButtonStyle } from './navButtonStyle';
 import LocaleCurrencyList from './LocaleCurrencyList';
+
+const containerStyle = css`
+  display: flex;
+  flex-direction: column;
+`;
 
 const buttonStyle = css`
   gap: 1.6rem;
@@ -45,7 +50,7 @@ const SelectCurrencyButton = () => {
   };
 
   return (
-    <div>
+    <div css={containerStyle}>
       <button type="button" onClick={toggleCurrencySelector} css={[navButtonStyle, buttonStyle]}>
         <div css={textStyle}>{`${currencyUnit} (${currencySign})`}</div>
         <div css={mobileTextStyle}>{currencySign}</div>

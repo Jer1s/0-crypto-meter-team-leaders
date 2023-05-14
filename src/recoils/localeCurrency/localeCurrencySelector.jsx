@@ -1,5 +1,5 @@
 import { selector } from 'recoil';
-import localeCurrencyAtom from 'recoils/atoms/localeCurrencyAtom';
+import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import { LOCALE_CURRENCY } from 'utils/constants';
 
 const localeCurrencySelector = selector({
