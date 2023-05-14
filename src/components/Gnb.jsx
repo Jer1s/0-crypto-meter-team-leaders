@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 import logoImage from 'assets/logo-image.png';
 import logoText from 'assets/logo-text.png';
 import RecalculateButton from './RecalculateButton';
 import SelectCrurencyButton from './SelectCrurencyButton';
 import SearchHistoryButton from './SearchHistoryButton';
 
-const Nav = styled.nav`
+const navStyle = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -67,7 +68,7 @@ const ButtonContainer = styled.div`
 
 const Gnb = () => {
   return (
-    <Nav>
+    <nav css={navStyle}>
       <Logo>
         <LogoImage />
         <LogoText />
@@ -77,7 +78,7 @@ const Gnb = () => {
         <SelectCrurencyButton />
         <SearchHistoryButton />
       </ButtonContainer>
-    </Nav>
+    </nav>
   );
 };
 
