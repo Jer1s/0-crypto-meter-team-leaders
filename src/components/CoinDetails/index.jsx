@@ -4,6 +4,7 @@ import facebook from 'assets/facebook.png';
 import share from 'assets/share.png';
 import MainContainer from 'components/MainContainer';
 import KakaoShareButton from './KakaoShareButton';
+import CoinScenarioResult from './CoinScenarioResult';
 
 const CoinInfo = styled.div`
   display: flex;
@@ -58,7 +59,9 @@ const CoinDetails = () => {
           <img src={share} alt="Copy Link" />
         </SocialIconGroup>
       </header>
-      <main />
+      <main>
+        <CoinScenarioResult />
+      </main>
     </MainContainer>
   );
 };
