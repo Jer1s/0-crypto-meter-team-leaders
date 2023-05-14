@@ -56,7 +56,7 @@ const CoinDetails = () => {
         <SocialIconGroup>
           <KakaoShareButton />
           <img src={facebook} alt="Facebook Icon" />
-          <img src={share} alt="Copy Link" />
+          <img src={share} alt="Link Copy Icon" />
         </SocialIconGroup>
       </header>
       <main>

@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import localeCurrencyAtom from 'recoils/atoms/localeCurrencyAtom';
 import scenarioDataAtom from 'recoils/atoms/scenarioDataAtom';
 
-const ifIwillBuyStyle = css`
+const ScenarioDescriptionStyle = css`
   margin-top: 4.8rem;
   margin-bottom: 0.8rem;
   line-height: 2.4rem;
@@ -13,24 +13,23 @@ const ifIwillBuyStyle = css`
   color: var(--black);
 `;
 
-const resultStyle = ({ localeCurrency }) => {
-  const primaryColor = 'var(--primary)';
-  const primaryRedColor = 'var(--primary-red)';
+const resultStyle = css`
+  font-weight: 700;
+  font-size: 4.8rem;
+  margin: 0 0 0.9rem;
+`;
 
+const currentPriceStyle = ({ localeCurrency }) => {
   return css`
-    font-weight: 700;
-    font-size: 4.8rem;
-    margin: 0 0 0.9rem;
-
-    & span {
-      display: inline-block;
-      margin-right: 1rem;
-      color: ${localeCurrency === 'krw' ? primaryColor : primaryRedColor};
-    }
+    display: inline-block;
+    margin-right: 1rem;
+    color: ${localeCurrency === 'krw'
+      ? 'var(--primary)'
+      : 'var(--primary-red)'};
   `;
 };
 
-const basedOnTodayTimeStyle = css`
+const currentDateStyle = css`
   color: var(--gray4);
   margin: 0;
 `;
@@ -42,7 +41,7 @@ const CoinScenarioResult = () => {
   const { price, date } = scenarioData;
   const { year, month, day } = date;
 
-  const getYearMonthDay = () => {
+  const getCurrentDate = () => {
     const today = new Date();
     const todayYear = today.getFullYear();
     const todayMonth = today.getMonth() + 1;
@@ -58,16 +57,14 @@ const CoinScenarioResult = () => {
 
   return (
     <>
-      <p css={ifIwillBuyStyle}>
+      <p css={ScenarioDescriptionStyle}>
         {`${year}년 ${month}월 ${day}일에 ${priceWithCommas}원으로 샀다면 오늘`}
       </p>
-      <p css={resultStyle({ localeCurrency })}>
-        <span>31,000.74원</span>
+      <p css={resultStyle}>
+        <span css={currentPriceStyle({ localeCurrency })}>31,000.74원</span>
         입니다.
       </p>
-      <p css={basedOnTodayTimeStyle}>
-        {`(${getYearMonthDay()} 오전 9시 기준)`}
-      </p>
+      <p css={currentDateStyle}>{`(${getCurrentDate()} 오전 9시 기준)`}</p>
     </>
   );
 };
