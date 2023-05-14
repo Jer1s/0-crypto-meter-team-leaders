@@ -13,6 +13,7 @@ export default defineConfig({
       components: path.resolve(__dirname, 'src/components'),
       pages: path.resolve(__dirname, 'src/pages'),
       hooks: path.resolve(__dirname, 'src/hooks'),
+      pages: path.resolve(__dirname, 'src/pages'),
       recoils: path.resolve(__dirname, 'src/recoils'),
       utils: path.resolve(__dirname, 'src/utils'),
     },
