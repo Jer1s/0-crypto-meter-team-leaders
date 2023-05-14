@@ -1,34 +1,25 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import restore from 'assets/restore.png';
-import styled from '@emotion/styled';
-import NavButton from './NavButton';
+import { navButtonStyle } from 'styles/emotionStyles';
 
-const StyledNavButton = styled(NavButton)`
-  display: none;
+const buttonStyle = css`
+  gap: 0.6rem;
+  padding-left: 1rem;
 `;
 
-const Img = styled.img`
+const imgStyle = css`
   width: 2rem;
   height: 2rem;
 `;
 
-const Title = styled.span`
-  font-weight: 500;
-  font-size: 1.4rem;
-  line-height: 1.8rem;
-  color: var(--gray2);
-`;
-
 const RecalculateButton = () => {
   return (
-    <StyledNavButton>
-      <Img src={restore} alt="Restore" />
-      <Title>다시 계산하기</Title>
-    </StyledNavButton>
+    <button type="button" css={[navButtonStyle, buttonStyle]}>
+      <img css={imgStyle} src={restore} alt="Restore" />
+      다시 계산하기
+    </button>
   );
 };
-
-// SearchHistoryButton.propTypes = {
-//   children: PropTypes.node.isRequired,
-// };
 
 export default RecalculateButton;
