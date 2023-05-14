@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import restore from 'assets/restore.png';
-import { navButtonStyle } from 'styles/emotionStyles';
+import { navButtonStyle } from './navButtonStyle';
 
 const buttonStyle = css`
   gap: 0.6rem;

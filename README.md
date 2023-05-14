@@ -27,7 +27,6 @@ The application can be accessed at [https://cryptometer.netlify.app/](https://cr
 ├─ package.json
 ├─ public
 │  ├─ favicon.svg
-│  ├─ logo-mobile.svg
 │  └─ logo.svg
 ├─ src
 │  ├─ App.jsx
@@ -38,26 +37,46 @@ The application can be accessed at [https://cryptometer.netlify.app/](https://cr
 │  │  ├─ facebook.png
 │  │  ├─ filter.png
 │  │  ├─ gt.png
+│  │  ├─ inverted-triangle.png
 │  │  ├─ kakaotalk.png
+│  │  ├─ logo-image.png
+│  │  ├─ logo-text.png
+│  │  ├─ logo.png
 │  │  ├─ lt.png
 │  │  ├─ order-ascending.png
 │  │  ├─ order-desending.png
 │  │  ├─ order-none.png
 │  │  ├─ restore.png
-│  │  └─ share.png
+│  │  ├─ share.png
+│  │  ├─ triangle.png
+│  │  ├─ white--inverted-triangle.png
+│  │  └─ white-triangle.png
 │  ├─ components
-│  │  └─ index.jsx
+│  │  ├─ CoinDetails
+│  │  │  ├─ KakaoShareButton.jsx
+│  │  │  └─ index.jsx
+│  │  ├─ GlobalStyle.jsx
+│  │  ├─ Gnb
+│  │  │  ├─ RecalculateButton.jsx
+│  │  │  ├─ SearchHistoryButton.jsx
+│  │  │  ├─ SelectCrurencyButton.jsx
+│  │  │  ├─ index.jsx
+│  │  │  └─ navButtonStyle.jsx
+│  │  ├─ MainContainer.jsx
+│  │  └─ pages
+│  │     └─ HomePage.jsx
+│  ├─ hooks
+│  │  └─ useKakaoShare.jsx
 │  ├─ main.jsx
-│  ├─ pages
-│  │  └─ HomePage.jsx
 │  ├─ recoils
 │  │  ├─ atoms
-│  │  │  └─ localeCurrencyAtom.jsx
+│  │  │  ├─ localeCurrencyAtom.jsx
+│  │  │  ├─ scenarioDataAtom.jsx
+│  │  │  └─ searchHistoryAtom.jsx
 │  │  └─ selectors
-│  ├─ styles
-│  │  └─ GlobalStyle.jsx
+│  │     └─ index.jsx
 │  └─ utils
-│     └─ index.jsx
+│     └─ constants.jsx
 └─ vite.config.js
 
 ```
@@ -66,10 +85,8 @@ The application can be accessed at [https://cryptometer.netlify.app/](https://cr
 - src/: This folder is for storing source code.
 - src/api/: This folder is for storing fetch api files.
 - src/assets/: This folder is for storing static asset files.
-- src/components/: This folder is for storing react components.
-- src/pages/: This folder is for storing page components.
+- src/components/: This folder is for storing react components including style components and page components.
 - src/recoils/: This folder is for recoil atoms and selectors.
-- src/styles/: This folder is for storing style components.
 - src/utils/: This folder is for storing utility functions and constants.
 
 ## License

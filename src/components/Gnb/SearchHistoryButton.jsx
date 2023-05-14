@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useState } from 'react';
-import { navButtonStyle } from 'styles/emotionStyles';
+import { navButtonStyle } from './navButtonStyle';
 
 const activeButtonStyle = css`
   background-color: var(--active-button-background);

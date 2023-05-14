@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import kakaotalk from 'assets/kakaotalk.png';
 import useKakaoShare from 'hooks/useKakaoShare';
 

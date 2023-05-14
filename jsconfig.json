@@ -3,12 +3,11 @@
     "baseUrl": "src",
     "paths": {
       "@/*": ["src/*"],
+      "api/*": ["src/api/*"],
       "assets/*": ["src/assets/*"],
       "components/*": ["src/components/*"],
       "hooks/*": ["src/hooks/*"],
-      "pages/*": ["src/pages/*"],
       "recoils/*": ["src/recoils/*"],
-      "styles/*": ["src/styles/*"],
       "utils/*": ["src/utils/*"]
     }
   },
