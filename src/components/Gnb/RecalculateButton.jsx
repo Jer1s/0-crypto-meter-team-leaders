@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import restore from 'assets/restore.png';
+import { useResetRecoilState } from 'recoil';
+import scenarioDataAtom from 'recoils/atoms/scenarioDataAtom';
 import { navButtonStyle } from './navButtonStyle';
 
 const buttonStyle = css`
@@ -28,8 +30,10 @@ const textStyle = css`
 `;
 
 const RecalculateButton = () => {
+  const resetScenarioData = useResetRecoilState(scenarioDataAtom);
+
   return (
-    <button type="button" css={[navButtonStyle, buttonStyle]}>
+    <button type="button" onClick={resetScenarioData} css={[navButtonStyle, buttonStyle]}>
       <img css={imgStyle} src={restore} alt="Restore" />
       <div css={textStyle}>다시 계산하기</div>
     </button>
