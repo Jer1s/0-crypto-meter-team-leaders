@@ -17,6 +17,7 @@ const style = css`
     --gray9: #F5F8F9;
     --white: #ffffff;
     --background: #f5f8f9;
+    --active-button-background: #DAF1E5;
   }
 
   * {
@@ -38,6 +39,7 @@ const style = css`
   button {
     font-family: inherit;
     font-size: inherit;
+    background-color: transparent;
   }
 
   a {

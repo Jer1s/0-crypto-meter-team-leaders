@@ -23,6 +23,7 @@ module.exports = {
     'react/require-default-props': 'off',
     'react-hooks/exhaustive-deps': 'warn',
     'react/jsx-key': 'error',
+    'react/no-unknown-property': ['error', { ignore: ['css'] }],
     'import/prefer-default-export': 'off',
     'no-restricted-exports': 'off',
     'no-console': ['error', { allow: ['warn', 'error'] }],
