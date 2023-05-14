@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import invertedTriangle from 'assets/inverted-triangle.png';
+import localeCurrencySelector from 'recoils/selectors/localeCurrencySelector';
+import { useRecoilValue } from 'recoil';
 import { navButtonStyle } from './navButtonStyle';
 
 const buttonStyle = css`
@@ -34,14 +36,16 @@ const mobileTextStyle = css`
   }
 `;
 
-const SearchHistoryButton = () => {
+const SelectCrurencyButton = () => {
+  const { currencySign, currencyUnit } = useRecoilValue(localeCurrencySelector);
+
   return (
     <button type="button" css={[navButtonStyle, buttonStyle]}>
-      <div css={textStyle}>원(₩)</div>
-      <div css={mobileTextStyle}>₩</div>
+      <div css={textStyle}>{`${currencyUnit} (${currencySign})`}</div>
+      <div css={mobileTextStyle}>{currencySign}</div>
       <img css={imgStyle} src={invertedTriangle} alt="Inverted Triangle" />
     </button>
   );
 };
 
-export default SearchHistoryButton;
+export default SelectCrurencyButton;

@@ -4,11 +4,11 @@ export const COIN_TYPE = Object.freeze({
 
 export const LOCALE_CURRENCY = Object.freeze({
   KRW: {
-    sign: '₩',
-    unit: '원',
+    currencySign: '₩',
+    currencyUnit: '원',
   },
   USD: {
-    sign: '$',
-    unit: 'USD',
+    currencySign: '$',
+    currencyUnit: 'USD',
   },
 });
