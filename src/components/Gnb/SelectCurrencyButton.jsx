@@ -2,12 +2,10 @@
 import { css } from '@emotion/react';
 import invertedTriangle from 'assets/inverted-triangle.png';
 import localeCurrencySelector from 'recoils/selectors/localeCurrencySelector';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { useState } from 'react';
-import localeCurrencyAtom from 'recoils/atoms/localeCurrencyAtom';
-import { LOCALE_CURRENCY } from 'utils/constants';
 import { navButtonStyle } from './navButtonStyle';
-import LocaleCurrencyData from './LocaleCurrencyData';
+import LocaleCurrencyList from './LocaleCurrencyList';
 
 const buttonStyle = css`
   gap: 1.6rem;
@@ -18,18 +16,6 @@ const buttonStyle = css`
     padding-right: 1.3rem;
     padding-left: 1.6rem;
   }
-`;
-
-const selectButtonStyle = css`
-  cursor: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  align-items: flex-start;
-  position: absolute;
-  margin-top: 0.4rem;
-  padding: 0.4rem;
-  background-color: var(--gray9);
 `;
 
 const imgStyle = css`
@@ -52,15 +38,10 @@ const mobileTextStyle = css`
 
 const SelectCurrencyButton = () => {
   const [isActive, setIsActive] = useState(false);
-  const [localeCurrency, setLocaleCurrency] = useRecoilState(localeCurrencyAtom);
-  const { currencySign, currencyUnit } = useRecoilValue(localeCurrencySelector);
+  const { currencyUnit, currencySign } = useRecoilValue(localeCurrencySelector);
 
   const toggleCurrencySelector = () => {
     setIsActive((prev) => { return !prev; });
-  };
-
-  const selectLocaleCurrency = (currencyKey) => {
-    setLocaleCurrency(currencyKey);
   };
 
   return (
@@ -70,23 +51,7 @@ const SelectCurrencyButton = () => {
         <div css={mobileTextStyle}>{currencySign}</div>
         <img css={imgStyle} src={invertedTriangle} alt="Inverted Triangle" />
       </button>
-      {isActive && (
-      <div css={[navButtonStyle, selectButtonStyle]}>
-        {Object.keys(LOCALE_CURRENCY).map((currencyKey) => {
-          const currencyData = LOCALE_CURRENCY[currencyKey];
-          return (
-            <LocaleCurrencyData
-              key={currencyKey}
-              selectLocaleCurrency={selectLocaleCurrency}
-              currencyKey={currencyKey}
-              currencyUnit={currencyData.currencyUnit}
-              currencySign={currencyData.currencySign}
-              localeCurrency={localeCurrency}
-            />
-          );
-        })}
-      </div>
-      )}
+      {isActive && (<LocaleCurrencyList />)}
     </div>
   );
 };
