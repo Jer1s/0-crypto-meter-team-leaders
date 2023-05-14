@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import logoImage from 'assets/logo-image.png';
 import logoText from 'assets/logo-text.png';
@@ -24,7 +24,7 @@ const navStyle = css`
   }
 `;
 
-const Logo = styled.div`
+const logoStyle = css`
   display: flex;
   justify-content: space-between;
   align-items: end;
@@ -35,7 +35,7 @@ const Logo = styled.div`
   }
 `;
 
-const LogoImage = styled.div`
+const logoImageStyle = css`
   width: 3.4rem;
   height: 2.6rem;
   background-image: url(${logoImage});
@@ -43,7 +43,7 @@ const LogoImage = styled.div`
   background-repeat: no-repeat;
 `;
 
-const LogoText = styled.div` 
+const logoTextStyle = css` 
   width: 14rem;
   height: 2.15rem;
   background-image: url(${logoText});
@@ -55,7 +55,7 @@ const LogoText = styled.div`
   }
 `;
 
-const ButtonContainer = styled.div`
+const buttonContainerStyle = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -69,15 +69,15 @@ const ButtonContainer = styled.div`
 const Gnb = () => {
   return (
     <nav css={navStyle}>
-      <Logo>
-        <LogoImage />
-        <LogoText />
-      </Logo>
-      <ButtonContainer>
+      <div css={logoStyle}>
+        <div css={logoImageStyle} />
+        <div css={logoTextStyle} />
+      </div>
+      <div css={buttonContainerStyle}>
         <RecalculateButton />
         <SelectCrurencyButton />
         <SearchHistoryButton />
-      </ButtonContainer>
+      </div>
     </nav>
   );
 };

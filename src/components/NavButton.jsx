@@ -1,7 +1,8 @@
-import styled from '@emotion/styled';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
 
-const Button = styled.button`
+const buttonStyle = css`
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -14,7 +15,7 @@ const Button = styled.button`
 
 const NavButton = ({ children }) => {
   return (
-    <Button>{children}</Button>
+    <button type="button" css={buttonStyle}>{children}</button>
   );
 };
 
