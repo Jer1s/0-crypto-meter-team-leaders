@@ -1,9 +1,9 @@
 import React from 'react';
-import MainContainer from 'components/MainContainer';
 import styled from '@emotion/styled';
 import facebook from 'assets/facebook.png';
 import share from 'assets/share.png';
-import KakaoShareButton from 'components/KakaoShareButton';
+import MainContainer from 'components/MainContainer';
+import KakaoShareButton from './KakaoShareButton';
 
 const CoinInfo = styled.div`
   display: flex;
@@ -28,7 +28,7 @@ const SocialIconGroup = styled.div`
   height: 2.4rem;
   display: flex;
   justify-content: space-between;
-  align-items: center
+  align-items: center;
   margin-right: 1.5rem;
 
   & img {

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import invertedTriangle from 'assets/inverted-triangle.png';
-import { navButtonStyle } from 'styles/emotionStyles';
+import { navButtonStyle } from './navButtonStyle';
 
 const buttonStyle = css`
   gap: 1.6rem;
