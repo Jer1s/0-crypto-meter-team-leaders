@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
 import kakaotalk from 'assets/kakaotalk.png';
+import logo from 'assets/logo.png';
+
+const KAKAO_JAVASCRIPT_KEY = import.meta.env.VITE_KAKAO_SHARE_JAVASCRIPT_KEY;
 
 const KakaoShareButton = () => {
   const createKakaoButton = () => {
@@ -9,7 +12,7 @@ const KakaoShareButton = () => {
       // 중복 initialization 방지
       if (!kakao.isInitialized()) {
         // 두번째 step 에서 가져온 javascript key 를 이용하여 initialize
-        kakao.init(process.env.KAKAO_SHARE_JAVASCRIPT_KEY);
+        kakao.init(KAKAO_JAVASCRIPT_KEY);
       }
       kakao.Link.createDefaultButton({
         // Render 부분 id=kakao-link-btn 을 찾아 그부분에 렌더링을 합니다
@@ -18,7 +21,8 @@ const KakaoShareButton = () => {
         content: {
           title: 'Cryptometer',
           description: '#Cryptometer',
-          imageUrl: 'IMAGE_URL', // i.e. process.env.FETCH_URL + '/logo.png'
+          imageUrl:
+            'https://mud-kage.kakao.com/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg',
           link: {
             webUrl: window.location.href,
             mobileWebUrl: window.location.href,
@@ -50,16 +54,15 @@ const KakaoShareButton = () => {
       });
     }
   };
+
   useEffect(() => {
     createKakaoButton();
   }, []);
 
   return (
-    <div className="kakao-share-button">
-      <button type="button" id="kakao-link-btn">
-        <img src={kakaotalk} alt="kakao-share-icon" />
-      </button>
-    </div>
+    <button type="button" id="kakao-link-btn">
+      <img src={kakaotalk} alt="kakao-share-icon" />
+    </button>
   );
 };
 export default KakaoShareButton;

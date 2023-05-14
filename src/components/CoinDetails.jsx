@@ -1,7 +1,6 @@
 import React from 'react';
 import MainContainer from 'components/MainContainer';
 import styled from '@emotion/styled';
-import kakaotalk from 'assets/kakaotalk.png';
 import facebook from 'assets/facebook.png';
 import share from 'assets/share.png';
 import KakaoShareButton from 'components/KakaoShareButton';
@@ -38,7 +37,7 @@ const CoinDetails = () => {
       cursor: pointer;
     }
 
-    & .kakao-share-button button {
+    & button {
       background-color: #fff;
       border: none;
     }
@@ -49,7 +48,7 @@ const CoinDetails = () => {
       <header>
         <CoinInfo>
           <img src={share} alt="코인아이콘" />
-          <p>coin</p>
+          <p>bitcoin</p>
         </CoinInfo>
         <SocialIconGroup>
           <KakaoShareButton />
