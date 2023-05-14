@@ -2,8 +2,12 @@
 import { css } from '@emotion/react';
 import invertedTriangle from 'assets/inverted-triangle.png';
 import localeCurrencySelector from 'recoils/selectors/localeCurrencySelector';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { useState } from 'react';
+import localeCurrencyAtom from 'recoils/atoms/localeCurrencyAtom';
+import { LOCALE_CURRENCY } from 'utils/constants';
 import { navButtonStyle } from './navButtonStyle';
+import LocaleCurrencyData from './LocaleCurrencyData';
 
 const buttonStyle = css`
   gap: 1.6rem;
@@ -16,12 +20,22 @@ const buttonStyle = css`
   }
 `;
 
-const imgStyle = css`
-  width: 1rem;
-  height: 0.6rem;
+const selectButtonStyle = css`
+  cursor: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: flex-start;
+  position: absolute;
+  margin-top: 0.4rem;
+  padding: 0.4rem;
+  background-color: var(--gray9);
 `;
 
-// 추후에 recoil로 관리해야함 (원/달러, ₩/$)
+const imgStyle = css`
+  width: 1rem;
+`;
+
 const textStyle = css`
   @media (max-width: 767px) {
     display: none
@@ -36,16 +50,45 @@ const mobileTextStyle = css`
   }
 `;
 
-const SelectCrurencyButton = () => {
+const SelectCurrencyButton = () => {
+  const [isActive, setIsActive] = useState(false);
+  const [localeCurrency, setLocaleCurrency] = useRecoilState(localeCurrencyAtom);
   const { currencySign, currencyUnit } = useRecoilValue(localeCurrencySelector);
 
+  const toggleCurrencySelector = () => {
+    setIsActive((prev) => { return !prev; });
+  };
+
+  const selectLocaleCurrency = (currencyKey) => {
+    setLocaleCurrency(currencyKey);
+  };
+
   return (
-    <button type="button" css={[navButtonStyle, buttonStyle]}>
-      <div css={textStyle}>{`${currencyUnit} (${currencySign})`}</div>
-      <div css={mobileTextStyle}>{currencySign}</div>
-      <img css={imgStyle} src={invertedTriangle} alt="Inverted Triangle" />
-    </button>
+    <div>
+      <button type="button" onClick={toggleCurrencySelector} css={[navButtonStyle, buttonStyle]}>
+        <div css={textStyle}>{`${currencyUnit} (${currencySign})`}</div>
+        <div css={mobileTextStyle}>{currencySign}</div>
+        <img css={imgStyle} src={invertedTriangle} alt="Inverted Triangle" />
+      </button>
+      {isActive && (
+      <div css={[navButtonStyle, selectButtonStyle]}>
+        {Object.keys(LOCALE_CURRENCY).map((currencyKey) => {
+          const currencyData = LOCALE_CURRENCY[currencyKey];
+          return (
+            <LocaleCurrencyData
+              key={currencyKey}
+              selectLocaleCurrency={selectLocaleCurrency}
+              currencyKey={currencyKey}
+              currencyUnit={currencyData.currencyUnit}
+              currencySign={currencyData.currencySign}
+              localeCurrency={localeCurrency}
+            />
+          );
+        })}
+      </div>
+      )}
+    </div>
   );
 };
 
-export default SelectCrurencyButton;
+export default SelectCurrencyButton;
