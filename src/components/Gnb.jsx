@@ -20,7 +20,7 @@ const navStyle = css`
   }
 
   @media (max-width: 767px) {
-    padding: 1.4rem 2rem 2rem 2.5rem;
+    padding: 1.4rem 2rem 2rem 2.4rem;
   }
 `;
 
@@ -62,7 +62,7 @@ const buttonContainerStyle = css`
   width: 33rem;
 
   @media (max-width: 767px) {
-    width: 21rem;
+    width: 20.8rem;
   }
 `;
 
