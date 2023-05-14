@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import logoImage from 'assets/logo-image.png';
 import logoText from 'assets/logo-text.png';
 import RecalculateButton from './RecalculateButton';
-import SelectCrurencyButton from './SelectCrurencyButton';
+import SelectCurrencyButton from './SelectCurrencyButton';
 import SearchHistoryButton from './SearchHistoryButton';
 
 const navStyle = css`
@@ -75,7 +75,7 @@ const Gnb = () => {
       </div>
       <div css={buttonContainerStyle}>
         <RecalculateButton />
-        <SelectCrurencyButton />
+        <SelectCurrencyButton />
         <SearchHistoryButton />
       </div>
     </nav>
