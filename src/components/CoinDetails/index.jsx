@@ -46,6 +46,15 @@ const SocialIconGroup = styled.div`
 `;
 
 const CoinDetails = () => {
+  const handleCopyClipBoard = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      alert('클립보드에 링크가 복사되었습니다.');
+    } catch (e) {
+      alert('복사에 실패하였습니다');
+    }
+  };
+
   return (
     <MainContainer>
       <header>
@@ -56,7 +65,7 @@ const CoinDetails = () => {
         <SocialIconGroup>
           {/* <KakaoShareButton /> */}
           <img src={facebook} alt="Facebook Icon" />
-          <img src={share} alt="Link Copy Icon" />
+          <img onClick={handleCopyClipBoard} src={share} alt="Link Copy Icon" />
         </SocialIconGroup>
       </header>
       <main>
