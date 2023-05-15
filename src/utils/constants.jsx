@@ -13,6 +13,6 @@ export const LOCALE_CURRENCY = Object.freeze({
   },
 });
 
-export const exchangeRate = Object.freeze({
+export const EXCHANGE_RATE = Object.freeze({
   KRWTOUSD: 0.001,
 });
