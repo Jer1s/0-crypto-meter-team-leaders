@@ -169,8 +169,8 @@ const SearchHistoryPopup = () => {
           const previousPrice = item.price;
           const formattedPreviousPrice = formatPrice(previousPrice);
           return (
-            <>
-              <div key={item.id} css={historyItemStyle}>
+            <div key={item.id}>
+              <div css={historyItemStyle}>
                 <div css={symoblContainer}>
                   <img src={usdtSymbol} css={symbolStyle} alt="USDT Symbol" />
                 </div>
@@ -196,7 +196,7 @@ const SearchHistoryPopup = () => {
                 </div>
               </div>
               <hr css={hrStyle} />
-            </>
+            </div>
           );
         })}
       </div>
