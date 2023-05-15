@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import {
   AreaChart,
@@ -16,6 +16,8 @@ import bitcoin from './bitcoin';
 import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
 const CoinChart = () => {
+  const [selectedCoinHistory, setSelectedCoinHistory] = useState('전체');
+
   // ohlc는 coin chart 컴포넌트에서만 사용한다.
   // scenarioData에서 받은 coinType과 localeCurrencyAtom 있는 localeCurrency를 이용한다.
   // https://api.coingecko.com/api/v3/coins/{coinType}}/ohlc?vs_currency={localeCurrency}&days={일자}
@@ -28,7 +30,7 @@ const CoinChart = () => {
     // 1만원, 10만원, 100만원, 1000만원 단위는 item[1] / 10,000 + '만원'
     // 1만원 이하는 item[1] + '원'
     return {
-      date: moment(item[0]).format('YYYY년 MM월'),
+      date: moment(item[0]).format('YYYY년 M월'),
       price: item[1],
     };
   });
@@ -39,42 +41,43 @@ const CoinChart = () => {
   };
 
   return (
-    <>
-      <CategoryButtonChipContainer />
-      <ResponsiveContainer width={910} height={299}>
-        <AreaChart data={convertCoinNestedArrayToObject} margin={{ left: 20 }}>
-          <defs>
-            <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#B9E7D0" stopOpacity={1} />
-              <stop offset="95%" stopColor="#B9E7D0" stopOpacity={0} />
-            </linearGradient>
-          </defs>
-          <CartesianGrid horizontal vertical={false} />
-          <XAxis
-            dataKey="date"
-            tickSize={0}
-            dx={50}
-            dy={10}
-            // x축 데이터 간격 설정
-            interval={parseInt(convertCoinNestedArrayToObject.length / 3.42)}
-          />
-          <YAxis
-            // y축 값에 있는 줄 삭제
-            axisLine={false}
-            tickCount={7}
-            tickFormatter={formatYAxisLabel}
-          />
-          <Tooltip />
-          <Area
-            type="monotone"
-            dataKey="price"
-            stroke="#00A661"
-            fill="url(#gradient)"
-            fillOpacity={1}
-          />
-        </AreaChart>
-      </ResponsiveContainer>
-    </>
+    <ResponsiveContainer width={910} height={299}>
+      <CategoryButtonChipContainer
+        selectedCoinHistory={selectedCoinHistory}
+        setSelectedCoinHistory={setSelectedCoinHistory}
+      />
+      <AreaChart data={convertCoinNestedArrayToObject} margin={{ left: 20 }}>
+        <defs>
+          <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#B9E7D0" stopOpacity={1} />
+            <stop offset="95%" stopColor="#B9E7D0" stopOpacity={0} />
+          </linearGradient>
+        </defs>
+        <CartesianGrid horizontal vertical={false} />
+        <XAxis
+          dataKey="date"
+          tickSize={0}
+          dx={50}
+          dy={10}
+          // x축 데이터 간격 설정
+          interval={parseInt(convertCoinNestedArrayToObject.length / 3.42)}
+        />
+        <YAxis
+          // y축 값에 있는 줄 삭제
+          axisLine={false}
+          tickCount={7}
+          tickFormatter={formatYAxisLabel}
+        />
+        <Tooltip />
+        <Area
+          type="monotone"
+          dataKey="price"
+          stroke="#00A661"
+          fill="url(#gradient)"
+          fillOpacity={1}
+        />
+      </AreaChart>
+    </ResponsiveContainer>
   );
 };
 

@@ -1,14 +1,24 @@
 import CategoryButtonChip from './CategoryButtonChip';
 
-const CategoryButtonChipContainer = () => {
+const coinHistoryArray = ['전체', '1년', '1개월', '1주', '1일'];
+
+const CategoryButtonChipContainer = ({
+  selectedCoinHistory,
+  setSelectedCoinHistory,
+}) => {
   return (
-    <>
-      <CategoryButtonChip text="전체" />
-      <CategoryButtonChip text="1년" />
-      <CategoryButtonChip text="1개월" />
-      <CategoryButtonChip text="1주" />
-      <CategoryButtonChip text="1일" />
-    </>
+    <div>
+      {coinHistoryArray.map((coin) => {
+        return (
+          <CategoryButtonChip
+            selectedCoinHistory={selectedCoinHistory}
+            setSelectedCoinHistory={setSelectedCoinHistory}
+            key={coin}
+            text={coin}
+          />
+        );
+      })}
+    </div>
   );
 };
 
