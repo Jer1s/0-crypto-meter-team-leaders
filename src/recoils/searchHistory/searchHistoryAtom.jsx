@@ -2,7 +2,19 @@ import { atom } from 'recoil';
 
 const searchHistoryAtom = atom({
   key: 'searchHistory',
-  default: [],
+  default: [{
+    id: 1,
+    date: { year: 2022, month: 10, day: 12 },
+    price: 10000,
+    coinType: 'Tether',
+  },
+  {
+    id: 2,
+    date: { year: 2022, month: 10, day: 12 },
+    price: 10000,
+    coinType: 'Dogecoin',
+  },
+  ],
 });
 
 export default searchHistoryAtom;
