@@ -1,4 +1,4 @@
-export const COIN_TYPE = Object.freeze({
+export const COIN_NAME = Object.freeze({
   BTC: 'Bitcoin',
   ETH: 'Ethereum',
   USDT: 'Tether',
