@@ -13,18 +13,6 @@ import {
 import bitcoin from './bitcoin';
 
 const CoinChart = () => {
-  const { length } = bitcoin;
-  const splitLength = Math.floor(length / 3);
-  let abc = splitLength;
-  const xLabels = [1];
-  for (let i = 0; i < 3; i++) {
-    abc += splitLength;
-    xLabels.push(abc);
-  }
-  const answer = [];
-
-  console.log(xLabels);
-
   const temp = bitcoin.map((item, index) => {
     return {
       name: moment(item[0]).format('yyyy년 MM월'),
@@ -32,14 +20,14 @@ const CoinChart = () => {
     };
   });
 
-  temp.forEach((item, idx) => {
-    if (xLabels.includes(idx)) answer.push(item.name);
-  });
+  console.log(temp);
 
   // Y축 레이블 포맷 함수
   const formatYAxisLabel = (value) => {
     return `${value}원`;
   };
+
+  const xLabels = ['1월', '2월', '3월', '4월', '5월'];
 
   return (
     <ResponsiveContainer width={910} height={299}>
@@ -56,14 +44,11 @@ const CoinChart = () => {
           // tickFormatter={(value, index) => {
           //   return xLabels[index];
           // }}
+          ticks={xLabels}
         />
         <YAxis
-          label={{
-            value: 'Price',
-            angle: -90,
-            position: 'insideLeft',
-            offset: -10,
-          }}
+          // y축 값에 있는 줄 삭제
+          axisLine={false}
           tickFormatter={formatYAxisLabel}
         />
         <Tooltip />
