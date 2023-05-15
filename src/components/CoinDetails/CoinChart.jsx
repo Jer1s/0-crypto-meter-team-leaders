@@ -20,14 +20,12 @@ const CoinChart = () => {
     };
   });
 
-  console.log(temp);
+  const abc = Math.ceil(temp.length / 4);
 
   // Y축 레이블 포맷 함수
   const formatYAxisLabel = (value) => {
-    return `${value}원`;
+    return `${value / 100000}원`;
   };
-
-  const xLabels = ['1월', '2월', '3월', '4월', '5월'];
 
   return (
     <ResponsiveContainer width={910} height={299}>
@@ -39,16 +37,11 @@ const CoinChart = () => {
           </linearGradient>
         </defs>
         <CartesianGrid horizontal vertical={false} />
-        <XAxis
-          dataKey="name"
-          // tickFormatter={(value, index) => {
-          //   return xLabels[index];
-          // }}
-          ticks={xLabels}
-        />
+        <XAxis dataKey="name" interval={abc} />
         <YAxis
           // y축 값에 있는 줄 삭제
           axisLine={false}
+          tickCount={7}
           tickFormatter={formatYAxisLabel}
         />
         <Tooltip />
