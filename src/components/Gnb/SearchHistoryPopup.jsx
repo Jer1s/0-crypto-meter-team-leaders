@@ -28,26 +28,24 @@ const popupStyle = css`
   }
 `;
 
+const firstLineStyle = css`
+  color: var(--gray5);
+  line-height: 1.8rem;
+`;
+
 const SearchHistoryPopup = () => {
   const searchHistory = useRecoilValue(searchHistoryAtom);
   return (
     <div css={[navButtonStyle, popupStyle]}>
       {searchHistory.map((item) => {
+        const {
+          year, month, day,
+        } = item.date;
         return (
           <div key={item.id}>
-            <span>
-              {item.date.year}
-              -
-              {item.date.month}
-              -
-              {item.date.day}
-            </span>
-            <span>
-              {item.price}
-            </span>
-            <span>
-              {item.coinType}
-            </span>
+            <div css={firstLineStyle}>
+              {`만약 ${year}년 ${month}월 ${day}일에 ${item.price}원으로`}
+            </div>
           </div>
         );
       })}
