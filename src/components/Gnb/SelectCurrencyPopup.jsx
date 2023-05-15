@@ -6,6 +6,7 @@ import { LOCALE_CURRENCY } from 'utils/constants';
 import { navButtonStyle } from './navButtonStyle';
 
 const popupStyle = css`
+  z-index: 1;
   position: absolute;
   top: 7.2rem;
   width: 9.06rem;
@@ -34,7 +35,7 @@ const usdWidthStyle = css`
   }
 `;
 
-const currencyDataStyle = css`
+const currencyItemStyle = css`
   cursor: pointer;
   display: flex;
   flex-direction: row;
@@ -85,7 +86,7 @@ const SelectCurrencyPopup = () => {
             key={key}
             type="button"
             onClick={() => { return handleClick(key); }}
-            css={[currencyDataStyle, (key === localeCurrency) && highlightStyle]}
+            css={[currencyItemStyle, (key === localeCurrency) && highlightStyle]}
           >
             <div css={textStyle}>{`${currencyUnit} (${currencySign})`}</div>
             <div css={mobileTextStyle}>{`${currencySign}`}</div>
