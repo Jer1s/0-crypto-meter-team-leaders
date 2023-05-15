@@ -17,7 +17,13 @@ const SearchHistoryButton = () => {
   };
 
   return (
-    <button type="button" css={[navButtonStyle, isActive ? activeButtonStyle : null]} onClick={toggleSearchHistory}>검색 기록</button>
+    <button
+      type="button"
+      css={[navButtonStyle, isActive ? activeButtonStyle : null]}
+      onClick={toggleSearchHistory}
+    >
+      검색 기록
+    </button>
   );
 };
 
