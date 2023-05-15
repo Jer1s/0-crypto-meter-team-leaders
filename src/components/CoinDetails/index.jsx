@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from '@emotion/styled';
 import facebook from 'assets/facebook.png';
 import share from 'assets/share.png';

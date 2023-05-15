@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useRecoilValue } from 'recoil';
-import localeCurrencyAtom from 'recoils/atoms/localeCurrencyAtom';
-import scenarioDataAtom from 'recoils/atoms/scenarioDataAtom';
+import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
+import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 
 const ScenarioDescriptionStyle = css`
   margin-top: 4.8rem;
@@ -24,8 +24,8 @@ const currentPriceStyle = ({ localeCurrency }) => {
     display: inline-block;
     margin-right: 1rem;
     color: ${localeCurrency === 'krw'
-      ? 'var(--primary)'
-      : 'var(--primary-red)'};
+    ? 'var(--primary)'
+    : 'var(--primary-red)'};
   `;
 };
 
