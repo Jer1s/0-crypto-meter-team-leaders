@@ -7,6 +7,7 @@ import { navButtonStyle } from './navButtonStyle';
 const popupStyle = css`
   position: absolute;
   top: 7.2rem;
+  right: 6rem;
   width: 52rem;
   max-height: 59rem;
   cursor: auto;
@@ -16,6 +17,15 @@ const popupStyle = css`
   gap: 0.4rem;
   padding: 0.4rem;
   background-color: var(--gray9);
+
+  @media (min-width: 768px) and (max-width: 1199px) {
+    right: 2.4rem;
+  }
+  
+  @media (max-width: 767px) {
+    top: 6rem;
+    right: 2rem;
+  }
 `;
 
 const SearchHistoryPopup = () => {
