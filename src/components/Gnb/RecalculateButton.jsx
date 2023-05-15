@@ -2,14 +2,16 @@
 import { css } from '@emotion/react';
 import restore from 'assets/restore.png';
 import { useResetRecoilState } from 'recoil';
-import scenarioDataAtom from 'recoils/atoms/scenarioDataAtom';
+import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import { navButtonStyle } from './navButtonStyle';
 
 const buttonStyle = css`
   gap: 0.6rem;
   padding-left: 1rem;
+  height: 4rem;
   @media (max-width: 767px) {
     padding: 1.2rem 1.6rem;
+    height: 4.2rem;
   }
 `;
 
