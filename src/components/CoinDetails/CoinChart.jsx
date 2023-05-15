@@ -13,6 +13,7 @@ import {
 
 import CategoryButtonChip from 'components/CoinDetails/CategoryButtonChip';
 import bitcoin from './bitcoin';
+import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
 const CoinChart = () => {
   // ohlc는 coin chart 컴포넌트에서만 사용한다.
@@ -39,12 +40,7 @@ const CoinChart = () => {
 
   return (
     <>
-      <CategoryButtonChip />
-      <CategoryButtonChip />
-      <CategoryButtonChip />
-      <CategoryButtonChip />
-      <CategoryButtonChip />
-      <CategoryButtonChip />
+      <CategoryButtonChipContainer />
       <ResponsiveContainer width={910} height={299}>
         <AreaChart data={convertCoinNestedArrayToObject} margin={{ left: 20 }}>
           <defs>

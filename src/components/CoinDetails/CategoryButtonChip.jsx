@@ -21,7 +21,7 @@ const CategoryButtonChip = ({ text }) => {
 
   return (
     <button type="button" css={chiyStye}>
-      전체
+      {text}
     </button>
   );
 };
