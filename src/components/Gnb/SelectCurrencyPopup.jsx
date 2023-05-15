@@ -64,7 +64,7 @@ const mobileTextStyle = css`
   }
 `;
 
-const LocaleCurrencyPopup = () => {
+const SelectCurrencyPopup = () => {
   const [localeCurrency, setLocaleCurrency] = useRecoilState(localeCurrencyAtom);
 
   const handleClick = (currencyKey) => {
@@ -96,4 +96,4 @@ const LocaleCurrencyPopup = () => {
   );
 };
 
-export default LocaleCurrencyPopup;
+export default SelectCurrencyPopup;
