@@ -3,8 +3,9 @@ import styled from '@emotion/styled';
 import facebook from 'assets/facebook.png';
 import share from 'assets/share.png';
 import MainContainer from 'components/MainContainer';
-import KakaoShareButton from './KakaoShareButton';
-import CoinScenarioResult from './CoinScenarioResult';
+import KakaoShareButton from 'components/CoinDetails/KakaoShareButton';
+import CoinScenarioResult from 'components/CoinDetails/CoinScenarioResult';
+import CoinChart from './CoinChart';
 
 const CoinInfo = styled.div`
   display: flex;
@@ -61,6 +62,7 @@ const CoinDetails = () => {
       </header>
       <main>
         <CoinScenarioResult />
+        <CoinChart />
       </main>
     </MainContainer>
   );
