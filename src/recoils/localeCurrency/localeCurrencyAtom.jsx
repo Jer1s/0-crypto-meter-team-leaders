@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 
 const localeCurrencyAtom = atom({
   key: 'localeCurrency',
-  default: 'krw',
+  default: 'KRW',
 });
 
 export default localeCurrencyAtom;
