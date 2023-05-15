@@ -5,7 +5,7 @@ import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import { LOCALE_CURRENCY } from 'utils/constants';
 import { navButtonStyle } from './navButtonStyle';
 
-const popUpSelectorStyle = css`
+const popupStyle = css`
   position: absolute;
   top: 7.2rem;
   width: 9.06rem;
@@ -64,7 +64,7 @@ const mobileTextStyle = css`
   }
 `;
 
-const LocaleCurrencyList = () => {
+const LocaleCurrencyPopup = () => {
   const [localeCurrency, setLocaleCurrency] = useRecoilState(localeCurrencyAtom);
 
   const handleClick = (currencyKey) => {
@@ -72,7 +72,12 @@ const LocaleCurrencyList = () => {
   };
 
   return (
-    <div css={[navButtonStyle, popUpSelectorStyle, (localeCurrency === 'USD') && usdWidthStyle]}>
+    <div css={[
+      navButtonStyle,
+      popupStyle,
+      (localeCurrency === 'USD') && usdWidthStyle,
+    ]}
+    >
       {Object.keys(LOCALE_CURRENCY).map((key) => {
         const { currencyUnit, currencySign } = LOCALE_CURRENCY[key];
         return (
@@ -91,4 +96,4 @@ const LocaleCurrencyList = () => {
   );
 };
 
-export default LocaleCurrencyList;
+export default LocaleCurrencyPopup;

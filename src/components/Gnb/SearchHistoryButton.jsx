@@ -2,6 +2,12 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
 import { navButtonStyle } from './navButtonStyle';
+import SearchHistoryPopup from './SearchHistoryPopup';
+
+const containerStyle = css`
+  display: flex;
+  flex-direction: column;
+`;
 
 const activeButtonStyle = css`
   background-color: var(--active-button-background);
@@ -17,13 +23,16 @@ const SearchHistoryButton = () => {
   };
 
   return (
-    <button
-      type="button"
-      css={[navButtonStyle, isActive ? activeButtonStyle : null]}
-      onClick={toggleSearchHistory}
-    >
-      검색 기록
-    </button>
+    <div css={containerStyle}>
+      <button
+        type="button"
+        css={[navButtonStyle, isActive ? activeButtonStyle : null]}
+        onClick={toggleSearchHistory}
+      >
+        검색 기록
+      </button>
+      {isActive && (<SearchHistoryPopup />)}
+    </div>
   );
 };
 

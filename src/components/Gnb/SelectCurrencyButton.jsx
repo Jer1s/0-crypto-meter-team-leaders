@@ -6,7 +6,7 @@ import localeCurrencySelector from 'recoils/localeCurrency/localeCurrencySelecto
 import { useRecoilValue } from 'recoil';
 import { useState } from 'react';
 import { navButtonStyle } from './navButtonStyle';
-import LocaleCurrencyList from './LocaleCurrencyList';
+import LocaleCurrencyPopup from './LocaleCurrencyPopup';
 
 const containerStyle = css`
   display: flex;
@@ -61,7 +61,7 @@ const SelectCurrencyButton = () => {
         <div css={mobileTextStyle}>{currencySign}</div>
         {isActive ? <img css={imgStyle} src={Triangle} alt="Triangle" /> : <img css={imgStyle} src={invertedTriangle} alt="Inverted Triangle" />}
       </button>
-      {isActive && (<LocaleCurrencyList />)}
+      {isActive && (<LocaleCurrencyPopup />)}
     </div>
   );
 };
