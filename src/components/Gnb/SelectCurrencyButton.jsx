@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import invertedTriangle from 'assets/inverted-triangle.png';
+import Triangle from 'assets/triangle.png';
 import localeCurrencySelector from 'recoils/localeCurrency/localeCurrencySelector';
 import { useRecoilValue } from 'recoil';
 import { useState } from 'react';
@@ -58,7 +59,7 @@ const SelectCurrencyButton = () => {
       >
         <div css={textStyle}>{`${currencyUnit} (${currencySign})`}</div>
         <div css={mobileTextStyle}>{currencySign}</div>
-        <img css={imgStyle} src={invertedTriangle} alt="Inverted Triangle" />
+        {isActive ? <img css={imgStyle} src={Triangle} alt="Triangle" /> : <img css={imgStyle} src={invertedTriangle} alt="Inverted Triangle" />}
       </button>
       {isActive && (<LocaleCurrencyList />)}
     </div>
