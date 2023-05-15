@@ -6,6 +6,7 @@ import useFormattedPrice from 'hooks/useFormattedPrice';
 import { COIN_NAME } from 'utils/constants';
 import getCurrentDate from 'utils/getCurrentDate';
 import usdtSymbol from 'assets/USDT-symbol.png'; // 더미 데이터
+import { Fragment } from 'react';
 import { navButtonStyle } from './navButtonStyle';
 
 const popupStyle = css`
@@ -169,7 +170,7 @@ const SearchHistoryPopup = () => {
           const previousPrice = item.price;
           const formattedPreviousPrice = formatPrice(previousPrice);
           return (
-            <div key={item.id}>
+            <Fragment key={item.id}>
               <div css={historyItemStyle}>
                 <div css={symoblContainer}>
                   <img src={usdtSymbol} css={symbolStyle} alt="USDT Symbol" />
@@ -196,7 +197,7 @@ const SearchHistoryPopup = () => {
                 </div>
               </div>
               <hr css={hrStyle} />
-            </div>
+            </Fragment>
           );
         })}
       </div>

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import logoImage from 'assets/logo-image.png';
+import logo from 'assets/logo.png';
 import logoText from 'assets/logo-text.png';
 import RecalculateButton from './RecalculateButton';
 import SelectCurrencyButton from './SelectCurrencyButton';
@@ -39,7 +39,7 @@ const logoImageStyle = css`
   width: 3.4rem;
   height: 2.6rem;
   margin-top: 0.6rem;
-  background-image: url(${logoImage});
+  background-image: url(${logo});
   background-size: 3.5rem 2.6rem;
   background-repeat: no-repeat;
 `;
