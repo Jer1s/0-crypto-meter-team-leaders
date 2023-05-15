@@ -26,7 +26,7 @@ const containerStyle = css`
 `;
 
 const CoinChart = () => {
-  const [selectedCoinHistory, setSelectedCoinHistory] = useState('전체');
+  const [selectedTerm, setSelectedTerm] = useState('전체');
 
   // ohlc는 coin chart 컴포넌트에서만 사용한다.
   // scenarioData에서 받은 coinType과 localeCurrencyAtom 있는 localeCurrency를 이용한다.
@@ -53,8 +53,8 @@ const CoinChart = () => {
   return (
     <div css={containerStyle}>
       <CategoryButtonChipContainer
-        selectedCoinHistory={selectedCoinHistory}
-        setSelectedCoinHistory={setSelectedCoinHistory}
+        selectedTerm={selectedTerm}
+        setSelectedTerm={setSelectedTerm}
       />
       <ResponsiveContainer width={910} height={299}>
         <AreaChart data={convertCoinNestedArrayToObject} margin={{ left: 20 }}>

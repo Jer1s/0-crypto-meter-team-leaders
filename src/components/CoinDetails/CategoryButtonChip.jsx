@@ -2,16 +2,14 @@
 import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
 
-const chiyStye = ({ text, selectedCoinHistory }) => {
+const chipStyle = ({ text, selectedTerm }) => {
   return css`
     width: 4.4rem;
     height: 2.6rem;
     border-radius: 2.1rem;
     font-size: 1.4rem;
-    color: ${selectedCoinHistory === text ? 'var(--white)' : 'var(--gray5)'};
-    background: ${selectedCoinHistory === text
-      ? 'var(--black)'
-      : 'var(--gray8)'};
+    color: ${selectedTerm === text ? 'var(--white)' : 'var(--gray5)'};
+    background: ${selectedTerm === text ? 'var(--black)' : 'var(--gray8)'};
     text-align: center;
     border: none;
     cursor: pointer;
@@ -25,20 +23,16 @@ const chiyStye = ({ text, selectedCoinHistory }) => {
   `;
 };
 
-const CategoryButtonChip = ({
-  text,
-  selectedCoinHistory,
-  setSelectedCoinHistory,
-}) => {
+const CategoryButtonChip = ({ text, selectedTerm, setSelectedTerm }) => {
   const handleClick = () => {
-    setSelectedCoinHistory(text);
+    setSelectedTerm(text);
   };
 
   return (
     <button
       onClick={handleClick}
       type="button"
-      css={chiyStye({ text, selectedCoinHistory })}
+      css={chipStyle({ text, selectedTerm })}
     >
       {text}
     </button>
@@ -46,8 +40,8 @@ const CategoryButtonChip = ({
 };
 
 CategoryButtonChip.propTypes = {
-  selectedCoinHistory: PropTypes.string.isRequired,
-  setSelectedCoinHistory: PropTypes.func.isRequired,
+  selectedTerm: PropTypes.string.isRequired,
+  setSelectedTerm: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
 };
 

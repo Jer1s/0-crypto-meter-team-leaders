@@ -2,8 +2,7 @@ import styled from '@emotion/styled';
 import facebook from 'assets/facebook.png';
 import share from 'assets/share.png';
 import MainContainer from 'components/MainContainer';
-import KakaoShareButton from 'components/CoinDetails/KakaoShareButton';
-import CoinScenarioResult from 'components/CoinDetails/CoinScenarioResult';
+import CoinScenarioResult from './CoinScenarioResult';
 import CoinChart from './CoinChart';
 
 const CoinInfo = styled.div`

@@ -1,21 +1,18 @@
 import PropTypes from 'prop-types';
 import CategoryButtonChip from './CategoryButtonChip';
 
-const coinHistoryArray = ['전체', '1년', '1개월', '1주', '1일'];
+const termList = ['전체', '1년', '1개월', '1주', '1일'];
 
-const CategoryButtonChipContainer = ({
-  selectedCoinHistory,
-  setSelectedCoinHistory,
-}) => {
+const CategoryButtonChipContainer = ({ selectedTerm, setSelectedTerm }) => {
   return (
     <div>
-      {coinHistoryArray.map((coin) => {
+      {termList.map((term) => {
         return (
           <CategoryButtonChip
-            selectedCoinHistory={selectedCoinHistory}
-            setSelectedCoinHistory={setSelectedCoinHistory}
-            key={coin}
-            text={coin}
+            selectedTerm={selectedTerm}
+            setSelectedTerm={setSelectedTerm}
+            key={term}
+            text={term}
           />
         );
       })}
@@ -24,8 +21,8 @@ const CategoryButtonChipContainer = ({
 };
 
 CategoryButtonChipContainer.propTypes = {
-  selectedCoinHistory: PropTypes.string.isRequired,
-  setSelectedCoinHistory: PropTypes.func.isRequired,
+  selectedTerm: PropTypes.string.isRequired,
+  setSelectedTerm: PropTypes.func.isRequired,
 };
 
 export default CategoryButtonChipContainer;
