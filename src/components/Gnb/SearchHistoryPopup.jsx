@@ -2,6 +2,7 @@
 import { css } from '@emotion/react';
 import { useRecoilValue } from 'recoil';
 import searchHistoryAtom from 'recoils/searchHistory/searchHistoryAtom';
+import useFormattedPrice from 'hooks/useFormattedPrice';
 import { navButtonStyle } from './navButtonStyle';
 
 const popupStyle = css`
@@ -35,20 +36,25 @@ const firstLineStyle = css`
 
 const SearchHistoryPopup = () => {
   const searchHistory = useRecoilValue(searchHistoryAtom);
+  const formatPrice = useFormattedPrice();
   return (
     <div css={[navButtonStyle, popupStyle]}>
-      {searchHistory.map((item) => {
-        const {
-          year, month, day,
-        } = item.date;
-        return (
-          <div key={item.id}>
-            <div css={firstLineStyle}>
-              {`만약 ${year}년 ${month}월 ${day}일에 ${item.price}원으로`}
+      <div>
+
+        {searchHistory.map((item) => {
+          const {
+            year, month, day,
+          } = item.date;
+          const price = formatPrice(item.price);
+          return (
+            <div key={item.id}>
+              <div css={firstLineStyle}>
+                {`만약 ${year}년 ${month}월 ${day}일에 ${price}으로`}
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 };
