@@ -53,7 +53,7 @@ const CoinDetails = () => {
           <p>bitcoin</p>
         </CoinInfo>
         <SocialIconGroup>
-          <KakaoShareButton />
+          {/* <KakaoShareButton /> */}
           <img src={facebook} alt="Facebook Icon" />
           <img src={share} alt="Link Copy Icon" />
         </SocialIconGroup>
