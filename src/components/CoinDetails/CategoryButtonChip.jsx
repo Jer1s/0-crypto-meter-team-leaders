@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import PropTypes from 'prop-types';
 
 const chiyStye = ({ text, selectedCoinHistory }) => {
   return css`
@@ -14,6 +15,8 @@ const chiyStye = ({ text, selectedCoinHistory }) => {
     text-align: center;
     border: none;
     cursor: pointer;
+    margin-top: 2.8rem;
+    margin-bottom: 3.45rem;
     margin-right: 0.8rem;
 
     &:last-child {
@@ -40,6 +43,12 @@ const CategoryButtonChip = ({
       {text}
     </button>
   );
+};
+
+CategoryButtonChip.propTypes = {
+  selectedCoinHistory: PropTypes.string.isRequired,
+  setSelectedCoinHistory: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
 };
 
 export default CategoryButtonChip;
