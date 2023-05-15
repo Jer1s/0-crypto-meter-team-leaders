@@ -8,6 +8,7 @@ import {
   Tooltip,
   Area,
   CartesianGrid,
+  Label,
 } from 'recharts';
 
 import bitcoin from './bitcoin';
@@ -15,16 +16,14 @@ import bitcoin from './bitcoin';
 const CoinChart = () => {
   const temp = bitcoin.map((item, index) => {
     return {
-      name: moment(item[0]).format('yyyy년 MM월'),
+      name: moment(item[0]).format('MM월 DD일'),
       price: item[1],
     };
   });
 
-  const abc = Math.ceil(temp.length / 4);
-
   // Y축 레이블 포맷 함수
   const formatYAxisLabel = (value) => {
-    return `${value / 100000}원`;
+    return `${value}원`;
   };
 
   return (
@@ -37,7 +36,13 @@ const CoinChart = () => {
           </linearGradient>
         </defs>
         <CartesianGrid horizontal vertical={false} />
-        <XAxis dataKey="name" interval={abc} />
+        <XAxis
+          dataKey="name"
+          tickSize={0}
+          dx={50}
+          dy={20}
+          interval={parseInt(temp.length / 3.4)}
+        />
         <YAxis
           // y축 값에 있는 줄 삭제
           axisLine={false}
