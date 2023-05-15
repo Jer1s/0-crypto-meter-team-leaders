@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import facebook from 'assets/facebook.png';
 import share from 'assets/share.png';
 import MainContainer from 'components/MainContainer';
-import KakaoShareButton from 'components/CoinDetails/KakaoShareButton';
 import CoinScenarioResult from 'components/CoinDetails/CoinScenarioResult';
 import CoinChart from './CoinChart';
 
@@ -49,9 +48,9 @@ const CoinDetails = () => {
   const handleCopyClipBoard = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
-      alert('클립보드에 링크가 복사되었습니다.');
+      // alert('클립보드에 링크가 복사되었습니다.');
     } catch (e) {
-      alert('복사에 실패하였습니다');
+      // alert('복사에 실패하였습니다');
     }
   };
 
@@ -65,7 +64,7 @@ const CoinDetails = () => {
         <SocialIconGroup>
           {/* <KakaoShareButton /> */}
           <img src={facebook} alt="Facebook Icon" />
-          <img onClick={handleCopyClipBoard} src={share} alt="Link Copy Icon" />
+          <button type="button" onClick={handleCopyClipBoard}><img src={share} alt="Link Copy Icon" /></button>
         </SocialIconGroup>
       </header>
       <main>

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import moment from 'moment';
 import {
   AreaChart,
@@ -11,7 +11,6 @@ import {
   Tooltip,
   Area,
   CartesianGrid,
-  Label,
 } from 'recharts';
 
 import bitcoin from './bitcoin';
@@ -32,7 +31,7 @@ const CoinChart = () => {
   // scenarioData에서 받은 coinType과 localeCurrencyAtom 있는 localeCurrency를 이용한다.
   // https://api.coingecko.com/api/v3/coins/{coinType}}/ohlc?vs_currency={localeCurrency}&days={일자}
 
-  const convertCoinNestedArrayToObject = bitcoin.map((item, index) => {
+  const convertCoinNestedArrayToObject = bitcoin.map((item) => {
     // ChartDetail 버튼에 따른 x축 포멧 변경
     // 7, 30일은 MM월 DD일
     // 1일은 hh시 별
