@@ -19,10 +19,11 @@ import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
 const containerStyle = css`
   max-width: 91rem;
-  height: 29.9rem;
+  height: 35.1rem;
   display: flex;
   flex-direction: column;
   align-items: end;
+  padding-bottom: 8rem;
 `;
 
 const CoinChart = () => {
@@ -56,7 +57,7 @@ const CoinChart = () => {
         selectedTerm={selectedTerm}
         setSelectedTerm={setSelectedTerm}
       />
-      <ResponsiveContainer width={910} height={299}>
+      <ResponsiveContainer width={910}>
         <AreaChart data={convertCoinNestedArrayToObject} margin={{ left: 20 }}>
           <defs>
             <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
