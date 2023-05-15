@@ -44,6 +44,10 @@ const SocialIconGroup = styled.div`
   }
 `;
 
+const Button = styled.button`
+  border: nonde;
+`;
+
 const CoinDetails = () => {
   const handleCopyClipBoard = async () => {
     try {
@@ -64,7 +68,7 @@ const CoinDetails = () => {
         <SocialIconGroup>
           {/* <KakaoShareButton /> */}
           <img src={facebook} alt="Facebook Icon" />
-          <button type="button" onClick={handleCopyClipBoard}><img src={share} alt="Link Copy Icon" /></button>
+          <Button type="button" onClick={handleCopyClipBoard}><img src={share} alt="Link Copy Icon" /></Button>
         </SocialIconGroup>
       </header>
       <main>
