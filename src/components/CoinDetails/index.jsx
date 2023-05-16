@@ -12,6 +12,7 @@ const CoinInfo = styled.div`
   align-items: center;
 
   & p {
+    margin: 0;
     font-size: 2.6rem;
     font-weight: 700;
   }
@@ -26,7 +27,6 @@ const CoinInfo = styled.div`
 
 const SocialIconGroup = styled.div`
   width: 11.2rem;
-  height: 2.4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -57,10 +57,10 @@ const CoinDetails = () => {
 
   return (
     <MainContainer>
-      <header>
+      <header style={{ height: '100px' }}>
         <CoinInfo>
           <img src={share} alt="Coin Icon" />
-          <p>bitcoin</p>
+          <p style={{ height: '3.1rem' }}>bitcoin</p>
         </CoinInfo>
         <SocialIconGroup>
           <KakaoShareButton />

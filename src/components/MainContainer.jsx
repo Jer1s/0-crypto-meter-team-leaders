@@ -4,16 +4,14 @@ import PropTypes from 'prop-types';
 
 const Contianer = styled.div`
   max-width: 137.9rem;
-  max-height: 73.3rem;
+  min-height: 73.3rem;
   border-radius: 2.5rem;
   background-color: var(--white);
-  padding: 3.6rem 4.8rem 8rem;
-  margin-bottom: 2.4rem;
+  padding: 3.6rem 4.8rem 0;
 `;
 
 const HeaderContainer = styled.div`
   width: 100%;
-  height: 9.9rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -23,6 +21,7 @@ const HeaderContainer = styled.div`
 
 const BodyContainer = styled.div`
   width: 100%;
+  height: 100%
 `;
 
 const MainContainer = ({ children }) => {
