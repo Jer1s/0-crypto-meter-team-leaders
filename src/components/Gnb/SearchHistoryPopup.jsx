@@ -161,14 +161,14 @@ const SearchHistoryPopup = () => {
       <div css={historyItemsStyle}>
         {searchHistory.map((item) => {
           const {
-            year, month, day,
-          } = item.date;
+            inputYear, inputMonth, inputDay,
+          } = item.inputDate;
           const {
-            resultYear, resultMonth, resultDay,
-          } = item.resultDate;
-          const { previousPrice, resultPrice, isSkyrocketed } = item;
-          const formattedPreviousPrice = formatPrice(previousPrice);
-          const formattedResultPrice = formatPrice(resultPrice);
+            outputYear, outputMonth, outputDay,
+          } = item.outputDate;
+          const { inputPrice, outputPrice, isSkyrocketed } = item;
+          const formattedPreviousPrice = formatPrice(inputPrice);
+          const formattedResultPrice = formatPrice(outputPrice);
           return (
             <Fragment key={item.id}>
               <div css={historyItemStyle}>
@@ -176,14 +176,14 @@ const SearchHistoryPopup = () => {
                   <img src={usdtSymbol} css={symbolStyle} alt="USDT Symbol" />
                 </div>
                 <div css={scenarioDataStyle}>
-                  {`만약 ${year}년 ${month}월 ${day}일에 ${formattedPreviousPrice}으로`}
+                  {`만약 ${inputYear}년 ${inputMonth}월 ${inputDay}일에 ${formattedPreviousPrice}으로`}
                 </div>
                 <div css={scenarioResultStyle}>
                   <div>
                     {`${COIN_NAME[item.coinType]}을 샀다면,`}
                   </div>
                   <div>
-                    {`${resultYear}년 ${resultMonth}월 ${resultDay}일에는 `}
+                    {`${outputYear}년 ${outputMonth}월 ${outputDay}일에는 `}
                     <span css={
                 (isSkyrocketed)
                   ? incrementStyle

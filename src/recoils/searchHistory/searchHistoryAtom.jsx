@@ -5,12 +5,12 @@ const searchHistoryAtom = atom({
   // 더미 데이터
   default: [{
     id: 1,
-    date: { year: 2022, month: 10, day: 12 },
-    previousPrice: 10000,
-    resultDate: { resultYear: 2023, resultMonth: 5, resultDay: 16 },
-    resultPrice: 31000,
-    isSkyrocketed: true,
+    inputDate: { inputYear: 2022, inputMonth: 10, inputDay: 12 },
+    inputPrice: 10000,
+    outputDate: { outputYear: 2023, outputMonth: 5, outputDay: 16 },
+    outputPrice: 31000,
     coinType: 'USDT',
+    isSkyrocketed: true,
   },
   ],
 });

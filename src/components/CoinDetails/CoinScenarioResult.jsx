@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { useRecoilValue } from 'recoil';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
-import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
+import scenarioInputAtom from 'recoils/scenarioData/scenarioInputAtom';
 
 const ScenarioDescriptionStyle = css`
   margin-top: 4.8rem;
@@ -35,7 +35,7 @@ const currentDateStyle = css`
 `;
 
 const CoinScenarioResult = () => {
-  const scenarioData = useRecoilValue(scenarioDataAtom);
+  const scenarioData = useRecoilValue(scenarioInputAtom);
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
 
   const { price, date } = scenarioData;
