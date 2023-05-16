@@ -1,4 +1,4 @@
-const dayCoinList = [
+const dayCoinList = JSON.stringify([
   [
     1684126800000,
     36455567.3,
@@ -335,6 +335,6 @@ const dayCoinList = [
     36235882.73,
     36250591.46,
   ],
-];
+]);
 
 export default dayCoinList;

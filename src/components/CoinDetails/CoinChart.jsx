@@ -13,6 +13,7 @@ import {
   CartesianGrid,
 } from 'recharts';
 
+import useFetch from 'hooks/useFetch';
 import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
 const containerStyle = css`
@@ -27,14 +28,17 @@ const chartScale = [{ term: 'max', dx: 55, interval: 3.4 }, { term: '365', dx: 5
 
 const CoinChart = () => {
   const [selectedTerm, setSelectedTerm] = useState({ text: '전체', term: 'max' });
-  const [coinPriceList, setCoinPirceList] = useState([]);
+  // const [coinPriceList, setCoinPirceList] = useState([]);
+  // const url = `https://api.coingecko.com/api/v3/coins/bitcoin/ohlc?vs_currency=krw&days=${selectedTerm.term}`;
+  const { data: coinPriceList, loading, error } = useFetch('src/components/CoinDetails/TermList/dayCoinList.json');
+  console.log(coinPriceList);
 
   // ohlc는 coin chart 컴포넌트에서만 사용한다.
   // scenarioData에서 받은 coinType과 localeCurrencyAtom 있는 localeCurrency를 이용한다.
   // https://api.coingecko.com/api/v3/coins/{coinType}}/ohlc?vs_currency={localeCurrency}&days={일자}
 
   const getCoinList = async () => {
-    const response = await fetch(`https://api.coingecko.com/api/v3/coins/bitcoin/ohlc?vs_currency=krw&days=${selectedTerm.term}`);
+    const response = await fetch('src/components/CoinDetails/TermList/dayCoinList.json');
     const data = await response.json();
     setCoinPirceList(data);
   };
