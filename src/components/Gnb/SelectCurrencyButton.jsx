@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
+import { useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import invertedTriangle from 'assets/inverted-triangle.png';
 import Triangle from 'assets/triangle.png';
 import localeCurrencySelector from 'recoils/localeCurrency/localeCurrencySelector';
 import { useRecoilValue } from 'recoil';
-import { useState } from 'react';
 import { navButtonStyle } from './navButtonStyle';
 import SelectCurrencyPopup from './SelectCurrencyPopup';
 
@@ -51,25 +51,41 @@ const mobileTextStyle = css`
 `;
 
 const SelectCurrencyButton = () => {
-  const [isActive, setIsActive] = useState(false);
   const { currencyUnit, currencySign } = useRecoilValue(localeCurrencySelector);
 
-  const toggleCurrencySelector = () => {
-    setIsActive((prev) => { return !prev; });
+  const [showPopup, setShowPopup] = useState(false);
+  const node = useRef();
+
+  useEffect(() => {
+    const clickOutside = (e) => {
+      if (showPopup && node.current && !node.current.contains(e.target)) {
+        setShowPopup(false);
+      }
+    };
+
+    document.addEventListener('mousedown', clickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', clickOutside);
+    };
+  }, [showPopup]);
+
+  const toggleShowPopup = () => {
+    setShowPopup((prev) => { return !prev; });
   };
 
   return (
-    <div css={containerStyle}>
+    <div ref={node} css={containerStyle}>
       <button
         type="button"
-        onClick={toggleCurrencySelector}
+        onClick={toggleShowPopup}
         css={[navButtonStyle, buttonStyle]}
       >
         <div css={textStyle}>{`${currencyUnit} (${currencySign})`}</div>
         <div css={mobileTextStyle}>{currencySign}</div>
-        {isActive ? <img css={imgStyle} src={Triangle} alt="Triangle" /> : <img css={imgStyle} src={invertedTriangle} alt="Inverted Triangle" />}
+        {showPopup ? <img css={imgStyle} src={Triangle} alt="Triangle" /> : <img css={imgStyle} src={invertedTriangle} alt="Inverted Triangle" />}
       </button>
-      {isActive && (<SelectCurrencyPopup />)}
+      {showPopup && (<SelectCurrencyPopup />)}
     </div>
   );
 };
