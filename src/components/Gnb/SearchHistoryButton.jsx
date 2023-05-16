@@ -31,7 +31,7 @@ const SearchHistoryButton = () => {
       >
         검색 기록
       </button>
-      {isActive && (<SearchHistoryPopup />)}
+      {isActive && (<SearchHistoryPopup setIsActive={setIsActive} />)}
     </div>
   );
 };

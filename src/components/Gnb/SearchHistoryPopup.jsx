@@ -1,11 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
+import {
+  useRecoilValue, useResetRecoilState, useSetRecoilState,
+} from 'recoil';
 import searchHistoryAtom from 'recoils/searchHistory/searchHistoryAtom';
 import useFormattedPrice from 'hooks/useFormattedPrice';
 import { COIN_NAME } from 'utils/constants';
 import usdtSymbol from 'assets/usdt-symbol.png'; // 더미 데이터
-import { Fragment } from 'react';
+import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
+import PropTypes from 'prop-types';
 import { navButtonStyle } from './navButtonStyle';
 
 const popupStyle = css`
@@ -70,7 +73,6 @@ const historyItemsStyle = css`
 `;
 
 const historyItemStyle = css`
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   align-content: flex-start;
@@ -112,6 +114,20 @@ const scenarioResultStyle = css`
   }
 `;
 
+const buttonStyle = css`
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  text-align: start;
+  width: 100%;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--gray9);
+    }
+  }
+`;
+
 const headerHrStyle = css`
   margin: 0;
   border: 0.1rem solid var(--gray8);
@@ -146,10 +162,16 @@ const decrementStyle = css`
   color: var(--primary-red);
 `;
 
-const SearchHistoryPopup = () => {
+const SearchHistoryPopup = ({ setIsActive }) => {
   const searchHistory = useRecoilValue(searchHistoryAtom);
   const resetSearchHistory = useResetRecoilState(searchHistoryAtom);
   const formatPrice = useFormattedPrice();
+  const setScenarioData = useSetRecoilState(scenarioDataAtom);
+
+  const recalculateHistory = (item) => {
+    setScenarioData({ date: item.date, price: item.previousPrice, coinType: item.coinType });
+    setIsActive(false);
+  };
 
   return (
     <div css={[navButtonStyle, popupStyle]}>
@@ -163,14 +185,17 @@ const SearchHistoryPopup = () => {
           const {
             year, month, day,
           } = item.date;
+
           const {
             resultYear, resultMonth, resultDay,
           } = item.resultDate;
+
           const { previousPrice, resultPrice, isSkyrocketed } = item;
           const formattedPreviousPrice = formatPrice(previousPrice);
           const formattedResultPrice = formatPrice(resultPrice);
+
           return (
-            <Fragment key={item.id}>
+            <button type="button" onClick={() => { return recalculateHistory(item); }} key={item.id} css={buttonStyle}>
               <div css={historyItemStyle}>
                 <div css={symoblContainer}>
                   <img src={usdtSymbol} css={symbolStyle} alt="USDT Symbol" />
@@ -185,10 +210,10 @@ const SearchHistoryPopup = () => {
                   <div>
                     {`${resultYear}년 ${resultMonth}월 ${resultDay}일에는 `}
                     <span css={
-                (isSkyrocketed)
-                  ? incrementStyle
-                  : decrementStyle
-                }
+                      (isSkyrocketed)
+                        ? incrementStyle
+                        : decrementStyle
+                      }
                     >
                       {formattedResultPrice}
                     </span>
@@ -197,12 +222,16 @@ const SearchHistoryPopup = () => {
                 </div>
               </div>
               <hr css={hrStyle} />
-            </Fragment>
+            </button>
           );
         })}
       </div>
     </div>
   );
+};
+
+SearchHistoryPopup.propTypes = {
+  setIsActive: PropTypes.func.isRequired,
 };
 
 export default SearchHistoryPopup;
