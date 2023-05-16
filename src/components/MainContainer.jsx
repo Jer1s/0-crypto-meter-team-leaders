@@ -21,11 +21,11 @@ const headerStyle = css`
 const MainContainer = ({ children }) => {
   return (
     <div css={containerStyle}>
-      {children.map((child, index) => {
+      {children.map((child) => {
         return (
           <div
-            css={index === 0 && headerStyle}
-            key={index}
+            css={child.key === 'headerContent' && headerStyle}
+            key={child.key}
           >
             {child.props.children}
           </div>
