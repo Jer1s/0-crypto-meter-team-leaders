@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { navButtonStyle } from './navButtonStyle';
 import SearchHistoryPopup from './SearchHistoryPopup';
 
@@ -15,25 +15,32 @@ const activeButtonStyle = css`
   border-color: var(--primary);
 `;
 
-const SearchHistoryButton = () => {
-  const [isActive, setIsActive] = useState(false);
-
+const SearchHistoryButton = ({ activeButton, setActiveButton }) => {
   const toggleSearchHistory = () => {
-    setIsActive((prev) => { return !prev; });
+    if (activeButton === 'searchHistory') {
+      setActiveButton('');
+    } else {
+      setActiveButton('searchHistory');
+    }
   };
 
   return (
     <div css={containerStyle}>
       <button
         type="button"
-        css={[navButtonStyle, isActive ? activeButtonStyle : null]}
+        css={[navButtonStyle, (activeButton === 'searchHistory') ? activeButtonStyle : null]}
         onClick={toggleSearchHistory}
       >
         검색 기록
       </button>
-      {isActive && (<SearchHistoryPopup setIsActive={setIsActive} />)}
+      {(activeButton === 'searchHistory') && (<SearchHistoryPopup setActiveButton={setActiveButton} />)}
     </div>
   );
+};
+
+SearchHistoryButton.propTypes = {
+  activeButton: PropTypes.string.isRequired,
+  setActiveButton: PropTypes.func.isRequired,
 };
 
 export default SearchHistoryButton;

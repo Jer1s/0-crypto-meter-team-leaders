@@ -2,6 +2,7 @@
 import { css } from '@emotion/react';
 import logo from 'assets/logo.png';
 import logoText from 'assets/logo-text.png';
+import { useState } from 'react';
 import RecalculateButton from './RecalculateButton';
 import SelectCurrencyButton from './SelectCurrencyButton';
 import SearchHistoryButton from './SearchHistoryButton';
@@ -67,6 +68,7 @@ const buttonContainerStyle = css`
 `;
 
 const Gnb = () => {
+  const [activeButton, setActiveButton] = useState('');
   return (
     <nav css={navStyle}>
       <div css={logoStyle}>
@@ -75,8 +77,8 @@ const Gnb = () => {
       </div>
       <div css={buttonContainerStyle}>
         <RecalculateButton />
-        <SelectCurrencyButton />
-        <SearchHistoryButton />
+        <SelectCurrencyButton activeButton={activeButton} setActiveButton={setActiveButton} />
+        <SearchHistoryButton activeButton={activeButton} setActiveButton={setActiveButton} />
       </div>
     </nav>
   );

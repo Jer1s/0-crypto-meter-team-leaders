@@ -4,7 +4,7 @@ import invertedTriangle from 'assets/inverted-triangle.png';
 import Triangle from 'assets/triangle.png';
 import localeCurrencySelector from 'recoils/localeCurrency/localeCurrencySelector';
 import { useRecoilValue } from 'recoil';
-import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { navButtonStyle } from './navButtonStyle';
 import SelectCurrencyPopup from './SelectCurrencyPopup';
 
@@ -50,12 +50,15 @@ const mobileTextStyle = css`
   }
 `;
 
-const SelectCurrencyButton = () => {
-  const [isActive, setIsActive] = useState(false);
+const SelectCurrencyButton = ({ activeButton, setActiveButton }) => {
   const { currencyUnit, currencySign } = useRecoilValue(localeCurrencySelector);
 
   const toggleCurrencySelector = () => {
-    setIsActive((prev) => { return !prev; });
+    if (activeButton === 'selectCurrency') {
+      setActiveButton('');
+    } else {
+      setActiveButton('selectCurrency');
+    }
   };
 
   return (
@@ -67,11 +70,16 @@ const SelectCurrencyButton = () => {
       >
         <div css={textStyle}>{`${currencyUnit} (${currencySign})`}</div>
         <div css={mobileTextStyle}>{currencySign}</div>
-        {isActive ? <img css={imgStyle} src={Triangle} alt="Triangle" /> : <img css={imgStyle} src={invertedTriangle} alt="Inverted Triangle" />}
+        {(activeButton === 'selectCurrency') ? <img css={imgStyle} src={Triangle} alt="Triangle" /> : <img css={imgStyle} src={invertedTriangle} alt="Inverted Triangle" />}
       </button>
-      {isActive && (<SelectCurrencyPopup />)}
+      {(activeButton === 'selectCurrency') && (<SelectCurrencyPopup />)}
     </div>
   );
+};
+
+SelectCurrencyButton.propTypes = {
+  activeButton: PropTypes.string.isRequired,
+  setActiveButton: PropTypes.func.isRequired,
 };
 
 export default SelectCurrencyButton;

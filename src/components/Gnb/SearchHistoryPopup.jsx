@@ -161,7 +161,7 @@ const decrementStyle = css`
   color: var(--primary-red);
 `;
 
-const SearchHistoryPopup = ({ setIsActive }) => {
+const SearchHistoryPopup = ({ setActiveButton }) => {
   const searchHistory = useRecoilValue(searchHistoryAtom);
   const resetSearchHistory = useResetRecoilState(searchHistoryAtom);
   const formatPrice = useFormattedPrice();
@@ -169,7 +169,7 @@ const SearchHistoryPopup = ({ setIsActive }) => {
 
   const recalculateHistory = (item) => {
     setScenarioData({ date: item.inputDate, price: item.inputPrice, coinType: item.coinType });
-    setIsActive(false);
+    setActiveButton('');
   };
 
   return (
@@ -227,7 +227,7 @@ const SearchHistoryPopup = ({ setIsActive }) => {
 };
 
 SearchHistoryPopup.propTypes = {
-  setIsActive: PropTypes.func.isRequired,
+  setActiveButton: PropTypes.func.isRequired,
 };
 
 export default SearchHistoryPopup;
