@@ -2,21 +2,21 @@ import { Global, css } from '@emotion/react';
 
 const style = css`
   :root {
-    --primary: #00a661;
+    --primary: #00A661;
     --primary-red: #FD493D;
-    --primary-blue: #4c32ed;
-    --black: #0b0e1b;
-    --gray1: #161c2f;
-    --gray2: #262a38;
-    --gray3: #474b58;
+    --primary-blue: #4C32ED;
+    --black: #0B0E1B;
+    --gray1: #161C2F;
+    --gray2: #262A38;
+    --gray3: #474B58;
     --gray4: #616575;
     --gray5: #848898;
     --gray6: #A2A7B7;
     --gray7: #CED2DD;
     --gray8: #E7E9F0;
     --gray9: #F5F8F9;
-    --white: #ffffff;
-    --background: #f5f8f9;
+    --white: #FFFFFF;
+    --background: #F5F8F9;
     --active-button-background: #DAF1E5;
   }
 
@@ -33,6 +33,10 @@ const style = css`
     background-color: var(--background);
     font-family: "Pretendard", sans-serif;
     font-size: 1.6rem;
+
+    @media (max-width: 767px) {
+      background-color: var(--white);
+    }
   }
 
   input,
