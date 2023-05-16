@@ -4,7 +4,6 @@ import { useRecoilValue, useResetRecoilState } from 'recoil';
 import searchHistoryAtom from 'recoils/searchHistory/searchHistoryAtom';
 import useFormattedPrice from 'hooks/useFormattedPrice';
 import { COIN_NAME } from 'utils/constants';
-import getCurrentDate from 'utils/getCurrentDate';
 import usdtSymbol from 'assets/usdt-symbol.png'; // 더미 데이터
 import { Fragment } from 'react';
 import { navButtonStyle } from './navButtonStyle';
@@ -151,7 +150,6 @@ const SearchHistoryPopup = () => {
   const searchHistory = useRecoilValue(searchHistoryAtom);
   const resetSearchHistory = useResetRecoilState(searchHistoryAtom);
   const formatPrice = useFormattedPrice();
-  const currentDate = getCurrentDate();
 
   return (
     <div css={[navButtonStyle, popupStyle]}>
@@ -165,9 +163,12 @@ const SearchHistoryPopup = () => {
           const {
             year, month, day,
           } = item.date;
-          const { previousPrice, calculatedPrice, isSkyrocketed } = item;
+          const {
+            resultYear, resultMonth, resultDay,
+          } = item.resultDate;
+          const { previousPrice, resultPrice, isSkyrocketed } = item;
           const formattedPreviousPrice = formatPrice(previousPrice);
-          const formattedCalculatedPrice = formatPrice(calculatedPrice);
+          const formattedResultPrice = formatPrice(resultPrice);
           return (
             <Fragment key={item.id}>
               <div css={historyItemStyle}>
@@ -182,14 +183,14 @@ const SearchHistoryPopup = () => {
                     {`${COIN_NAME[item.coinType]}을 샀다면,`}
                   </div>
                   <div>
-                    {`${currentDate}에는 `}
+                    {`${resultYear}년 ${resultMonth}월 ${resultDay}일에는 `}
                     <span css={
                 (isSkyrocketed)
                   ? incrementStyle
                   : decrementStyle
                 }
                     >
-                      {formattedCalculatedPrice}
+                      {formattedResultPrice}
                     </span>
                     {' 입니다.'}
                   </div>
