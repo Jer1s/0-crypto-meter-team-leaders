@@ -1,4 +1,4 @@
-import HomeMainLayout from 'components/HomeMainLayout';
+import HomePageMainLayout from 'components/HomePageMainLayout';
 import CoinDetails from 'components/CoinDetails';
 import CryptoMarketCapList from 'components/CryptoMarketCapList';
 import Gnb from 'components/Gnb';
@@ -7,10 +7,10 @@ const HomePage = () => {
   return (
     <>
       <Gnb />
-      <HomeMainLayout>
+      <HomePageMainLayout>
         <CoinDetails />
         <CryptoMarketCapList />
-      </HomeMainLayout>
+      </HomePageMainLayout>
     </>
   );
 };

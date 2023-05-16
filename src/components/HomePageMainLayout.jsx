@@ -9,12 +9,16 @@ const layoutStyle = css`
   gap: 2.4rem;
 `;
 
-const HomeMainLayout = ({ children }) => {
-  return (<main css={layoutStyle}>{children}</main>);
+const HomePageMainLayout = ({ children }) => {
+  return (
+    <main css={layoutStyle}>
+      {children}
+    </main>
+  );
 };
 
-HomeMainLayout.propTypes = {
+HomePageMainLayout.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default HomeMainLayout;
+export default HomePageMainLayout;
