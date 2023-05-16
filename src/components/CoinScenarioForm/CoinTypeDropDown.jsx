@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import dropDownTriangleIcon from 'assets/drop-down-triangle-icon.svg';
+import whiteInvertedTriangleIcon from 'assets/white-inverted-triangle.svg';
 import useFetch from 'hooks/useFetch';
 import PropTypes from 'prop-types';
 import { coinScenarioInputStyle } from './coinScenarioInputStyle';
@@ -99,7 +99,7 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
 
       </div>
       <p>
-        <img src={dropDownTriangleIcon} alt="Drop Down Triangle Icon" />
+        <img src={whiteInvertedTriangleIcon} alt="White Triangle Icon" />
       </p>
     </div>
   );

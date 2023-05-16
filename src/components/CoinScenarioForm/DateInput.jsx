@@ -4,7 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import PropTypes from 'prop-types';
 
 /** @jsxImportSource @emotion/react */
-import dropDownTriangleIcon from 'assets/drop-down-triangle-icon.svg';
+import whiteInvertedTriangleIcon from 'assets/white-inverted-triangle.svg';
 import { coinScenarioInputStyle } from './coinScenarioInputStyle';
 
 const DateInput = ({ selectedDate, onSelectedDate }) => {
@@ -23,7 +23,7 @@ const DateInput = ({ selectedDate, onSelectedDate }) => {
         shouldCloseOnSelect
       />
       <p>
-        <img src={dropDownTriangleIcon} alt="Drop Down Triangle Icon" />
+        <img src={whiteInvertedTriangleIcon} alt="Drop Down Triangle Icon" />
       </p>
     </div>
   );
