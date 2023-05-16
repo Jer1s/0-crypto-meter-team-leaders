@@ -3,6 +3,7 @@ import React from 'react';
 import { css } from '@emotion/react';
 import DateInput from './DateInput';
 import BuyPriceInput from './BuyPriceInput';
+import CoinTypeDropDown from './CoinTypeDropDown';
 
 const containerStyle = css`
   max-width : 44.5rem;
@@ -17,6 +18,7 @@ const CoinScenarioForm = () => {
       <form>
         <DateInput />
         <BuyPriceInput />
+        <CoinTypeDropDown />
       </form>
     </div>
   );
