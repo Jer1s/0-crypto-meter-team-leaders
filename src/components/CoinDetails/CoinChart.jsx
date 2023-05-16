@@ -18,12 +18,14 @@ import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
 const containerStyle = css`
   max-width: 91rem;
-  max-height: 35.1rem;
+  min-height: 35.1rem;
   display: flex;
   flex-direction: column;
   align-items: end;
   /* padding-bottom: 8rem; */
 `;
+
+const chartScale = [{ term: 'max', dx: 55, interval: 3.5 }, { term: '365', dx: 50, interval: 3.43 }, { term: '30', dx: 40, interval: 3.4 }, { term: '7', dx: 30, interval: 3.4 }, { term: '1', dx: 60, interval: 3.6 }];
 
 const CoinChart = () => {
   const [selectedTerm, setSelectedTerm] = useState({ text: '전체', term: 'max' });
@@ -73,13 +75,25 @@ const CoinChart = () => {
     return `${value / 10000}만원`;
   };
 
+  const calculatingChartScale = () => {
+    const applyScale = chartScale.find((scale) => { return scale.term === selectedTerm.term; });
+    return {
+      dx: applyScale.dx,
+      interval: applyScale.interval,
+    };
+  };
+
+  const temp = calculatingChartScale();
+
+  console.log(temp);
+
   return (
     <div css={containerStyle}>
       <CategoryButtonChipContainer
         selectedTerm={selectedTerm}
         setSelectedTerm={setSelectedTerm}
       />
-      <ResponsiveContainer width={910} height={351}>
+      <ResponsiveContainer width="80%" height="100%">
         <AreaChart data={convertCoinNestedArrayToObject}>
           <defs>
             <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
@@ -91,13 +105,12 @@ const CoinChart = () => {
           <XAxis
             dataKey="date"
             tickSize={0}
-            dx={30}
-            dy={10}
+            dx={temp.dx}
+            dy={20}
             // x축 데이터 간격 설정
-            interval={parseInt(convertCoinNestedArrayToObject.length / 3.42)}
+            interval={parseInt(convertCoinNestedArrayToObject.length / temp.interval)}
           />
           <YAxis
-            // padding={{ right: 100 }}
             // y축 값에 있는 줄 삭제
             dataKey="price"
             axisLine={false}
@@ -108,6 +121,7 @@ const CoinChart = () => {
           />
           <Tooltip />
           <Area
+            margin={{ left: 100 }}
             type="monotone"
             dataKey="price"
             stroke="#00A661"
