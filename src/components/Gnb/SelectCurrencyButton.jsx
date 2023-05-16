@@ -14,21 +14,29 @@ const containerStyle = css`
 `;
 
 const buttonStyle = css`
-  gap: 1.6rem;
-  padding-right: 1rem;
+  display: flex;
+  align-items: center;
+  width: 9rem;
+  padding: 1.1rem 1rem 1.1rem 1.5rem;
 
   @media (max-width: 767px) {
-    gap: 0.8rem;
-    padding-right: 1.3rem;
-    padding-left: 1.6rem;
+    width: 5.9rem;
+    padding: 1.2rem 1.2rem 1.2rem 1.6rem;
   }
 `;
 
 const imgStyle = css`
   width: 1rem;
+
+  @media (max-width: 767px) {
+    width: 0.8rem;
+  }
 `;
 
 const textStyle = css`
+  line-height: 1.8rem;
+  letter-spacing: -0.3px;
+
   @media (max-width: 767px) {
     display: none
   }

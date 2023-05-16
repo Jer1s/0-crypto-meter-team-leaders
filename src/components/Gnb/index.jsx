@@ -60,10 +60,9 @@ const buttonContainerStyle = css`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  width: 33rem;
+  gap: 1.6rem;
 
   @media (max-width: 767px) {
-    width: 20.8rem;
   }
 `;
 

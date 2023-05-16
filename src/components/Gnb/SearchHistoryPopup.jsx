@@ -151,9 +151,6 @@ const SearchHistoryPopup = () => {
   const resetSearchHistory = useResetRecoilState(searchHistoryAtom);
   const formatPrice = useFormattedPrice();
   const currentDate = getCurrentDate();
-  // 더미 데이터
-  const currentPrice = 31000;
-  const formattedCurrentPrice = formatPrice(currentPrice);
 
   return (
     <div css={[navButtonStyle, popupStyle]}>
@@ -167,8 +164,9 @@ const SearchHistoryPopup = () => {
           const {
             year, month, day,
           } = item.date;
-          const previousPrice = item.price;
+          const { previousPrice, calculatedPrice, isSkyrocketed } = item;
           const formattedPreviousPrice = formatPrice(previousPrice);
+          const formattedCalculatedPrice = formatPrice(calculatedPrice);
           return (
             <Fragment key={item.id}>
               <div css={historyItemStyle}>
@@ -185,12 +183,12 @@ const SearchHistoryPopup = () => {
                   <div>
                     {`${currentDate}에는 `}
                     <span css={
-                currentPrice >= previousPrice
+                (isSkyrocketed)
                   ? incrementStyle
                   : decrementStyle
                 }
                     >
-                      {formattedCurrentPrice}
+                      {formattedCalculatedPrice}
                     </span>
                     {' 입니다.'}
                   </div>

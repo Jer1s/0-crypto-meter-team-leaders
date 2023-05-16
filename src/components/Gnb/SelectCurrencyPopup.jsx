@@ -9,29 +9,19 @@ const popupStyle = css`
   z-index: 1;
   position: absolute;
   top: 7.2rem;
-  width: 9.06rem;
   cursor: auto;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.4rem;
   padding: 0.4rem;
+  width: 9rem;
   background-color: var(--gray9);
 
   @media (max-width: 767px) {
     padding: 0.4rem;
-    top: 6rem; 
-    width: 6.1rem;
-  }
-`;
-
-// 팝업 창 width 문제 해결을 못해서 임시 처리
-const usdWidthStyle = css`
-  width: 10.25rem;
-
-  @media (max-width: 767px) {
-    top: 6rem; 
-    width: 5.7rem;
+    top: 6rem;
+    width: 5.9rem;
   }
 `;
 
@@ -76,7 +66,6 @@ const SelectCurrencyPopup = () => {
     <div css={[
       navButtonStyle,
       popupStyle,
-      (localeCurrency === 'USD') && usdWidthStyle,
     ]}
     >
       {Object.keys(LOCALE_CURRENCY).map((key) => {
