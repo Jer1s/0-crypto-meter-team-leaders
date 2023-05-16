@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useSetRecoilState } from 'recoil';
-import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
+import scenarioInputAtom from 'recoils/scenarioData/scenarioInputAtom';
 import DateInput from './DateInput';
 import BuyPriceInput from './BuyPriceInput';
 import CoinTypeDropDown from './CoinTypeDropDown';
@@ -15,7 +15,7 @@ const containerStyle = css`
 `;
 
 const CoinScenarioForm = () => {
-  const setScenarioData = useSetRecoilState(scenarioDataAtom);
+  const setScenarioData = useSetRecoilState(scenarioInputAtom);
   const [selectedDate, setSelectedDate] = useState(null);
   // const [buyPrice, setBuyPrice] = useState('');
   const inputRef = useRef(null);
