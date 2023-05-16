@@ -13,7 +13,6 @@ import {
   CartesianGrid,
 } from 'recharts';
 
-import bitcoin from './TermList/bitcoin';
 import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
 const containerStyle = css`
@@ -22,14 +21,13 @@ const containerStyle = css`
   display: flex;
   flex-direction: column;
   align-items: end;
-  /* padding-bottom: 8rem; */
 `;
 
 const chartScale = [{ term: 'max', dx: 55, interval: 3.4 }, { term: '365', dx: 50, interval: 3.43 }, { term: '30', dx: 40, interval: 3.4 }, { term: '7', dx: 50, interval: 3.7 }, { term: '1', dx: 60, interval: 3.6 }];
 
 const CoinChart = () => {
   const [selectedTerm, setSelectedTerm] = useState({ text: '전체', term: 'max' });
-  const [data, setData] = useState([]);
+  const [coinPriceList, setCoinPirceList] = useState([]);
 
   // ohlc는 coin chart 컴포넌트에서만 사용한다.
   // scenarioData에서 받은 coinType과 localeCurrencyAtom 있는 localeCurrency를 이용한다.
@@ -38,7 +36,7 @@ const CoinChart = () => {
   const getCoinList = async () => {
     const response = await fetch(`https://api.coingecko.com/api/v3/coins/bitcoin/ohlc?vs_currency=krw&days=${selectedTerm.term}`);
     const data = await response.json();
-    setData(data);
+    setCoinPirceList(data);
   };
 
   useEffect(() => { getCoinList(); }, [selectedTerm]);
@@ -54,7 +52,7 @@ const CoinChart = () => {
     return `${meridiem === 'AM' ? '오전' : '오후'} ${hour}시`;
   };
 
-  const convertCoinNestedArrayToObject = data.map((item) => {
+  const convertCoinNestedArrayToObject = coinPriceList.map((item) => {
     // ChartDetail 버튼에 따른 x축 포멧 변경
     // 7, 30일은 MM월 DD일
     // 1일은 hh시 별
