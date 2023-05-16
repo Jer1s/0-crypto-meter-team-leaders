@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import moment from 'moment';
 import {
   AreaChart,
@@ -11,10 +11,9 @@ import {
   Tooltip,
   Area,
   CartesianGrid,
-  Label,
 } from 'recharts';
 
-import bitcoin from './bitcoin';
+import bitcoin from './TermList/bitcoin';
 import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
 const containerStyle = css`
@@ -27,21 +26,44 @@ const containerStyle = css`
 `;
 
 const CoinChart = () => {
-  const [selectedTerm, setSelectedTerm] = useState('전체');
+  const [selectedTerm, setSelectedTerm] = useState({ text: '전체', term: 'max' });
+  const [data, setData] = useState([]);
 
   // ohlc는 coin chart 컴포넌트에서만 사용한다.
   // scenarioData에서 받은 coinType과 localeCurrencyAtom 있는 localeCurrency를 이용한다.
   // https://api.coingecko.com/api/v3/coins/{coinType}}/ohlc?vs_currency={localeCurrency}&days={일자}
 
-  const convertCoinNestedArrayToObject = bitcoin.map((item, index) => {
+  const getCoinList = async () => {
+    const response = await fetch(`https://api.coingecko.com/api/v3/coins/bitcoin/ohlc?vs_currency=krw&days=${selectedTerm.term}`);
+    const data = await response.json();
+    setData(data);
+  };
+
+  useEffect(() => { getCoinList(); }, [selectedTerm]);
+
+  const fomattingTerm = (date) => {
+    if (selectedTerm.term === 'max' || selectedTerm.term === '365') {
+      return moment(date).format('YYYY년 M월');
+    } if (selectedTerm.term === '30' || selectedTerm.term === '7') {
+      return moment(date).format('M월 D일');
+    }
+    const meridiem = moment(date).format('A');
+    const hour = moment(date).format('h');
+    return `${meridiem === 'AM' ? '오전' : '오후'} ${hour}시`;
+  };
+
+  const convertCoinNestedArrayToObject = data.map((item) => {
     // ChartDetail 버튼에 따른 x축 포멧 변경
     // 7, 30일은 MM월 DD일
     // 1일은 hh시 별
 
     // 1만원, 10만원, 100만원, 1000만원 단위는 item[1] / 10,000 + '만원'
     // 1만원 이하는 item[1] + '원'
+
     return {
-      date: moment(item[0]).format('YYYY년 M월'),
+      // date: moment(item[0]).format('YYYY년 M월'),
+      // date: moment(item[0]).format('h시'),
+      date: fomattingTerm(item[0]),
       price: item[1],
     };
   });
@@ -57,7 +79,7 @@ const CoinChart = () => {
         selectedTerm={selectedTerm}
         setSelectedTerm={setSelectedTerm}
       />
-      <ResponsiveContainer width={910}>
+      <ResponsiveContainer height={400}>
         <AreaChart data={convertCoinNestedArrayToObject} margin={{ left: 20 }}>
           <defs>
             <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
@@ -69,16 +91,20 @@ const CoinChart = () => {
           <XAxis
             dataKey="date"
             tickSize={0}
-            dx={50}
+            // dx={30}
             dy={10}
             // x축 데이터 간격 설정
             interval={parseInt(convertCoinNestedArrayToObject.length / 3.42)}
           />
           <YAxis
+            // padding={{ right: 100 }}
             // y축 값에 있는 줄 삭제
+            dataKey="price"
             axisLine={false}
             tickCount={7}
             tickFormatter={formatYAxisLabel}
+            tickSize={0}
+            dx={-12}
           />
           <Tooltip />
           <Area

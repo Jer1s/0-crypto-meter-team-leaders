@@ -8,8 +8,8 @@ const chipStyle = ({ text, selectedTerm }) => {
     height: 2.6rem;
     border-radius: 2.1rem;
     font-size: 1.4rem;
-    color: ${selectedTerm === text ? 'var(--white)' : 'var(--gray5)'};
-    background: ${selectedTerm === text ? 'var(--black)' : 'var(--gray8)'};
+    color: ${selectedTerm.text === text ? 'var(--white)' : 'var(--gray5)'};
+    background: ${selectedTerm.text === text ? 'var(--black)' : 'var(--gray8)'};
     text-align: center;
     border: none;
     cursor: pointer;
@@ -23,9 +23,11 @@ const chipStyle = ({ text, selectedTerm }) => {
   `;
 };
 
-const CategoryButtonChip = ({ text, selectedTerm, setSelectedTerm }) => {
+const CategoryButtonChip = ({ termItem, selectedTerm, setSelectedTerm }) => {
+  const { text } = termItem;
+
   const handleClick = () => {
-    setSelectedTerm(text);
+    setSelectedTerm(termItem);
   };
 
   return (
@@ -42,7 +44,9 @@ const CategoryButtonChip = ({ text, selectedTerm, setSelectedTerm }) => {
 CategoryButtonChip.propTypes = {
   selectedTerm: PropTypes.string.isRequired,
   setSelectedTerm: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired,
+  termItem: PropTypes.shape({
+    text: PropTypes.string.isRequired,
+  }),
 };
 
 export default CategoryButtonChip;
