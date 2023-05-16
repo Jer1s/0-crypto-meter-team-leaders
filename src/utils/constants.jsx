@@ -12,3 +12,7 @@ export const LOCALE_CURRENCY = Object.freeze({
     currencySign: '$',
   },
 });
+
+export const EXCHANGE_RATE = Object.freeze({
+  KRWTOUSD: 0.001,
+});
