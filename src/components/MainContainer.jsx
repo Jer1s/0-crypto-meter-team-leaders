@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
 import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
 
@@ -20,11 +19,18 @@ const headerStyle = css`
 `;
 
 const MainContainer = ({ children }) => {
-  const [header, body] = React.Children.toArray(children);
   return (
     <div css={containerStyle}>
-      <div css={headerStyle}>{header.props.children}</div>
-      <div>{body}</div>
+      {children.map((child, index) => {
+        return (
+          <div
+            css={index === 0 && headerStyle}
+            key={index}
+          >
+            {child.props.children}
+          </div>
+        );
+      })}
     </div>
   );
 };
