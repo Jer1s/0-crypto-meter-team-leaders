@@ -168,7 +168,7 @@ const SearchHistoryPopup = ({ setIsActive }) => {
   const setScenarioData = useSetRecoilState(scenarioInputAtom);
 
   const recalculateHistory = (item) => {
-    setScenarioData({ date: item.date, price: item.previousPrice, coinType: item.coinType });
+    setScenarioData({ date: item.inputDate, price: item.inputPrice, coinType: item.coinType });
     setIsActive(false);
   };
 
@@ -182,7 +182,7 @@ const SearchHistoryPopup = ({ setIsActive }) => {
       <div css={historyItemsStyle}>
         {searchHistory.map((item) => {
           const {
-            inputYear, inputMonth, inputDay,
+            year, month, day,
           } = item.inputDate;
           const {
             outputYear, outputMonth, outputDay,
@@ -197,7 +197,7 @@ const SearchHistoryPopup = ({ setIsActive }) => {
                   <img src={usdtSymbol} css={symbolStyle} alt="USDT Symbol" />
                 </div>
                 <div css={scenarioDataStyle}>
-                  {`만약 ${inputYear}년 ${inputMonth}월 ${inputDay}일에 ${formattedPreviousPrice}으로`}
+                  {`만약 ${year}년 ${month}월 ${day}일에 ${formattedPreviousPrice}으로`}
                 </div>
                 <div css={scenarioResultStyle}>
                   <div>
