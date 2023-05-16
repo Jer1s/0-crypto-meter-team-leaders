@@ -1,5 +1,13 @@
-export const COIN_TYPE = Object.freeze({
-  BITCOIN: 'Bitcoin',
+export const COIN_NAME = Object.freeze({
+  BTC: 'Bitcoin',
+  ETH: 'Ethereum',
+  USDT: 'Tether',
+  BNB: 'BNB',
+  USDC: 'USD Coin',
+  XRP: 'XRP',
+  ADA: 'Cardano',
+  DOGE: 'Dogecoin',
+  MATIC: 'Polygon',
 });
 
 export const LOCALE_CURRENCY = Object.freeze({
@@ -16,3 +24,5 @@ export const LOCALE_CURRENCY = Object.freeze({
 export const EXCHANGE_RATE = Object.freeze({
   KRWTOUSD: 0.001,
 });
+
+export const BASE_CURRENCY = 'KRW';

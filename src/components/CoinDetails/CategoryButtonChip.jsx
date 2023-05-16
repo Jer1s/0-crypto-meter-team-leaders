@@ -9,9 +9,7 @@ const chiyStye = ({ text, selectedCoinHistory }) => {
     border-radius: 2.1rem;
     font-size: 1.4rem;
     color: ${selectedCoinHistory === text ? 'var(--white)' : 'var(--gray5)'};
-    background: ${selectedCoinHistory === text
-      ? 'var(--black)'
-      : 'var(--gray8)'};
+    background: ${(selectedCoinHistory === text) ? 'var(--black)' : 'var(--gray8)'};
     text-align: center;
     border: none;
     cursor: pointer;
