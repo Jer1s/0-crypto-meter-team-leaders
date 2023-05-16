@@ -14,7 +14,7 @@ const popupStyle = css`
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   position: absolute;
   top: 7.2rem;
   right: 6rem;
@@ -106,7 +106,8 @@ const scenarioResultStyle = css`
   line-height: 100%;
   letter-spacing: -0.3px;
 
-  @media (max-width: 767px) {   
+  @media (max-width: 767px) { 
+    width: 25.9rem;  
     font-size: 1.4rem;
     line-height: 2rem;
   }
