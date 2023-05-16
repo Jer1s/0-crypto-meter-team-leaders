@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
+import { useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
-import { useState } from 'react';
 import { navButtonStyle } from './navButtonStyle';
 import SearchHistoryPopup from './SearchHistoryPopup';
 
@@ -16,22 +16,37 @@ const activeButtonStyle = css`
 `;
 
 const SearchHistoryButton = () => {
-  const [isActive, setIsActive] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const node = useRef();
 
-  const toggleSearchHistory = () => {
-    setIsActive((prev) => { return !prev; });
+  useEffect(() => {
+    const clickOutside = (e) => {
+      if (showPopup && node.current && !node.current.contains(e.target)) {
+        setShowPopup(false);
+      }
+    };
+
+    document.addEventListener('mousedown', clickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', clickOutside);
+    };
+  }, [showPopup]);
+
+  const toggleShowPopup = () => {
+    setShowPopup((prev) => { return !prev; });
   };
 
   return (
-    <div css={containerStyle}>
+    <div ref={node} css={containerStyle}>
       <button
         type="button"
-        css={[navButtonStyle, isActive ? activeButtonStyle : null]}
-        onClick={toggleSearchHistory}
+        css={[navButtonStyle, showPopup && activeButtonStyle]}
+        onClick={toggleShowPopup}
       >
         검색 기록
       </button>
-      {isActive && (<SearchHistoryPopup />)}
+      {showPopup && (<SearchHistoryPopup setShowPopup={setShowPopup} />)}
     </div>
   );
 };
