@@ -7,7 +7,7 @@ import searchHistoryAtom from 'recoils/searchHistory/searchHistoryAtom';
 import useFormattedPrice from 'hooks/useFormattedPrice';
 import { COIN_NAME } from 'utils/constants';
 import usdtSymbol from 'assets/usdt-symbol.png'; // 더미 데이터
-import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
+import scenarioInputAtom from 'recoils/scenarioData/scenarioInputAtom';
 import PropTypes from 'prop-types';
 import { navButtonStyle } from './navButtonStyle';
 
@@ -102,7 +102,6 @@ const scenarioResultStyle = css`
   display: flex;
   flex-wrap: wrap;
   gap: 0 0.4rem;
-  color: var(--black);
   font-size: 1.5rem;
   line-height: 100%;
   letter-spacing: -0.3px;
@@ -166,7 +165,7 @@ const SearchHistoryPopup = ({ setIsActive }) => {
   const searchHistory = useRecoilValue(searchHistoryAtom);
   const resetSearchHistory = useResetRecoilState(searchHistoryAtom);
   const formatPrice = useFormattedPrice();
-  const setScenarioData = useSetRecoilState(scenarioDataAtom);
+  const setScenarioData = useSetRecoilState(scenarioInputAtom);
 
   const recalculateHistory = (item) => {
     setScenarioData({ date: item.date, price: item.previousPrice, coinType: item.coinType });
@@ -183,17 +182,14 @@ const SearchHistoryPopup = ({ setIsActive }) => {
       <div css={historyItemsStyle}>
         {searchHistory.map((item) => {
           const {
-            year, month, day,
-          } = item.date;
-
+            inputYear, inputMonth, inputDay,
+          } = item.inputDate;
           const {
-            resultYear, resultMonth, resultDay,
-          } = item.resultDate;
-
-          const { previousPrice, resultPrice, isSkyrocketed } = item;
-          const formattedPreviousPrice = formatPrice(previousPrice);
-          const formattedResultPrice = formatPrice(resultPrice);
-
+            outputYear, outputMonth, outputDay,
+          } = item.outputDate;
+          const { inputPrice, outputPrice, isSkyrocketed } = item;
+          const formattedPreviousPrice = formatPrice(inputPrice);
+          const formattedResultPrice = formatPrice(outputPrice);
           return (
             <button type="button" onClick={() => { return recalculateHistory(item); }} key={item.id} css={buttonStyle}>
               <div css={historyItemStyle}>
@@ -201,14 +197,14 @@ const SearchHistoryPopup = ({ setIsActive }) => {
                   <img src={usdtSymbol} css={symbolStyle} alt="USDT Symbol" />
                 </div>
                 <div css={scenarioDataStyle}>
-                  {`만약 ${year}년 ${month}월 ${day}일에 ${formattedPreviousPrice}으로`}
+                  {`만약 ${inputYear}년 ${inputMonth}월 ${inputDay}일에 ${formattedPreviousPrice}으로`}
                 </div>
                 <div css={scenarioResultStyle}>
                   <div>
                     {`${COIN_NAME[item.coinType]}을 샀다면,`}
                   </div>
                   <div>
-                    {`${resultYear}년 ${resultMonth}월 ${resultDay}일에는 `}
+                    {`${outputYear}년 ${outputMonth}월 ${outputDay}일에는 `}
                     <span css={
                       (isSkyrocketed)
                         ? incrementStyle

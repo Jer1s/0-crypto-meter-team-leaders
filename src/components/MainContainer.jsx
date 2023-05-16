@@ -1,37 +1,37 @@
-import React from 'react';
-import styled from '@emotion/styled';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
 
-const Contianer = styled.div`
-  max-width: 137.9rem;
-  max-height: 73.3rem;
+const containerStyle = css`
   border-radius: 2.5rem;
-  background-color: var(--white);
   padding: 3.6rem 4.8rem 8rem;
-  margin-bottom: 2.4rem;
+  max-width: 137.9rem;
+  background-color: var(--white);
 `;
 
-const HeaderContainer = styled.div`
-  width: 100%;
-  height: 9.9rem;
+const headerStyle = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 0.1rem solid black;
+  border-bottom: 0.1rem solid var(--gray1);
   padding-bottom: 3.2rem;
-`;
-
-const BodyContainer = styled.div`
-  width: 100%;
+  height: 6.4rem;
 `;
 
 const MainContainer = ({ children }) => {
-  const [header, body] = React.Children.toArray(children);
   return (
-    <Contianer>
-      <HeaderContainer>{header.props.children}</HeaderContainer>
-      <BodyContainer>{body}</BodyContainer>
-    </Contianer>
+    <div css={containerStyle}>
+      {children.map((child) => {
+        return (
+          <div
+            css={child.key === 'headerContent' && headerStyle}
+            key={child.key}
+          >
+            {child.props.children}
+          </div>
+        );
+      })}
+    </div>
   );
 };
 

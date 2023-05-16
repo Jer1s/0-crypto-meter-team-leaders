@@ -60,7 +60,7 @@ const CoinDetails = () => {
 
   return (
     <MainContainer>
-      <header>
+      <div key="headerContent">
         <CoinInfo>
           <img src={share} alt="Coin Icon" />
           <p>bitcoin</p>
@@ -70,11 +70,11 @@ const CoinDetails = () => {
           <img src={facebook} alt="Facebook Icon" />
           <Button type="button" onClick={handleCopyClipBoard}><img src={share} alt="Link Copy Icon" /></Button>
         </SocialIconGroup>
-      </header>
-      <main>
+      </div>
+      <div key="bodyContent">
         <CoinScenarioResult />
         <CoinChart />
-      </main>
+      </div>
     </MainContainer>
   );
 };
