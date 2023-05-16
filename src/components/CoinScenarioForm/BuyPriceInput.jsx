@@ -13,7 +13,7 @@ const BuyPriceInput = () => {
 
   return (
     <div css={coinScenarioInputStyle}>
-      <input placeholder="0" />
+      <input className="inputBox" placeholder="0" />
       <p>
         {currencyUnit}
         (

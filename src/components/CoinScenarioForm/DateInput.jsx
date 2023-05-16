@@ -16,6 +16,7 @@ const DateInput = () => {
   return (
     <div css={coinScenarioInputStyle}>
       <DatePicker
+        className="inputBox"
         selected={selectedDate}
         onChange={handleDateChange}
         placeholderText="년/월/일"
