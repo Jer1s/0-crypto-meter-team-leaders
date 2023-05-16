@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
 import { useRecoilValue } from 'recoil';
-import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
-import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import localeCurrencySelector from 'recoils/localeCurrency/localeCurrencySelector';
+import PropTypes from 'prop-types';
 import { coinScenarioInputStyle } from './coinScenarioInputStyle';
 
-const BuyPriceInput = () => {
+const BuyPriceInput = ({ inputRef }) => {
   const { currencyUnit, currencySign } = useRecoilValue(localeCurrencySelector);
-  console.log(currencySign, currencyUnit);
 
   return (
     <div css={coinScenarioInputStyle}>
-      <input className="inputBox" placeholder="0" />
+      <input className="inputBox" placeholder="0" ref={inputRef} />
       <p>
         {currencyUnit}
         (
@@ -25,4 +22,7 @@ const BuyPriceInput = () => {
   );
 };
 
+BuyPriceInput.propTypes = {
+  inputRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+};
 export default BuyPriceInput;

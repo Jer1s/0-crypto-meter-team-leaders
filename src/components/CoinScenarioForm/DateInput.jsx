@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import PropTypes from 'prop-types';
 
 /** @jsxImportSource @emotion/react */
 import dropDownTriangleIcon from 'assets/drop-down-triangle-icon.svg';
 import { coinScenarioInputStyle } from './coinScenarioInputStyle';
 
-const DateInput = () => {
-  const [selectedDate, setSelectedDate] = useState(null);
-
+const DateInput = ({ selectedDate, onSelectedDate }) => {
   const handleDateChange = (date) => {
-    setSelectedDate(date);
+    onSelectedDate(date);
   };
 
   return (
@@ -29,5 +28,8 @@ const DateInput = () => {
     </div>
   );
 };
-
+DateInput.propTypes = {
+  onSelectedDate: PropTypes.func.isRequired,
+  selectedDate: PropTypes.instanceOf(Date),
+};
 export default DateInput;
