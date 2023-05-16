@@ -100,7 +100,6 @@ const scenarioResultStyle = css`
   display: flex;
   flex-wrap: wrap;
   gap: 0 0.4rem;
-  color: var(--black);
   font-size: 1.5rem;
   line-height: 100%;
   letter-spacing: -0.3px;
