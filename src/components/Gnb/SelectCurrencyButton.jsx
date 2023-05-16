@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
+import { useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import invertedTriangle from 'assets/inverted-triangle.png';
 import Triangle from 'assets/triangle.png';
 import localeCurrencySelector from 'recoils/localeCurrency/localeCurrencySelector';
 import { useRecoilValue } from 'recoil';
-import PropTypes from 'prop-types';
 import { navButtonStyle } from './navButtonStyle';
 import SelectCurrencyPopup from './SelectCurrencyPopup';
 
@@ -50,36 +50,44 @@ const mobileTextStyle = css`
   }
 `;
 
-const SelectCurrencyButton = ({ activeButton, setActiveButton }) => {
+const SelectCurrencyButton = () => {
   const { currencyUnit, currencySign } = useRecoilValue(localeCurrencySelector);
 
-  const toggleCurrencySelector = () => {
-    if (activeButton === 'selectCurrency') {
-      setActiveButton('');
-    } else {
-      setActiveButton('selectCurrency');
-    }
+  const [showPopup, setShowPopup] = useState(false);
+  const node = useRef();
+
+  useEffect(() => {
+    const clickOutside = (e) => {
+      if (showPopup && node.current && !node.current.contains(e.target)) {
+        setShowPopup(false);
+      }
+    };
+
+    document.addEventListener('mousedown', clickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', clickOutside);
+    };
+  }, [showPopup]);
+
+  const toggleShowPopup = () => {
+    setShowPopup((prev) => { return !prev; });
   };
 
   return (
-    <div css={containerStyle}>
+    <div ref={node} css={containerStyle}>
       <button
         type="button"
-        onClick={toggleCurrencySelector}
+        onClick={toggleShowPopup}
         css={[navButtonStyle, buttonStyle]}
       >
         <div css={textStyle}>{`${currencyUnit} (${currencySign})`}</div>
         <div css={mobileTextStyle}>{currencySign}</div>
-        {(activeButton === 'selectCurrency') ? <img css={imgStyle} src={Triangle} alt="Triangle" /> : <img css={imgStyle} src={invertedTriangle} alt="Inverted Triangle" />}
+        {showPopup ? <img css={imgStyle} src={Triangle} alt="Triangle" /> : <img css={imgStyle} src={invertedTriangle} alt="Inverted Triangle" />}
       </button>
-      {(activeButton === 'selectCurrency') && (<SelectCurrencyPopup />)}
+      {showPopup && (<SelectCurrencyPopup />)}
     </div>
   );
-};
-
-SelectCurrencyButton.propTypes = {
-  activeButton: PropTypes.string.isRequired,
-  setActiveButton: PropTypes.func.isRequired,
 };
 
 export default SelectCurrencyButton;

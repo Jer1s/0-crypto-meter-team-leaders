@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
+import { useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
-import PropTypes from 'prop-types';
 import { navButtonStyle } from './navButtonStyle';
 import SearchHistoryPopup from './SearchHistoryPopup';
 
@@ -15,32 +15,40 @@ const activeButtonStyle = css`
   border-color: var(--primary);
 `;
 
-const SearchHistoryButton = ({ activeButton, setActiveButton }) => {
-  const toggleSearchHistory = () => {
-    if (activeButton === 'searchHistory') {
-      setActiveButton('');
-    } else {
-      setActiveButton('searchHistory');
-    }
+const SearchHistoryButton = () => {
+  const [showPopup, setShowPopup] = useState(false);
+  const node = useRef();
+
+  useEffect(() => {
+    const clickOutside = (e) => {
+      if (showPopup && node.current && !node.current.contains(e.target)) {
+        setShowPopup(false);
+      }
+    };
+
+    document.addEventListener('mousedown', clickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', clickOutside);
+    };
+  }, [showPopup]);
+
+  const toggleShowPopup = () => {
+    setShowPopup((prev) => { return !prev; });
   };
 
   return (
-    <div css={containerStyle}>
+    <div ref={node} css={containerStyle}>
       <button
         type="button"
-        css={[navButtonStyle, (activeButton === 'searchHistory') ? activeButtonStyle : null]}
-        onClick={toggleSearchHistory}
+        css={[navButtonStyle, showPopup && activeButtonStyle]}
+        onClick={toggleShowPopup}
       >
         검색 기록
       </button>
-      {(activeButton === 'searchHistory') && (<SearchHistoryPopup setActiveButton={setActiveButton} />)}
+      {showPopup && (<SearchHistoryPopup setShowPopup={setShowPopup} />)}
     </div>
   );
-};
-
-SearchHistoryButton.propTypes = {
-  activeButton: PropTypes.string.isRequired,
-  setActiveButton: PropTypes.func.isRequired,
 };
 
 export default SearchHistoryButton;
