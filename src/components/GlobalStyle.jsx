@@ -33,6 +33,7 @@ const style = css`
     background-color: var(--background);
     font-family: "Pretendard", sans-serif;
     font-size: 1.6rem;
+    color: var(--black);
 
     @media (max-width: 767px) {
       background-color: var(--white);

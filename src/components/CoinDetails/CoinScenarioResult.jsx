@@ -10,7 +10,6 @@ const ScenarioDescriptionStyle = css`
   line-height: 2.4rem;
   font-weight: 600;
   font-size: 1.8rem;
-  color: var(--black);
 `;
 
 const resultStyle = css`
