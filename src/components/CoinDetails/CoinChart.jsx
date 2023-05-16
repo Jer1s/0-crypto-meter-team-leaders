@@ -25,7 +25,7 @@ const containerStyle = css`
   /* padding-bottom: 8rem; */
 `;
 
-const chartScale = [{ term: 'max', dx: 55, interval: 3.5 }, { term: '365', dx: 50, interval: 3.43 }, { term: '30', dx: 40, interval: 3.4 }, { term: '7', dx: 30, interval: 3.4 }, { term: '1', dx: 60, interval: 3.6 }];
+const chartScale = [{ term: 'max', dx: 55, interval: 3.4 }, { term: '365', dx: 50, interval: 3.43 }, { term: '30', dx: 40, interval: 3.4 }, { term: '7', dx: 50, interval: 3.7 }, { term: '1', dx: 60, interval: 3.6 }];
 
 const CoinChart = () => {
   const [selectedTerm, setSelectedTerm] = useState({ text: '전체', term: 'max' });
@@ -72,7 +72,10 @@ const CoinChart = () => {
 
   // Y축 레이블 포맷 함수
   const formatYAxisLabel = (value) => {
-    return `${value / 10000}만원`;
+    if (value >= 10000) {
+      return `${value / 10000}만`;
+    }
+    return `${value}만원`;
   };
 
   const calculatingChartScale = () => {
@@ -85,15 +88,13 @@ const CoinChart = () => {
 
   const temp = calculatingChartScale();
 
-  console.log(temp);
-
   return (
     <div css={containerStyle}>
       <CategoryButtonChipContainer
         selectedTerm={selectedTerm}
         setSelectedTerm={setSelectedTerm}
       />
-      <ResponsiveContainer width="80%" height="100%">
+      <ResponsiveContainer width={910} height={300}>
         <AreaChart data={convertCoinNestedArrayToObject}>
           <defs>
             <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
@@ -109,6 +110,7 @@ const CoinChart = () => {
             dy={20}
             // x축 데이터 간격 설정
             interval={parseInt(convertCoinNestedArrayToObject.length / temp.interval)}
+            tick={{ fontSize: 12 }}
           />
           <YAxis
             // y축 값에 있는 줄 삭제
@@ -118,10 +120,13 @@ const CoinChart = () => {
             tickFormatter={formatYAxisLabel}
             tickSize={0}
             dx={-12}
+            label={{
+              position: 'insideLeft',
+            }}
+            tick={{ fontSize: 12 }}
           />
           <Tooltip />
           <Area
-            margin={{ left: 100 }}
             type="monotone"
             dataKey="price"
             stroke="#00A661"
