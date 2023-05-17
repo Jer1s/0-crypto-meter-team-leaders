@@ -4,6 +4,7 @@ import share from 'assets/share.svg';
 import MainContainer from 'components/MainContainer';
 import CoinScenarioResult from 'components/CoinDetails/CoinScenarioResult';
 import CoinChart from './CoinChart';
+import KakaoShareButton from './KakaoShareButton';
 
 const CoinInfo = styled.div`
   display: flex;
@@ -11,6 +12,7 @@ const CoinInfo = styled.div`
   align-items: center;
 
   & p {
+    margin: 0;
     font-size: 2.6rem;
     font-weight: 700;
   }
@@ -25,7 +27,6 @@ const CoinInfo = styled.div`
 
 const SocialIconGroup = styled.div`
   width: 11.2rem;
-  height: 2.4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -63,7 +64,7 @@ const CoinDetails = () => {
       <div key="headerContent">
         <CoinInfo>
           <img src={share} alt="Coin Icon" />
-          <p>bitcoin</p>
+          <p style={{ height: '3.1rem' }}>bitcoin</p>
         </CoinInfo>
         <SocialIconGroup>
           {/* <KakaoShareButton /> */}

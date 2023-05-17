@@ -51,6 +51,11 @@ const style = css`
   a {
     text-decoration: none;
   }
+
+  g.recharts-xAxis {
+    display: block; 
+    width: 801px;
+  }
 `;
 
 const GlobalStyle = () => {
