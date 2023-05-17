@@ -11,13 +11,13 @@ const mainContainerStyle = css`
 `;
 
 const headerStyle = css`
-  width: 100rem; // 임시
   margin: 0;
   font-size: 2.6rem;
   letter-spacing: -0.3px;
 `;
 
 const bodyStyle = css`
+  width: 125rem;
   margin-top: 1.6rem;
 `;
 

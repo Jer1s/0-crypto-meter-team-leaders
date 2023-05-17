@@ -11,27 +11,47 @@ const listStyle = css`
   display: flex;
   flex-direction: column;
   padding: 0;
-  gap: 2rem;
-  width: 128.3rem;
-`;
-
-const itemStyle = css`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 5rem;
-  border-bottom: 0.1rem solid var(--gray8);
-  padding: 2rem 0;
   font-size: 1.5rem;
   font-weight: 500;
   letter-spacing: -0.3px;
   color: var(--gray2);
 `;
 
+const itemStyle = css`
+  display: grid;
+  grid-template-columns: 57fr 217fr 165fr 209fr 209fr 146fr 140fr 140fr;
+  border-bottom: 0.1rem solid var(--gray8);
+  padding: 2rem 0;
+
+  * {
+    justify-self: end;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 3rem;
+  }
+
+  *:nth-of-type(1),
+  *:nth-of-type(2) {
+    justify-self: start;
+  }
+`;
+
 const headerStyle = css`
-  padding-top: 0;
+  display: grid;
+  grid-template-columns: 57fr 217fr 165fr 209fr 209fr 146fr 140fr 140fr;
+  border-bottom: 0.1rem solid var(--gray8);
+  padding: 0;
   padding-bottom: 1.8rem;
+
+  * {
+    justify-self: end;
+  }
+
+  *:nth-of-type(1),
+  *:nth-of-type(2) {
+    justify-self: start;
+  }
 `;
 
 const headerItemStyle = css`
@@ -51,15 +71,9 @@ const buttonStyle = css`
   border: none;
 `;
 
-const rankingStyle = css`
-  font-size: 1.4rem;
-`;
-
-const crpytoNameStyle = css`
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  height: 4rem;
+const imageStyle = css`
+  width: 3rem;
+  height: 3rem;
 `;
 
 const CryptoMarketCapList = ({ cryptoList }) => {
@@ -71,7 +85,7 @@ const CryptoMarketCapList = ({ cryptoList }) => {
 
   return (
     <ul css={listStyle}>
-      <li css={[itemStyle, headerStyle]}>
+      <li css={headerStyle}>
         <div css={headerItemStyle}>
           #
           <button type="button" onClick={handleClick} css={buttonStyle}>
@@ -125,13 +139,14 @@ const CryptoMarketCapList = ({ cryptoList }) => {
         const currentPrice = formatPrice(item.currentPrice);
         const marketCap = formatPrice(item.marketCap);
         const totalVolume = formatPrice(item.totalVolume);
+        const volumePerPrice = item.volumePerPrice.toLocaleString();
         return (
           <li key={item.id} css={itemStyle}>
-            <div css={rankingStyle}>{index + 1}</div>
-            <div css={crpytoNameStyle}>
-              <img src={item.image} alt={`${item.id} Symbol`} width="30" height="30" />
-              <span>{item.name}</span>
-              <span>{item.symbol}</span>
+            <div>{index + 1}</div>
+            <div>
+              <img src={item.image} alt={`${item.id} Symbol`} css={imageStyle} />
+              <div>{item.name}</div>
+              <div>{item.symbol}</div>
             </div>
             <div>
               {currentPrice}
@@ -140,11 +155,22 @@ const CryptoMarketCapList = ({ cryptoList }) => {
               {marketCap}
             </div>
             <div>
-              {totalVolume}
+              <div>
+                {totalVolume}
+              </div>
+              <div>
+                {`${volumePerPrice} ${item.symbol}`}
+              </div>
             </div>
-            <PriceChangeChip priceChange={item.pc1h} />
-            <PriceChangeChip priceChange={item.pc24h} />
-            <PriceChangeChip priceChange={item.pc7d} />
+            <div>
+              <PriceChangeChip priceChange={item.pc1h} />
+            </div>
+            <div>
+              <PriceChangeChip priceChange={item.pc24h} />
+            </div>
+            <div>
+              <PriceChangeChip priceChange={item.pc7d} />
+            </div>
           </li>
         );
       })}
