@@ -25,7 +25,49 @@ const containerStyle = css`
   align-items: end;
 `;
 
+const tooltipStyle = css`
+  width: 10rem;
+  height: 3.7rem;
+  padding: 0.3rem 0.7rem;
+  margin: 0;
+  background: rgba(29, 29, 29, 0.9);
+  border-radius: 0.8rem;
+  color: #fff;
+
+  & p:first-of-type {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--gray6);
+    width: 10rem;
+    height: 1.4rem;
+    padding: 0;
+  }
+
+  & p:last-of-type {
+    margin: 0;
+    font-size: 1.4rem;
+    color: var(--white);
+    width: 8.3rem;
+    height: 1.8rem;
+    padding: 0;
+  }
+  
+   
+`;
+
 const chartScale = [{ term: 'max', dx: 55, interval: 3.4 }, { term: '365', dx: 50, interval: 3.43 }, { term: '30', dx: 40, interval: 3.4 }, { term: '7', dx: 50, interval: 3.7 }, { term: '1', dx: 60, interval: 3.6 }];
+
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    const { filteredDate, price } = payload[0].payload;
+    return (
+      <div css={tooltipStyle}>
+        <p>{filteredDate}</p>
+        <p>{`₩${parseInt(price.toFixed(0)).toLocaleString()}`}</p>
+      </div>
+    );
+  }
+};
 
 const CoinChart = () => {
   const [selectedTerm, setSelectedTerm] = useState({ text: '전체', term: 'max' });
@@ -50,10 +92,9 @@ const CoinChart = () => {
     return {
       date: fomattingTerm(item[0]),
       price: item[1],
+      filteredDate: moment(item[0]).format('YYYY년 M월 D일'),
     };
   });
-
-  console.log(convertCoinNestedArrayToObject?.length);
 
   // Y축 레이블 포맷 함수
   const formatYAxisLabel = (value) => {
@@ -72,8 +113,6 @@ const CoinChart = () => {
   };
 
   const chartScaleInfo = calculatingChartScale();
-
-  console.log(coinPriceList || []);
 
   return (
     <div css={containerStyle}>
@@ -108,8 +147,6 @@ const CoinChart = () => {
           tickLine={false}
           tick={{ fontSize: 14 }}
           interval={(convertCoinNestedArrayToObject?.length / 3.35) >> 0}
-        // x축 데이터 간격 설정
-        // interval={convertCoinNestedArrayToObject && parseInt(convertCoinNestedArrayToObject.length / chartScaleInfo.interval)}
         />
         <YAxis
           // y축 값에 있는 줄 삭제
@@ -124,7 +161,7 @@ const CoinChart = () => {
           // }}
           tick={{ fontSize: 14 }}
         />
-        <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+        <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
         <Area
           type="monotone"
           dataKey="price"
