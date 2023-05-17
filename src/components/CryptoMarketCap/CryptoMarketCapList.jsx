@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import useFormattedPrice from 'hooks/useFormattedPrice';
 import PropTypes from 'prop-types';
 
 const containerStyle = css`
@@ -8,9 +9,14 @@ const containerStyle = css`
 `;
 
 const CryptoMarketCapList = ({ cryptoList }) => {
+  const formatPrice = useFormattedPrice(true);
+
   return (
     <>
       {cryptoList.map((item) => {
+        const currentPrice = formatPrice(item.currentPrice);
+        const marketCap = formatPrice(item.marketCap);
+        const totalVolume = formatPrice(item.totalVolume);
         return (
           <div key={item.id} css={containerStyle}>
             <img src={item.image} alt={`${item.id} Symbol`} width="30" />
@@ -19,13 +25,13 @@ const CryptoMarketCapList = ({ cryptoList }) => {
               {item.symbol}
             </div>
             <div>
-              {item.currentPrice}
+              {currentPrice}
             </div>
             <div>
-              {item.marketCap}
+              {marketCap}
             </div>
             <div>
-              {item.totalVolume}
+              {totalVolume}
             </div>
             <div>
               {item.pc1h}
