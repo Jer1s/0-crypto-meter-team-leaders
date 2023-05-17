@@ -25,7 +25,6 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
   // const page = 1;
   // const { data, loading, error } = useFetch(`/coins/markets?vs_currency=krw&order=market_cap_desc&per_page=100&page=${page}&sparkline=false&price_change_percentage=1h%2C24h%2C7d&locale=en`);
   const { data, loading, error } = useFetch('src/components/CoinScenarioForm/coinDropDownMockData.json');
-  // console.log(data);
 
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -61,8 +60,8 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
 
   return (
     <div css={coinScenarioInputStyle}>
-      <div
-        role="presentation"
+      <button
+        type="button"
         className="inputBox"
         css={dropDownBoxStyle}
         onClick={toggleDropdown}
@@ -87,7 +86,6 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
                         value={item.id}
                         onClick={() => { return handleSelectCoin(item); }}
                       >
-
                         <img src={item.image} alt={item.name} />
                         {item.name}
                       </li>
@@ -97,7 +95,7 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
           )}
         </div>
 
-      </div>
+      </button>
       <p>
         <img src={whiteInvertedTriangleIcon} alt="White Triangle Icon" />
       </p>
