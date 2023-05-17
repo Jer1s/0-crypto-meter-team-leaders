@@ -21,7 +21,7 @@ const parseMarketCapData = (marketCapData) => {
       currentPrice,
       marketCap,
       totalVolume,
-      volumePerPrice: totalVolume / currentPrice,
+      volumePerPrice: Math.floor(totalVolume / currentPrice),
       pc1h,
       pc24h,
       pc7d,

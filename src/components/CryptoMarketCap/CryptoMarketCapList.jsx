@@ -21,16 +21,24 @@ const itemStyle = css`
   display: grid;
   grid-template-columns: 57fr 217fr 165fr 209fr 209fr 146fr 140fr 140fr;
   grid-auto-flow: column;
+  align-items: center;
   border-bottom: 0.1rem solid var(--gray8);
   padding: 2rem 0;
+  height: 7.3rem;
 
   * {
     justify-self: end;
   }
 
-  *:nth-of-type(1),
-  *:nth-of-type(2) {
+  & > *:nth-of-type(1),
+  & > *:nth-of-type(2) {
     justify-self: start;
+  }
+
+  & > *:nth-of-type(2) {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    grid-gap: 1.2rem;
   }
 `;
 
@@ -41,12 +49,12 @@ const headerStyle = css`
   padding: 0;
   padding-bottom: 1.8rem;
 
-  * {
+  & > * {
     justify-self: end;
   }
 
-  *:nth-of-type(1),
-  *:nth-of-type(2) {
+  & > *:nth-of-type(1),
+  & > *:nth-of-type(2) {
     justify-self: start;
   }
 `;
@@ -66,6 +74,11 @@ const buttonStyle = css`
   display: flex;
   padding: 0;
   border: none;
+`;
+
+const secondLineStyle = css`
+  font-size: 1.2rem;
+  color: var(--gray5);
 `;
 
 const imageStyle = css`
@@ -142,8 +155,12 @@ const CryptoMarketCapList = ({ cryptoList }) => {
             <div>{index + 1}</div>
             <div>
               <img src={item.image} alt={`${item.id} Symbol`} css={imageStyle} />
-              <div>{item.name}</div>
-              <div>{item.symbol}</div>
+              <div>
+                {item.name}
+                <div css={secondLineStyle}>
+                  {item.symbol}
+                </div>
+              </div>
             </div>
             <div>
               {currentPrice}
@@ -155,7 +172,7 @@ const CryptoMarketCapList = ({ cryptoList }) => {
               <div>
                 {totalVolume}
               </div>
-              <div>
+              <div css={secondLineStyle} style={{ textAlign: 'right' }}>
                 {`${volumePerPrice} ${item.symbol}`}
               </div>
             </div>
