@@ -21,9 +21,9 @@ const parseMarketCapData = (marketCapData) => {
       currentPrice,
       marketCap,
       totalVolume,
-      pc1h: pc1h.toFixed(2),
-      pc24h: pc24h.toFixed(2),
-      pc7d: pc7d.toFixed(2),
+      pc1h: Number(pc1h.toFixed(2)),
+      pc24h: Number(pc24h.toFixed(2)),
+      pc7d: Number(pc7d.toFixed(2)),
     };
   });
 

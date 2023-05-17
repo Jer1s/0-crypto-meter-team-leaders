@@ -2,6 +2,7 @@
 import { css } from '@emotion/react';
 import useFormattedPrice from 'hooks/useFormattedPrice';
 import PropTypes from 'prop-types';
+import PriceChangeChip from './PriceChangeChip';
 
 const containerStyle = css`
   display: flex;
@@ -12,13 +13,13 @@ const CryptoMarketCapList = ({ cryptoList }) => {
   const formatPrice = useFormattedPrice(true);
 
   return (
-    <>
+    <ul>
       {cryptoList.map((item) => {
         const currentPrice = formatPrice(item.currentPrice);
         const marketCap = formatPrice(item.marketCap);
         const totalVolume = formatPrice(item.totalVolume);
         return (
-          <div key={item.id} css={containerStyle}>
+          <li key={item.id} css={containerStyle}>
             <img src={item.image} alt={`${item.id} Symbol`} width="30" />
             <div>
               {item.name}
@@ -33,19 +34,13 @@ const CryptoMarketCapList = ({ cryptoList }) => {
             <div>
               {totalVolume}
             </div>
-            <div>
-              {item.pc1h}
-            </div>
-            <div>
-              {item.pc24h}
-            </div>
-            <div>
-              {item.pc7d}
-            </div>
-          </div>
+            <PriceChangeChip priceChange={item.pc1h} />
+            <PriceChangeChip priceChange={item.pc24h} />
+            <PriceChangeChip priceChange={item.pc7d} />
+          </li>
         );
       })}
-    </>
+    </ul>
   );
 };
 
