@@ -8,13 +8,43 @@ import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import { useRecoilValue } from 'recoil';
 
 const h1Style = css`
+  font-size: 3.6rem;
   color : var(--gray5);
   margin : 0;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 0.7rem;
+
+  .description-line {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
   span {
     color: var(--white);
   }
+
+  @media (max-width: 1199px) {
+    .description-line{
+      display: flex; 
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1.1rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;    
+    font-size: 2.4rem;
+    /* display: grid;
+    grid-template-areas: 
+      "what-if" 
+      "date"
+      "price" 
+      "coin"; */
+  }  
 `;
 
 const ScenarioDescription = ({
@@ -27,29 +57,33 @@ const ScenarioDescription = ({
 
   return (
     <h1 css={h1Style}>
-      <div>
-        내가 만약
+      <div className="description-line">
+        <div>
+          내가 만약
+        </div>
+        <span>
+          {`${year}년 ${month}월 ${day}일에`}
+        </span>
       </div>
-      <span>
-        {`${year}년 ${month}월 ${day}일에`}
-      </span>
+      <div className="description-line">
+        <div>
+          <span>{formattedPrice}</span>
+          으로
+        </div>
+        <div>
+          <span>{selectedCoin.name}</span>
+          을 샀다면,
+        </div>
 
-      <div>
-        <span>{formattedPrice}</span>
-        으로
-      </div>
-      <div>
-        <span>{selectedCoin.name}</span>
-        을 샀다면,
       </div>
     </h1>
   );
 };
 
 ScenarioDescription.propTypes = {
-  year: PropTypes.number.isRequired,
-  month: PropTypes.number.isRequired,
-  day: PropTypes.number.isRequired,
+  year: PropTypes.string.isRequired,
+  month: PropTypes.string.isRequired,
+  day: PropTypes.string.isRequired,
 
   selectedCoin: PropTypes.shape({
     id: PropTypes.string.isRequired,

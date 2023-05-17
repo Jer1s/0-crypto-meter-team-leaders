@@ -1,73 +1,96 @@
-import React, { useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
-import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
-import { BASE_CURRENCY, INITIAL_CRYPTO } from 'utils/constants';
-import DateInput from './DateInput';
-import BuyPriceInput from './BuyPriceInput';
-import CoinTypeDropDown from './CoinTypeDropDown';
+import { INITIAL_CRYPTO } from 'utils/constants';
+import { useState } from 'react';
+import useResponsiveView from 'hooks/useResponsiveView';
+import filter from 'assets/filter.svg';
 import ScenarioDescription from './ScenarioDescription';
-import AddPriceButton from './AddPriceButton';
+import ScenarioForm from './ScenarioForm';
+import BottomSheet from './BottomSheet';
 
 const containerStyle = css`
+  position: relative;
   max-width : 44.5rem;
   height: 94.5rem;
   background-color: var(--gray1);
   border-radius: 2.4rem;
   padding: 6rem 4rem 7rem;
 
-  h1 {
-    font-weight: 600;
-    font-size: 3.6rem;
+  display:flex;
+  flex-direction: column;
+  gap: 5.5rem;
+
+  @media (max-width: 1199px) {
+    max-width: 100%;
+    height: 100%;
+    padding: 3.6rem  6.5rem  3.6rem 3.6rem ;
+  }
+
+  @media (max-width: 768px) {
+    padding: 2.8rem 6rem 2.4rem 2.8rem ;
   }
 `;
 
-const submitButtonStyle = css`
-  width: 36.5rem;
-  height: 6.4rem;
+const FilterButtonStyle = css`
+  position: absolute;
 
-  background: var(--white);
-  border-radius: 3.5rem;
-`;
+  button {
+    padding: 0;
+    border: 0;
+    outline:0;
+    border-radius: 3rem;
+    background-color: var(--gray3);
+  }
 
-const inputContainerStyle = css`
-  margin: 5.5rem 0 18.9rem;
-  display : flex;
-  flex-direction: column;
-  gap : 2.5rem;
-`;
+  @media (max-width: 1199px) {
+    top: 2.4rem;
+    right: 2.4rem;
+    margin: 0 10px;
+    button {
+      width: 3.2rem;
+      height: 3.2rem;
+    }
 
-const buyPriceInputStyle = css`
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-`;
+    img {
+      width: 16px;
+      height: 12px
+    }
+  }
 
-const addPriceButtonContainerStyle = css`
-  display: flex;
-  flex-direction: row;
-  gap: 0.8rem;
-  justify-content: end;
+  @media (max-width: 768px) {
+    top: 1.6rem;
+    right: 1.6rem;
+    button {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    img {
+      width: 14px;
+      height: 10.5px;
+    }
+  }
+
 `;
 
 const CoinScenarioForm = () => {
   const setScenarioData = useSetRecoilState(scenarioDataAtom);
-  const localeCurrency = useRecoilValue(localeCurrencyAtom);
+  const viewportType = useResponsiveView();
+
   const [selectedDate, setSelectedDate] = useState(null);
   const [buyPrice, setBuyPrice] = useState(0);
   const [selectedCoin, setSelectedCoin] = useState(INITIAL_CRYPTO);
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   const [year, month, day] = selectedDate
-    ? [selectedDate.getFullYear(), selectedDate.getMonth() + 1, selectedDate.getDate()]
-    : [0, 0, 0];
-
-  const addButtonData = localeCurrency === BASE_CURRENCY
-    ? [5000, 10000, 50000, 100000]
-    : [10000, 50000, 100000, 500000, 1000000];
+    ? [selectedDate.getFullYear().toString(),
+      (selectedDate.getMonth() + 1).toString(), selectedDate.getDate().toString()]
+    : ['0000', '00', '00'];
 
   const handleSubmit = async (event) => {
+    setIsBottomSheetOpen(!isBottomSheetOpen);
     event.preventDefault();
     setScenarioData({
       input: {
@@ -82,12 +105,31 @@ const CoinScenarioForm = () => {
         outputDate: { year: 2023, month: 5, day: 19 },
       },
     });
-    // const url = '';
-    // const { data, loading, error } = useFetch(url);
+  };
+  const handleBottomSheetClick = () => {
+    setIsBottomSheetOpen(!isBottomSheetOpen);
+  };
+
+  const formProps = {
+    selectedCoin,
+    setSelectedCoin,
+    buyPrice,
+    setBuyPrice,
+    selectedDate,
+    setSelectedDate,
+    handleSubmit,
   };
 
   return (
     <div css={containerStyle}>
+      {' '}
+      { viewportType !== 'Desktop' && (
+      <div css={FilterButtonStyle}>
+        <button type="button" onClick={handleBottomSheetClick}>
+          <img src={filter} alt="filter icon" />
+        </button>
+      </div>
+      )}
       <ScenarioDescription
         year={year}
         month={month}
@@ -95,22 +137,24 @@ const CoinScenarioForm = () => {
         selectedCoin={selectedCoin}
         price={buyPrice}
       />
-      <form onSubmit={handleSubmit}>
-        <div css={inputContainerStyle}>
-          <DateInput selectedDate={selectedDate} onSelectedDate={setSelectedDate} />
-          <div css={buyPriceInputStyle}>
-            <BuyPriceInput buyPrice={buyPrice} setBuyPrice={setBuyPrice} />
-            <div css={addPriceButtonContainerStyle}>
-              {addButtonData.map((value) => {
-                return <AddPriceButton key={value} value={value} onBuyPrice={setBuyPrice} />;
-              })}
-            </div>
-          </div>
-          <CoinTypeDropDown selectedCoin={selectedCoin} onCoinSelect={setSelectedCoin} />
-        </div>
-        <button type="submit" css={submitButtonStyle} onClick={handleSubmit}>오늘 얼마가 되었을까?</button>
-      </form>
+      {viewportType === 'Desktop'
+        ? (
+          <ScenarioForm
+            formProps={formProps}
+
+          />
+        ) : (
+          <BottomSheet
+            setIsBottomSheetOpen={setIsBottomSheetOpen}
+            isBottomSheetOpen={isBottomSheetOpen}
+          >
+            <ScenarioForm
+              formProps={formProps}
+            />
+          </BottomSheet>
+        )}
     </div>
+
   );
 };
 
