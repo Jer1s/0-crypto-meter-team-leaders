@@ -20,15 +20,12 @@ const listStyle = css`
 const itemStyle = css`
   display: grid;
   grid-template-columns: 57fr 217fr 165fr 209fr 209fr 146fr 140fr 140fr;
+  grid-auto-flow: column;
   border-bottom: 0.1rem solid var(--gray8);
   padding: 2rem 0;
 
   * {
     justify-self: end;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    height: 3rem;
   }
 
   *:nth-of-type(1),
