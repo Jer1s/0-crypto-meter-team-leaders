@@ -15,7 +15,6 @@ const ScenarioDescription = ({
   year, month, day, selectedCoin, price,
 }) => {
   const formattedPrice = useFormattedPrice();
-  console.log(selectedCoin);
   // const price = inputRef.current ? inputRef.current.value : 0
 
   return (
