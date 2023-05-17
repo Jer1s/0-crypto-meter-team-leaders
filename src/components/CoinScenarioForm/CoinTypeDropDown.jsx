@@ -7,24 +7,59 @@ import PropTypes from 'prop-types';
 import { coinScenarioInputStyle } from './coinScenarioInputStyle';
 
 const dropDownBoxStyle = css`
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  img {
+  button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    padding: 0;
+    text-align: initial;
+    color: var(--white);
+
+    display: flex;
+    font-size: 1.7rem;
+    align-items: center;
+    gap : 1rem;
+  }
+
+  .coin-icon {
     width : 3rem;
     height: 3rem;
   }
 `;
 
-const selectedCoinStyle = css`
+const dropDownListStyle = css`
+  width: 36.5rem;
+  max-height: 22.5rem; 
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 1rem;
+  margin-Top: 0.4rem;
+  border-radius: 1.2rem;
+  background-color: var(--gray2);
+  
+  -ms-overflow-style: none; /* 익스플로러, 앳지 */
+  scrollbar-width: none; /* 파이어폭스 */
 
+  ::-webkit-scrollbar {
+    display: none; 
+  }
+`;
+
+const dropDownItemStyle = css`
+  width:34.5rem;
+  height: 4.6rem;
+  list-style-type: none;
+  padding: 1rem;
+
+  :hover{
+    background-color: var(--black);
+    border-radius: 1.2rem;  
+  }
 `;
 
 const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
-  // 추후 mockdata에서 실제 api 요청으로 변경
-  // const page = 1;
-  // const { data, loading, error } = useFetch(`/coins/markets?vs_currency=krw&order=market_cap_desc&per_page=100&page=${page}&sparkline=false&price_change_percentage=1h%2C24h%2C7d&locale=en`);
-  const { data, loading, error } = useFetch('src/components/CoinScenarioForm/coinDropDownMockData.json');
+  const { data } = useFetch('src/components/CoinScenarioForm/coinDropDownMockData.json');
 
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -59,46 +94,46 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
   }, [data]);
 
   return (
-    <div css={coinScenarioInputStyle}>
-      <button
-        type="button"
-        className="inputBox"
-        css={dropDownBoxStyle}
-        onClick={toggleDropdown}
-        ref={dropdownRef}
-      >
-        {selectedCoin ? (
-          <div css={selectedCoinStyle}>
-            <img src={selectedCoin.image} alt={selectedCoin.name} />
+    <div>
+      <div css={[coinScenarioInputStyle, dropDownBoxStyle]}>
+        <p>
+          <img src={whiteInvertedTriangleIcon} alt="White Triangle Icon" />
+        </p>
+        <button
+          type="button"
+          className="inputBox"
+          onClick={toggleDropdown}
+          ref={dropdownRef}
+        >
+          {selectedCoin && (
+          <>
+            <img src={selectedCoin.image} alt={selectedCoin.name} className="coin-icon" />
             {selectedCoin.name}
-          </div>
-        ) : (<div />
-        )}
-        <div>
-          {isOpen && (
-          <ul>
+          </>
+          ) }
+        </button>
+      </div>
+      <div css={dropDownBoxStyle}>
+        {isOpen && (
+          <ul css={dropDownListStyle}>
             {data
                   && data.map((item) => {
                     return (
                       <li
-                        role="presentation"
+                        css={dropDownItemStyle}
                         key={item.id}
-                        value={item.id}
-                        onClick={() => { return handleSelectCoin(item); }}
                       >
-                        <img src={item.image} alt={item.name} />
-                        {item.name}
+                        <button type="button" onClick={() => { return handleSelectCoin(item); }}>
+                          <img src={item.image} alt={item.name} className="coin-icon" />
+                          {item.name}
+                        </button>
                       </li>
                     );
                   })}
           </ul>
-          )}
-        </div>
+        )}
+      </div>
 
-      </button>
-      <p>
-        <img src={whiteInvertedTriangleIcon} alt="White Triangle Icon" />
-      </p>
     </div>
   );
 };

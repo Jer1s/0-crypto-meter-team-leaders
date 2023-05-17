@@ -6,7 +6,7 @@ export const coinScenarioInputStyle = css`
   max-width : 36.5rem;
 
   & .inputBox{
-  padding: 2.6rem 2rem 2.6rem 2.5rem;
+  padding: 0 2.5rem;
   width: 100%;
   height: 7.4rem;
   border: 0.1rem solid var(--gray4);
