@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
+import { useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import MainContainer from 'components/MainContainer';
 import { getCryptoMockData } from 'api/mockDataAPI';
-import { useEffect, useState } from 'react';
 import parseMarketCapData from 'utils/parseMarketCapData';
 import CryptoMarketCapList from './CryptoMarketCapList';
 
