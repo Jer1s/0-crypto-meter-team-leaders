@@ -8,6 +8,7 @@ export const COIN_NAME = Object.freeze({
   ADA: 'Cardano',
   DOGE: 'Dogecoin',
   MATIC: 'Polygon',
+  SOL: 'Solana',
 });
 
 export const LOCALE_CURRENCY = Object.freeze({

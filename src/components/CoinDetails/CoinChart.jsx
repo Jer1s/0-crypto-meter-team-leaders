@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import moment from 'moment';
 import {
   AreaChart,
@@ -14,6 +14,7 @@ import {
 
 import useFetch from 'hooks/useFetch';
 import CategoryButtonChipContainer from './CategoryButtonChipContainer';
+import bitcoin from './TermList/bitcoin';
 
 const containerStyle = css`
   max-width: 91rem;
@@ -74,7 +75,6 @@ const CoinChart = () => {
   const url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=krw&days=${selectedTerm.term}`;
   const { data: coinPriceList, loading, error } = useFetch(url);
   // const coinPriceList = bitcoin;
-  console.log(coinPriceList);
 
   const fomattingTerm = (date) => {
     if (selectedTerm.term === 'max' || selectedTerm.term === '365') {
