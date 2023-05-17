@@ -31,8 +31,8 @@ const CoinChart = () => {
   const [selectedTerm, setSelectedTerm] = useState({ text: '전체', term: 'max' });
   // const [coinPriceList, setCoinPirceList] = useState([]);
   const url = `https://api.coingecko.com/api/v3/coins/bitcoin/ohlc?vs_currency=krw&days=${selectedTerm.term}`;
-  // const { data: coinPriceList, loading, error } = useFetch(url);
-  const coinPriceList = bitcoin;
+  const { data: coinPriceList, loading, error } = useFetch(url);
+  // const coinPriceList = bitcoin;
 
   const fomattingTerm = (date) => {
     if (selectedTerm.term === 'max' || selectedTerm.term === '365') {
@@ -76,47 +76,50 @@ const CoinChart = () => {
         selectedTerm={selectedTerm}
         setSelectedTerm={setSelectedTerm}
       />
-      <ResponsiveContainer width={910} height={300}>
-        <AreaChart data={convertCoinNestedArrayToObject}>
-          <defs>
-            <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#B9E7D0" stopOpacity={1} />
-              <stop offset="95%" stopColor="#B9E7D0" stopOpacity={0} />
-            </linearGradient>
-          </defs>
-          <CartesianGrid horizontal vertical={false} />
-          <XAxis
-            dataKey="date"
-            tickSize={0}
-            dx={chartScaleInfo.dx}
-            dy={20}
-            // x축 데이터 간격 설정
-            interval={convertCoinNestedArrayToObject && parseInt(convertCoinNestedArrayToObject.length / chartScaleInfo.interval)}
-            tick={{ fontSize: 12 }}
-          />
-          <YAxis
-            // y축 값에 있는 줄 삭제
-            dataKey="price"
-            axisLine={false}
-            tickCount={7}
-            tickFormatter={formatYAxisLabel}
-            tickSize={0}
-            dx={-12}
-            label={{
-              position: 'insideLeft',
-            }}
-            tick={{ fontSize: 12 }}
-          />
-          <Tooltip />
-          <Area
-            type="monotone"
-            dataKey="price"
-            stroke="#00A661"
-            fill="url(#gradient)"
-            fillOpacity={1}
-          />
-        </AreaChart>
-      </ResponsiveContainer>
+      <div css={{ width: '93.1rem', height: '30rem' }}>
+        <ResponsiveContainer>
+          <AreaChart data={convertCoinNestedArrayToObject}>
+            <defs>
+              <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#B9E7D0" stopOpacity={1} />
+                <stop offset="95%" stopColor="#B9E7D0" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid horizontal vertical={false} />
+            <XAxis
+              dataKey="date"
+              tickSize={0}
+              dx={chartScaleInfo.dx}
+              dy={20}
+              // x축 데이터 간격 설정
+              interval={convertCoinNestedArrayToObject && parseInt(convertCoinNestedArrayToObject.length / chartScaleInfo.interval)}
+              // interval={convertCoinNestedArrayToObject && convertCoinNestedArrayToObject.length / 3.3 >> 0}
+              tick={{ fontSize: 12 }}
+            />
+            <YAxis
+              // y축 값에 있는 줄 삭제
+              dataKey="price"
+              axisLine={false}
+              tickCount={7}
+              tickFormatter={formatYAxisLabel}
+              tickSize={0}
+              dx={-12}
+              label={{
+                position: 'insideLeft',
+              }}
+              tick={{ fontSize: 12 }}
+            />
+            <Tooltip />
+            <Area
+              type="monotone"
+              dataKey="price"
+              stroke="#00A661"
+              fill="url(#gradient)"
+              fillOpacity={1}
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 };

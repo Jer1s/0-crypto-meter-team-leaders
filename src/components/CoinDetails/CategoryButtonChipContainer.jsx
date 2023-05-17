@@ -21,7 +21,10 @@ const CategoryButtonChipContainer = ({ selectedTerm, setSelectedTerm }) => {
 };
 
 CategoryButtonChipContainer.propTypes = {
-  selectedTerm: PropTypes.object,
+  selectedTerm: PropTypes.shape({
+    term: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+  }),
   setSelectedTerm: PropTypes.func.isRequired,
 };
 
