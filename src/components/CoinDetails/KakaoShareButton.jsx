@@ -1,4 +1,4 @@
-import kakaotalk from 'assets/kakaotalk.png';
+import kakaotalk from 'assets/kakaotalk.svg';
 import useKakaoShare from 'hooks/useKakaoShare';
 
 const KAKAO_JAVASCRIPT_KEY = import.meta.env.VITE_KAKAO_SHARE_JAVASCRIPT_KEY;

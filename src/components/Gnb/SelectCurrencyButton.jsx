@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
-import invertedTriangle from 'assets/inverted-triangle.png';
-import Triangle from 'assets/triangle.png';
+import invertedTriangle from 'assets/inverted-triangle.svg';
+import Triangle from 'assets/triangle.svg';
 import localeCurrencySelector from 'recoils/localeCurrency/localeCurrencySelector';
 import { useRecoilValue } from 'recoil';
 import { navButtonStyle } from './navButtonStyle';
