@@ -18,7 +18,6 @@ const containerStyle = css`
   padding: 6rem 4rem 7rem;
 
   h1 {
-    
     font-weight: 600;
     font-size: 3.6rem;
   }

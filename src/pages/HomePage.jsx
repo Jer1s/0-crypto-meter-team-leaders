@@ -8,7 +8,7 @@ const HomePage = () => {
   return (
     <>
       <Gnb />
-      {/* <CoinScenarioForm /> */}
+      <CoinScenarioForm />
       <HomePageMainLayout>
         <CoinDetails />
         <CryptoMarketCapList />

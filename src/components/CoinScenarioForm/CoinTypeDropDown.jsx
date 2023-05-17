@@ -12,7 +12,6 @@ const dropDownBoxStyle = css`
     -moz-appearance: none;
     appearance: none;
     border: none;
-    padding: 0;
     text-align: initial;
     color: var(--white);
 
@@ -50,7 +49,6 @@ const dropDownItemStyle = css`
   width:34.5rem;
   height: 4.6rem;
   list-style-type: none;
-  padding: 1rem;
 
   :hover{
     background-color: var(--black);
@@ -69,6 +67,7 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
   };
 
   const handleSelectCoin = (coin) => {
+    console.log('왜 안돼', coin);
     onCoinSelect(coin);
     setIsOpen(false);
   };
@@ -94,7 +93,7 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
   }, [data]);
 
   return (
-    <div>
+    <div ref={dropdownRef}>
       <div css={[coinScenarioInputStyle, dropDownBoxStyle]}>
         <p>
           <img src={whiteInvertedTriangleIcon} alt="White Triangle Icon" />
@@ -103,7 +102,6 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
           type="button"
           className="inputBox"
           onClick={toggleDropdown}
-          ref={dropdownRef}
         >
           {selectedCoin && (
           <>
@@ -120,10 +118,9 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
                   && data.map((item) => {
                     return (
                       <li
-                        css={dropDownItemStyle}
                         key={item.id}
                       >
-                        <button type="button" onClick={() => { return handleSelectCoin(item); }}>
+                        <button type="button" css={dropDownItemStyle} onClick={() => { return handleSelectCoin(item); }}>
                           <img src={item.image} alt={item.name} className="coin-icon" />
                           {item.name}
                         </button>
