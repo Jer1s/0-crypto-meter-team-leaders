@@ -10,6 +10,7 @@ const searchHistoryAtom = atom({
     outputDate: { outputYear: 2023, outputMonth: 5, outputDay: 16 },
     outputPrice: 31000,
     coinType: 'USDT',
+    image: 'https://assets.coingecko.com/coins/images/10481/large/Tether_Gold.png?1668148656',
     isSkyrocketed: true,
   },
   ],

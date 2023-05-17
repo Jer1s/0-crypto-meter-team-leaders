@@ -6,7 +6,6 @@ import {
 import searchHistoryAtom from 'recoils/searchHistory/searchHistoryAtom';
 import useFormattedPrice from 'hooks/useFormattedPrice';
 import { COIN_NAME } from 'utils/constants';
-import usdtSymbol from 'assets/usdt-symbol.png'; // 더미 데이터
 import scenarioInputAtom from 'recoils/scenarioData/scenarioInputAtom';
 import PropTypes from 'prop-types';
 import { navButtonStyle } from './navButtonStyle';
@@ -194,7 +193,7 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
             <button type="button" onClick={() => { return recalculateHistory(item); }} key={item.id} css={buttonStyle}>
               <div css={historyItemStyle}>
                 <div css={symoblContainer}>
-                  <img src={usdtSymbol} css={symbolStyle} alt="USDT Symbol" />
+                  <img src={item.image} css={symbolStyle} alt="USDT Symbol" />
                 </div>
                 <div css={scenarioDataStyle}>
                   {`만약 ${year}년 ${month}월 ${day}일에 ${formattedPreviousPrice}으로`}
