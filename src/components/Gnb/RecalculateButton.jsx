@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import restore from 'assets/restore.png';
+import restore from 'assets/restore.svg';
 import { useResetRecoilState } from 'recoil';
 import scenarioInputAtom from 'recoils/scenarioData/scenarioInputAtom';
 import { navButtonStyle } from './navButtonStyle';

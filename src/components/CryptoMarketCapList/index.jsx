@@ -23,7 +23,7 @@ const CryptoMarketCapList = () => {
         <h2 css={headerStyle}>전체 암호화폐 시세</h2>
       </div>
       <div key="bodyContent">
-        <div css={bodyStyle}>asd</div>
+        <div css={bodyStyle}>temp</div>
       </div>
     </MainContainer>
   );
