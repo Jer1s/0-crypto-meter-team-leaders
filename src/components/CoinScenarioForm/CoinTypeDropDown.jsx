@@ -67,7 +67,6 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
   };
 
   const handleSelectCoin = (coin) => {
-    console.log('왜 안돼', coin);
     onCoinSelect(coin);
     setIsOpen(false);
   };

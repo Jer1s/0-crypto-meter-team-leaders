@@ -19,12 +19,15 @@ const BuyPriceInput = ({ buyPrice, setBuyPrice }) => {
 
   const handleInputChange = (event) => {
     const { value } = event.target;
-    setBuyPrice(Number(value));
+    setBuyPrice(Number(value.replace(/,/g, '')));
+  };
+  const formatValue = (value) => {
+    return value.toLocaleString();
   };
 
   return (
     <div css={[coinScenarioInputStyle, buyPriceInputStyle(buyPrice)]}>
-      <input css={buyPriceInputStyle} className="inputBox" value={buyPrice} onChange={handleInputChange} />
+      <input css={buyPriceInputStyle} className="inputBox" value={formatValue(buyPrice)} onChange={handleInputChange} />
       <p>
         {currencyUnit}
         {' '}

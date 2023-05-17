@@ -12,16 +12,19 @@ const buttonStyle = css`
   font-size: 1.4rem;
 `;
 
-const AddPriceButton = ({ value }) => {
+const AddPriceButton = ({ value, onBuyPrice }) => {
   const formattedPrice = useFormattedPrice();
-
+  const handleClickPlusPrice = () => {
+    onBuyPrice((prev) => { return prev + value; });
+  };
   return (
-    <button type="button" css={buttonStyle}>{formattedPrice(value)}</button>
+    <button type="button" css={buttonStyle} onClick={handleClickPlusPrice}>{formattedPrice(value)}</button>
   );
 };
 
 AddPriceButton.propTypes = {
   value: PropTypes.number.isRequired,
+  onBuyPrice: PropTypes.func.isRequired,
 };
 
 export default AddPriceButton;

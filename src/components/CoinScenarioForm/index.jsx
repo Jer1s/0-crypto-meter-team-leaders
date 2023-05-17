@@ -98,18 +98,18 @@ const CoinScenarioForm = () => {
             <BuyPriceInput buyPrice={buyPrice} setBuyPrice={setBuyPrice} />
             {currencyUnit === '원' ? (
               <div css={addPriceButtonContainerStyle}>
-                <AddPriceButton value={5000} />
-                <AddPriceButton value={10000} />
-                <AddPriceButton value={50000} />
-                <AddPriceButton value={100000} />
+                <AddPriceButton value={5000} onBuyPrice={setBuyPrice} />
+                <AddPriceButton value={10000} onBuyPrice={setBuyPrice} />
+                <AddPriceButton value={50000} onBuyPrice={setBuyPrice} />
+                <AddPriceButton value={100000} onBuyPrice={setBuyPrice} />
               </div>
             ) : (
               <div css={addPriceButtonContainerStyle}>
-                <AddPriceButton value={10000} />
-                <AddPriceButton value={50000} />
-                <AddPriceButton value={100000} />
-                <AddPriceButton value={500000} />
-                <AddPriceButton value={1000000} />
+                <AddPriceButton value={10000} onBuyPrice={setBuyPrice} />
+                <AddPriceButton value={50000} onBuyPrice={setBuyPrice} />
+                <AddPriceButton value={100000} onBuyPrice={setBuyPrice} />
+                <AddPriceButton value={500000} onBuyPrice={setBuyPrice} />
+                <AddPriceButton value={1000000} onBuyPrice={setBuyPrice} />
               </div>
             )}
           </div>
