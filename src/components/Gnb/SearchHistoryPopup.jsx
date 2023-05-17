@@ -42,9 +42,10 @@ const historyHeaderStyle = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 2rem 0 1.7rem;
-  width: 46.4rem;
-  height: 2.4rem;
+  border-bottom: 0.1rem solid var(--gray8);
+  padding: 2rem 2.4rem 1.7rem;
+  width: 100%;
+  height: 6.4rem;
 
   & > h2 {
     font-size: 2rem;
@@ -56,8 +57,8 @@ const historyHeaderStyle = css`
   }
 
   @media (max-width: 767px) {
-  width: 30rem;
-  height: 2.2rem;
+  padding-top: 2rem;
+  height: 5.8rem;
 
     & > h2 {
       font-size: 1.8rem;
@@ -133,12 +134,6 @@ const scenarioResultStyle = css`
   }
 `;
 
-const headerHrStyle = css`
-  margin: 0;
-  border: 0.1rem solid var(--gray8);
-  width: 100%;
-`;
-
 const symoblContainer = css`
   display: flex;
   flex-direction: column;
@@ -176,7 +171,6 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
         <h2>검색 기록</h2>
         <button type="button" onClick={resetSearchHistory}>기록 모두 지우기</button>
       </div>
-      <hr css={headerHrStyle} />
       <div css={historyItemsStyle}>
         {searchHistory.map((item) => {
           const {
