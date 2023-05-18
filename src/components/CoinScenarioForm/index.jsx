@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
-import scenarioInputAtom from 'recoils/scenarioData/scenarioInputAtom';
+import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import { BASE_CURRENCY, INITAIL_BITCOIN } from 'utils/constants';
 import DateInput from './DateInput';
@@ -53,7 +53,7 @@ const addPriceButtonContainerStyle = css`
 `;
 
 const CoinScenarioForm = () => {
-  const setScenarioData = useSetRecoilState(scenarioInputAtom);
+  const setScenarioData = useSetRecoilState(scenarioDataAtom);
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const [selectedDate, setSelectedDate] = useState(null);
   const [buyPrice, setBuyPrice] = useState(0);
@@ -70,14 +70,17 @@ const CoinScenarioForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setScenarioData({
-      date: {
-        year,
-        month,
-        day,
+      input: {
+        date: { year, month, day },
+        price: buyPrice,
+        cryptoId: selectedCoin.id,
+        image: selectedCoin.image,
       },
-      price: buyPrice,
-      coinType: { id: selectedCoin.id, name: selectedCoin.name },
-
+      output: {
+        outputPrice: 10000,
+        isSkyrocketed: true,
+        outputDate: { year: 2023, month: 5, day: 19 },
+      },
     });
     // const url = '';
     // const { data, loading, error } = useFetch(url);

@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import useFormattedPrice from 'hooks/useFormattedPrice';
 import { useRecoilValue } from 'recoil';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
-import scenarioOutputAtom from 'recoils/scenarioData/scenarioOutputAtom';
+import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 
 const ScenarioDescriptionStyle = css`
   margin-top: 4.8rem;
@@ -34,11 +34,10 @@ const currentDateStyle = css`
 
 const CoinScenarioResult = () => {
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
-  const data = useRecoilValue(scenarioOutputAtom);
-  const { userInputData, calculatedData } = data;
-  const { date, price } = userInputData;
-  const { calculatedPrice, isSkyrocketed, calculatedDate } = calculatedData;
-  const func = useFormattedPrice(calculatedPrice);
+  const scenarioData = useRecoilValue(scenarioDataAtom);
+  const { date, price } = scenarioData.input;
+  const { outputPrice, isSkyrocketed, outputDate } = scenarioData.output;
+  const func = useFormattedPrice();
 
   // const getCurrentDate = () => {
   //   const today = new Date();
@@ -61,11 +60,11 @@ const CoinScenarioResult = () => {
       </p>
       <p css={resultStyle}>
         <span css={currentPriceStyle({ isSkyrocketed })}>
-          {func(calculatedPrice)}
+          {func(outputPrice)}
         </span>
         입니다.
       </p>
-      <p css={currentDateStyle}>{`(${calculatedDate.year}년 ${calculatedDate.month}월 ${calculatedDate.day}일 오전 ${calculatedDate.hour}시 기준)`}</p>
+      <p css={currentDateStyle}>{`(${outputDate.year}년 ${outputDate.month}월 ${outputDate.day}일 오전 ${outputDate.hour}시 기준)`}</p>
     </>
   );
 };
