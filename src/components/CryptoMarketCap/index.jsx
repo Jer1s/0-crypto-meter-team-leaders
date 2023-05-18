@@ -21,7 +21,7 @@ const bodyStyle = css`
 `;
 
 const CryptoMarketCap = () => {
-  const [order, setOrder] = useState('');
+  const [order, setOrder] = useState('marketCap');
   const [cryptoList, setCryptoList] = useState([]);
 
   const sortedCryptoList = cryptoList.sort((a, b) => {
@@ -54,10 +54,10 @@ const CryptoMarketCap = () => {
 
   const clickHandlers = {
     marketCapRankSort: () => {
-      if (order === '') {
-        // setOrder(order.reverse());
+      if (order === 'marketCapAscend') {
+        setOrder('marketCapAscend');
       } else {
-        setOrder('');
+        setOrder('marketCap');
       }
     },
     nameSort: () => {
