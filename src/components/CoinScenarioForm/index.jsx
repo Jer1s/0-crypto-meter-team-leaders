@@ -63,6 +63,10 @@ const CoinScenarioForm = () => {
     ? [selectedDate.getFullYear(), selectedDate.getMonth() + 1, selectedDate.getDate()]
     : [0, 0, 0];
 
+  const addButtonData = localeCurrency === BASE_CURRENCY
+    ? [5000, 10000, 50000, 100000]
+    : [10000, 50000, 100000, 500000, 1000000];
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setScenarioData({
@@ -93,22 +97,11 @@ const CoinScenarioForm = () => {
           <DateInput selectedDate={selectedDate} onSelectedDate={setSelectedDate} />
           <div css={buyPriceInputStyle}>
             <BuyPriceInput buyPrice={buyPrice} setBuyPrice={setBuyPrice} />
-            {localeCurrency === BASE_CURRENCY ? (
-              <div css={addPriceButtonContainerStyle}>
-                <AddPriceButton value={5000} onBuyPrice={setBuyPrice} />
-                <AddPriceButton value={10000} onBuyPrice={setBuyPrice} />
-                <AddPriceButton value={50000} onBuyPrice={setBuyPrice} />
-                <AddPriceButton value={100000} onBuyPrice={setBuyPrice} />
-              </div>
-            ) : (
-              <div css={addPriceButtonContainerStyle}>
-                <AddPriceButton value={10000} onBuyPrice={setBuyPrice} />
-                <AddPriceButton value={50000} onBuyPrice={setBuyPrice} />
-                <AddPriceButton value={100000} onBuyPrice={setBuyPrice} />
-                <AddPriceButton value={500000} onBuyPrice={setBuyPrice} />
-                <AddPriceButton value={1000000} onBuyPrice={setBuyPrice} />
-              </div>
-            )}
+            <div css={addPriceButtonContainerStyle}>
+              {addButtonData.map((value) => {
+                return <AddPriceButton key={value} value={value} onBuyPrice={setBuyPrice} />;
+              })}
+            </div>
           </div>
           <CoinTypeDropDown selectedCoin={selectedCoin} onCoinSelect={setSelectedCoin} />
         </div>
