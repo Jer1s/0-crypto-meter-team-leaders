@@ -4,7 +4,8 @@ import useFormattedPrice from 'hooks/useFormattedPrice';
 import PropTypes from 'prop-types';
 import orderNone from 'assets/order-none.svg';
 import orderAscending from 'assets/order-ascending.svg';
-// import orderDesending from 'assets/order-desending.svg';
+import orderDesending from 'assets/order-desending.svg';
+import { useEffect, useState } from 'react';
 import PriceChangeChip from './PriceChangeChip';
 
 const listStyle = css`
@@ -88,55 +89,120 @@ const imageStyle = css`
 
 const CryptoMarketCapList = ({ cryptoList, clickHandlers, order }) => {
   const formatPrice = useFormattedPrice(true);
+  const [srcList, setSrcList] = useState([
+    orderAscending,
+    orderNone,
+    orderNone,
+    orderNone,
+    orderNone,
+    orderNone,
+    orderNone,
+    orderNone,
+  ]);
+
+  useEffect(() => {
+    const updatedSrcList = [];
+
+    if (order === 'marketCapRank') {
+      updatedSrcList.push(orderAscending);
+    } else {
+      updatedSrcList.push(order === 'marketCapRankAscend' ? orderDesending : orderNone);
+    }
+
+    if (order === 'name') {
+      updatedSrcList.push(orderDesending);
+    } else {
+      updatedSrcList.push(order === 'nameAscend' ? orderAscending : orderNone);
+    }
+
+    if (order === 'currentPrice') {
+      updatedSrcList.push(orderDesending);
+    } else {
+      updatedSrcList.push(order === 'currentPriceAscend' ? orderAscending : orderNone);
+    }
+
+    if (order === 'marketCap') {
+      updatedSrcList.push(orderDesending);
+    } else {
+      updatedSrcList.push(order === 'marketCapAscend' ? orderAscending : orderNone);
+    }
+
+    if (order === 'totalVolume') {
+      updatedSrcList.push(orderDesending);
+    } else {
+      updatedSrcList.push(order === 'totalVolumeAscend' ? orderAscending : orderNone);
+    }
+
+    if (order === 'pc1h') {
+      updatedSrcList.push(orderDesending);
+    } else {
+      updatedSrcList.push(order === 'pc1hAscend' ? orderAscending : orderNone);
+    }
+
+    if (order === 'pc24h') {
+      updatedSrcList.push(orderDesending);
+    } else {
+      updatedSrcList.push(order === 'pc24hAscend' ? orderAscending : orderNone);
+    }
+
+    if (order === 'pc7d') {
+      updatedSrcList.push(orderDesending);
+    } else {
+      updatedSrcList.push(order === 'pc7dAscend' ? orderAscending : orderNone);
+    }
+
+    setSrcList(updatedSrcList);
+  }, [order]);
+
   return (
     <ul css={listStyle}>
       <li css={headerStyle}>
         <div css={headerItemStyle}>
-          #
           <button type="button" onClick={clickHandlers.marketCapRankSort} css={buttonStyle}>
-            <img src={orderAscending} alt="Ascending Order" />
+            #
+            <img src={srcList[0]} alt="Order" />
           </button>
         </div>
         <div css={headerItemStyle}>
-          화폐 이름
           <button type="button" onClick={clickHandlers.nameSort} css={buttonStyle}>
-            <img src={orderNone} alt="None Order" />
+            화폐 이름
+            <img src={srcList[1]} alt="Order" />
           </button>
         </div>
         <div css={headerItemStyle}>
-          가격
           <button type="button" onClick={clickHandlers.currentPriceSort} css={buttonStyle}>
-            <img src={orderNone} alt="None Order" />
+            가격
+            <img src={srcList[2]} alt="Order" />
           </button>
         </div>
         <div css={headerItemStyle}>
-          총 시가
           <button type="button" onClick={clickHandlers.marketCapSort} css={buttonStyle}>
-            <img src={orderNone} alt="None Order" />
+            총 시가
+            <img src={srcList[3]} alt="Order" />
           </button>
         </div>
         <div css={headerItemStyle}>
-          24시간 거래량
           <button type="button" onClick={clickHandlers.totalVolumeSort} css={buttonStyle}>
-            <img src={orderNone} alt="None Order" />
+            24시간 거래량
+            <img src={srcList[4]} alt="Order" />
           </button>
         </div>
         <div css={headerItemStyle}>
-          1시간 변동폭
           <button type="button" onClick={clickHandlers.pc1hSort} css={buttonStyle}>
-            <img src={orderNone} alt="None Order" />
+            1시간 변동폭
+            <img src={srcList[5]} alt="Order" />
           </button>
         </div>
         <div css={headerItemStyle}>
-          24시간 변동폭
           <button type="button" onClick={clickHandlers.pc24hSort} css={buttonStyle}>
-            <img src={orderNone} alt="None Order" />
+            24시간 변동폭
+            <img src={srcList[6]} alt="Order" />
           </button>
         </div>
         <div css={headerItemStyle}>
-          7일 변동폭
           <button type="button" onClick={clickHandlers.pc7dSort} css={buttonStyle}>
-            <img src={orderNone} alt="None Order" />
+            7일 변동폭
+            <img src={srcList[7]} alt="Order" />
           </button>
         </div>
       </li>
