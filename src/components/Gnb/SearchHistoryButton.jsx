@@ -10,7 +10,7 @@ const containerStyle = css`
 `;
 
 const activeButtonStyle = css`
-  background-color: var(--active-button-background);
+  background-color: var(--primary-light);
   color: var(--primary);
   border-color: var(--primary);
 `;

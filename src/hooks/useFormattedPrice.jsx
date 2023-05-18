@@ -3,7 +3,7 @@ import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import localeCurrencySelector from 'recoils/localeCurrency/localeCurrencySelector';
 import currencyConverter from 'utils/currencyConverter';
 
-const useFormattedPrice = () => {
+const useFormattedPrice = (ignoreException) => {
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const { currencyUnit, currencySign } = useRecoilValue(localeCurrencySelector);
 
@@ -11,7 +11,7 @@ const useFormattedPrice = () => {
     const convertedPrice = currencyConverter(price, localeCurrency);
     const formattedPrice = convertedPrice.toLocaleString();
 
-    if (localeCurrency === 'KRW') {
+    if (!ignoreException && localeCurrency === 'KRW') {
       return `${formattedPrice}${currencyUnit}`;
     }
 

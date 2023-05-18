@@ -1,3 +1,6 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+import { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import facebook from 'assets/facebook.svg';
 import share from 'assets/share.svg';
@@ -45,18 +48,78 @@ const SocialIconGroup = styled.div`
   }
 `;
 
+const toolTipStyle = css`
+  background-color: var(--gray3);
+  border: var(--gray3) solid 0.1rem;
+  border-radius: 0.5rem;
+  color: var(--white);
+  font-size: 1.2rem;
+  font-weight: 500;
+  height: auto;
+  letter-spacing: -0.025rem;
+  margin-top: 0.68rem;
+  padding: 0.8rem 1.1rem;
+  position: absolute;
+  z-index: 1
+  width: 7rem;
+  height: 3rem;
+  text-align: center;
+
+  &:after {
+  border-color: var(--gray3) transparent;
+  border-style: solid;
+  border-width: 0 0.6rem 0.8rem 0.65rem;
+  content: '';
+  display: block;
+  left: 0.55rem;
+  position: absolute;
+  top: -0.7rem;
+  width: 0;
+  z-index: 1;
+}
+
+  &:before {
+  border-color: var(--gray3) transparent;
+  border-style: solid;
+  border-width: 0 0.6rem 0.8rem 0.65rem;
+  content: '';
+  display: block;
+  left: 0.5rem;
+  position: absolute;
+  top: -0.7rem;
+  width: 0;
+  z-index: 0;
+}
+`;
+
 const Button = styled.button`
+  position: relative;
   border: nonde;
 `;
 
 const CoinDetails = () => {
+  const [isCopy, setisCopy] = useState(false);
+
   const handleCopyClipBoard = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
-      // alert('클립보드에 링크가 복사되었습니다.');
+      setisCopy(true);
     } catch (e) {
-      // alert('복사에 실패하였습니다');
+      console.log(e);
     }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setisCopy(false);
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [isCopy]);
+
+  const shareFacebook = () => {
+    window.open('https://www.facebook.com/sharer/sharer.php?u=https://naver.com/');
   };
 
   return (
@@ -68,8 +131,13 @@ const CoinDetails = () => {
         </CoinInfo>
         <SocialIconGroup>
           {/* <KakaoShareButton /> */}
-          <img src={facebook} alt="Facebook Icon" />
-          <Button type="button" onClick={handleCopyClipBoard}><img src={share} alt="Link Copy Icon" /></Button>
+          <Button type="button" onClick={shareFacebook}>
+            <img src={facebook} alt="Facebook Icon" />
+          </Button>
+          <Button type="button" onClick={handleCopyClipBoard}>
+            <img src={share} alt="Link Copy Icon" />
+            {isCopy && <div css={toolTipStyle}>복사완료</div>}
+          </Button>
         </SocialIconGroup>
       </div>
       <div key="bodyContent">
