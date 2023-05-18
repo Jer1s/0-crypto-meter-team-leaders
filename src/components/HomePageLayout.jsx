@@ -11,8 +11,10 @@ const sidebarStyle = css`
 const mainStyle = css`
   box-sizing: content-box;
   padding: 1.2rem 3.6rem 1.2rem 50.5rem;
-  margin: 0 auto;
+  margin: 0;
+  margin-right: auto;
   width: calc(100vw - 56rem);
+  max-width: 136rem;
 `;
 
 const HomePageLayout = ({ children }) => {
