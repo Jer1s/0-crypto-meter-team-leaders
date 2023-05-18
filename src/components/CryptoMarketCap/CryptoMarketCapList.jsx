@@ -93,7 +93,7 @@ const CryptoMarketCapList = ({ cryptoList, clickHandlers, order }) => {
       <li css={headerStyle}>
         <div css={headerItemStyle}>
           #
-          <button type="button" onClick={clickHandlers.marketCapSort} css={buttonStyle}>
+          <button type="button" onClick={clickHandlers.marketCapRankSort} css={buttonStyle}>
             <img src={orderAscending} alt="Ascending Order" />
           </button>
         </div>
