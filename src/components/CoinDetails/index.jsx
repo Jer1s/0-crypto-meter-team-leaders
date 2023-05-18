@@ -10,7 +10,6 @@ import { useRecoilValue } from 'recoil';
 import scenarioOutputAtom from 'recoils/scenarioData/scenarioOutputAtom';
 import CoinChart from './CoinChart';
 import KakaoShareButton from './KakaoShareButton';
-import scenarioData from './mock';
 
 const CoinInfo = styled.div`
   display: flex;

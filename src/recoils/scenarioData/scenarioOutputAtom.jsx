@@ -12,7 +12,7 @@ const scenarioOutputAtom = atom({
     calculatedData: {
       // 사용자 입력 가격 / 현재 코인 가격 = 유저가 구매한 코인 개수
       // 유저가 구매한 코인 개수 * api 요청을 통한 실시간 코인 가격 = calcaulatedPrice
-      calculatedPrice: '31,565.74',
+      calculatedPrice: 3156574,
       isSkyrocketed: true,
       // 오늘 날짜
       calculatedDate: {

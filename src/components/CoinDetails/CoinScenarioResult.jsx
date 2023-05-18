@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import useFormattedPrice from 'hooks/useFormattedPrice';
 import { useRecoilValue } from 'recoil';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import scenarioOutputAtom from 'recoils/scenarioData/scenarioOutputAtom';
@@ -37,6 +38,7 @@ const CoinScenarioResult = () => {
   const { userInputData, calculatedData } = data;
   const { date, price } = userInputData;
   const { calculatedPrice, isSkyrocketed, calculatedDate } = calculatedData;
+  const func = useFormattedPrice(calculatedPrice);
 
   // const getCurrentDate = () => {
   //   const today = new Date();
@@ -55,12 +57,11 @@ const CoinScenarioResult = () => {
   return (
     <>
       <p css={ScenarioDescriptionStyle}>
-        {`${date.year}년 ${date.month}월 ${date.day}일에 ${price}원으로 샀다면 오늘`}
+        {`${date.year}년 ${date.month}월 ${date.day}일에 ${func(price)}으로 샀다면 오늘`}
       </p>
       <p css={resultStyle}>
         <span css={currentPriceStyle({ isSkyrocketed })}>
-          {calculatedPrice}
-          원
+          {func(calculatedPrice)}
         </span>
         입니다.
       </p>
