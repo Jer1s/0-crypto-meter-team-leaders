@@ -13,12 +13,12 @@ const buttonStyle = css`
 `;
 
 const AddPriceButton = ({ value, onBuyPrice }) => {
-  const formattedPrice = useFormattedPrice();
+  const formatPrice = useFormattedPrice();
   const handleClickPlusPrice = () => {
     onBuyPrice((prev) => { return prev + value; });
   };
   return (
-    <button type="button" css={buttonStyle} onClick={handleClickPlusPrice}>{formattedPrice(value)}</button>
+    <button type="button" css={buttonStyle} onClick={handleClickPlusPrice}>{formatPrice(value)}</button>
   );
 };
 

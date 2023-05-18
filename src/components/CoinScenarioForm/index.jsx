@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { css } from '@emotion/react';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import scenarioInputAtom from 'recoils/scenarioData/scenarioInputAtom';
-import localeCurrencySelector from 'recoils/localeCurrency/localeCurrencySelector';
+import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
+import { BASE_CURRENCY, INITAIL_BITCOIN } from 'utils/constants';
 import DateInput from './DateInput';
 import BuyPriceInput from './BuyPriceInput';
 import CoinTypeDropDown from './CoinTypeDropDown';
@@ -24,11 +25,11 @@ const containerStyle = css`
 `;
 
 const submitButtonStyle = css`
-  width: 365px;
-  height: 64px;
+  width: 36.5rem;
+  height: 6.4rem;
 
   background: var(--white);
-  border-radius: 35px;
+  border-radius: 3.5rem;
 `;
 
 const inputContainerStyle = css`
@@ -53,14 +54,10 @@ const addPriceButtonContainerStyle = css`
 
 const CoinScenarioForm = () => {
   const setScenarioData = useSetRecoilState(scenarioInputAtom);
-  const { currencyUnit } = useRecoilValue(localeCurrencySelector);
+  const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const [selectedDate, setSelectedDate] = useState(null);
   const [buyPrice, setBuyPrice] = useState(0);
-  const [selectedCoin, setSelectedCoin] = useState({
-    id: 'bitcoin',
-    name: 'Bitcoin',
-    image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
-  });
+  const [selectedCoin, setSelectedCoin] = useState(INITAIL_BITCOIN);
 
   const [year, month, day] = selectedDate
     ? [selectedDate.getFullYear(), selectedDate.getMonth() + 1, selectedDate.getDate()]
@@ -96,7 +93,7 @@ const CoinScenarioForm = () => {
           <DateInput selectedDate={selectedDate} onSelectedDate={setSelectedDate} />
           <div css={buyPriceInputStyle}>
             <BuyPriceInput buyPrice={buyPrice} setBuyPrice={setBuyPrice} />
-            {currencyUnit === '원' ? (
+            {localeCurrency === BASE_CURRENCY ? (
               <div css={addPriceButtonContainerStyle}>
                 <AddPriceButton value={5000} onBuyPrice={setBuyPrice} />
                 <AddPriceButton value={10000} onBuyPrice={setBuyPrice} />
@@ -115,7 +112,7 @@ const CoinScenarioForm = () => {
           </div>
           <CoinTypeDropDown selectedCoin={selectedCoin} onCoinSelect={setSelectedCoin} />
         </div>
-        <button type="submit" css={submitButtonStyle}>오늘 얼마가 되었을까?</button>
+        <button type="submit" css={submitButtonStyle} onClick={handleSubmit}>오늘 얼마가 되었을까?</button>
       </form>
     </div>
   );

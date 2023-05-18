@@ -6,6 +6,9 @@ import useFormattedPrice from 'hooks/useFormattedPrice';
 
 const h1Style = css`
   color : var(--gray5);
+  margin : 0;
+  display: grid;
+  gap: 0.7rem;
   span {
     color: var(--white);
   }
@@ -14,34 +17,26 @@ const h1Style = css`
 const ScenarioDescription = ({
   year, month, day, selectedCoin, price,
 }) => {
-  const formattedPrice = useFormattedPrice();
+  const formatPrice = useFormattedPrice();
   // const price = inputRef.current ? inputRef.current.value : 0
 
   return (
     <h1 css={h1Style}>
-      내가 만약
-      {' '}
-      <br />
+      <div>
+        내가 만약
+      </div>
       <span>
-        {year}
-        년
-        {' '}
-        {month}
-        월
-        {' '}
-        {day}
-        일
+        {`${year}년 ${month}월 ${day}일에`}
       </span>
-      에
-      {' '}
-      <br />
-      <span>{formattedPrice(price)}</span>
-      으로
-      {' '}
-      <br />
-      <span>{selectedCoin.name}</span>
-      을 샀다면,
 
+      <div>
+        <span>{formatPrice(price)}</span>
+        으로
+      </div>
+      <div>
+        <span>{selectedCoin.name}</span>
+        을 샀다면,
+      </div>
     </h1>
   );
 };
