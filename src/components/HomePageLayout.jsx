@@ -19,7 +19,7 @@ const sidebarStyle = css`
 
 const mainStyle = css`
   box-sizing: content-box;
-  padding: 1.2rem 3.6rem 1.2rem 50.5rem;
+  padding: 0 3.6rem 2.4rem 50.5rem;
   margin: 0 auto;
   width: calc(100vw - 56rem);
   max-width: 136rem;
