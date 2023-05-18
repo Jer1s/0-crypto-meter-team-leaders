@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import moment from 'moment';
 import {
   AreaChart,
-  ResponsiveContainer,
   XAxis,
   YAxis,
   Tooltip,

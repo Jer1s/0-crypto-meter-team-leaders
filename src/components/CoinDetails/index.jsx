@@ -59,6 +59,10 @@ const CoinDetails = () => {
     }
   };
 
+  const shareFacebook = () => {
+    window.open('https://www.facebook.com/sharer/sharer.php?u=https://naver.com/');
+  };
+
   return (
     <MainContainer>
       <div key="headerContent">
@@ -68,8 +72,12 @@ const CoinDetails = () => {
         </CoinInfo>
         <SocialIconGroup>
           {/* <KakaoShareButton /> */}
-          <img src={facebook} alt="Facebook Icon" />
-          <Button type="button" onClick={handleCopyClipBoard}><img src={share} alt="Link Copy Icon" /></Button>
+          <Button type="button" onClick={shareFacebook}>
+            <img src={facebook} alt="Facebook Icon" />
+          </Button>
+          <Button type="button" onClick={handleCopyClipBoard}>
+            <img src={share} alt="Link Copy Icon" />
+          </Button>
         </SocialIconGroup>
       </div>
       <div key="bodyContent">
