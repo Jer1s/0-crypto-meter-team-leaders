@@ -86,73 +86,69 @@ const imageStyle = css`
   height: 3rem;
 `;
 
-const CryptoMarketCapList = ({ cryptoList }) => {
+const CryptoMarketCapList = ({ cryptoList, clickHandlers, order }) => {
   const formatPrice = useFormattedPrice(true);
-
-  const handleClick = () => {
-    return null;
-  };
-
+  // const formattedPriceChange = Number(c).toFixed(2);
   return (
     <ul css={listStyle}>
       <li css={headerStyle}>
         <div css={headerItemStyle}>
           #
-          <button type="button" onClick={handleClick} css={buttonStyle}>
+          <button type="button" onClick={clickHandlers.marketCapRankSort} css={buttonStyle}>
             <img src={orderAscending} alt="Ascending Order" />
           </button>
         </div>
         <div css={headerItemStyle}>
           화폐 이름
-          <button type="button" onClick={handleClick} css={buttonStyle}>
+          <button type="button" onClick={clickHandlers.nameSort} css={buttonStyle}>
             <img src={orderNone} alt="None Order" />
           </button>
         </div>
         <div css={headerItemStyle}>
           가격
-          <button type="button" onClick={handleClick} css={buttonStyle}>
+          <button type="button" onClick={clickHandlers.currentPriceSort} css={buttonStyle}>
             <img src={orderNone} alt="None Order" />
           </button>
         </div>
         <div css={headerItemStyle}>
           총 시가
-          <button type="button" onClick={handleClick} css={buttonStyle}>
+          <button type="button" onClick={clickHandlers.marketCapSort} css={buttonStyle}>
             <img src={orderNone} alt="None Order" />
           </button>
         </div>
         <div css={headerItemStyle}>
           24시간 거래량
-          <button type="button" onClick={handleClick} css={buttonStyle}>
+          <button type="button" onClick={clickHandlers.pc1hSort} css={buttonStyle}>
             <img src={orderNone} alt="None Order" />
           </button>
         </div>
         <div css={headerItemStyle}>
           1시간 변동폭
-          <button type="button" onClick={handleClick} css={buttonStyle}>
+          <button type="button" onClick={clickHandlers.currentPriceSort} css={buttonStyle}>
             <img src={orderNone} alt="None Order" />
           </button>
         </div>
         <div css={headerItemStyle}>
           24시간 변동폭
-          <button type="button" onClick={handleClick} css={buttonStyle}>
+          <button type="button" onClick={clickHandlers.pc24hSort} css={buttonStyle}>
             <img src={orderNone} alt="None Order" />
           </button>
         </div>
         <div css={headerItemStyle}>
           7일 변동폭
-          <button type="button" onClick={handleClick} css={buttonStyle}>
+          <button type="button" onClick={clickHandlers.pc7dSort} css={buttonStyle}>
             <img src={orderNone} alt="None Order" />
           </button>
         </div>
       </li>
-      {cryptoList.map((item, index) => {
+      {cryptoList.map((item) => {
         const currentPrice = formatPrice(item.currentPrice);
         const marketCap = formatPrice(item.marketCap);
         const totalVolume = formatPrice(item.totalVolume);
         const volumePerPrice = item.volumePerPrice.toLocaleString();
         return (
           <li key={item.id} css={itemStyle}>
-            <div>{index + 1}</div>
+            <div>{item.marketCapRank}</div>
             <div>
               <img src={item.image} alt={`${item.id} Symbol`} css={imageStyle} />
               <div>
@@ -196,6 +192,8 @@ CryptoMarketCapList.propTypes = {
   cryptoList: PropTypes.arrayOf(
     Object,
   ),
+  clickHandlers: PropTypes.objectOf(PropTypes.func).isRequired,
+  order: PropTypes.string.isRequired,
 };
 
 export default CryptoMarketCapList;

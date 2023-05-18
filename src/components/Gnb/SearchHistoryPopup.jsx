@@ -17,6 +17,7 @@ const popupStyle = css`
   flex-direction: column;
   overflow-x: hidden;
   overflow-y: auto;
+  overflow-y: overlay;  // safari, operaAndroid, safarionIos 미지원이지만 크게 상관 없는 부분
   position: absolute;
   top: 7.2rem;
   right: 6rem;
@@ -82,11 +83,9 @@ const historyItemStyle = css`
   padding: 2rem 2.4rem;
   width: 47.2rem;
   height: 8.1rem;
-
   cursor: pointer;
   border: 0;
   text-align: start;
-  width: 100%;
 
   @media (hover: hover) {
     &:hover {
