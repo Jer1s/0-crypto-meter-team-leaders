@@ -27,6 +27,10 @@ const currentPriceStyle = ({ isSkyrocketed }) => {
   `;
 };
 
+const zeroStyle = css`
+  color: var(--gray5);
+`;
+
 const currentDateStyle = css`
   color: var(--gray4);
   margin: 0;
@@ -59,7 +63,7 @@ const CoinScenarioResult = () => {
         {`${date.year}년 ${date.month}월 ${date.day}일에 ${func(price)}으로 샀다면 오늘`}
       </p>
       <p css={resultStyle}>
-        <span css={currentPriceStyle({ isSkyrocketed })}>
+        <span css={[currentPriceStyle({ isSkyrocketed }), (outputPrice === 0) && zeroStyle]}>
           {func(outputPrice)}
         </span>
         입니다.
