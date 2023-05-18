@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
-import { BASE_CURRENCY, INITAIL_BITCOIN } from 'utils/constants';
+import { BASE_CURRENCY, INITIAL_CRYPTO } from 'utils/constants';
 import DateInput from './DateInput';
 import BuyPriceInput from './BuyPriceInput';
 import CoinTypeDropDown from './CoinTypeDropDown';
@@ -57,7 +57,7 @@ const CoinScenarioForm = () => {
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const [selectedDate, setSelectedDate] = useState(null);
   const [buyPrice, setBuyPrice] = useState(0);
-  const [selectedCoin, setSelectedCoin] = useState(INITAIL_BITCOIN);
+  const [selectedCoin, setSelectedCoin] = useState(INITIAL_CRYPTO);
 
   const [year, month, day] = selectedDate
     ? [selectedDate.getFullYear(), selectedDate.getMonth() + 1, selectedDate.getDate()]
