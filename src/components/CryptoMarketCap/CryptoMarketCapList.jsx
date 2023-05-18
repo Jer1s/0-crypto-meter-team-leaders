@@ -88,7 +88,6 @@ const imageStyle = css`
 
 const CryptoMarketCapList = ({ cryptoList, clickHandlers, order }) => {
   const formatPrice = useFormattedPrice(true);
-  // const formattedPriceChange = Number(c).toFixed(2);
   return (
     <ul css={listStyle}>
       <li css={headerStyle}>
@@ -118,13 +117,13 @@ const CryptoMarketCapList = ({ cryptoList, clickHandlers, order }) => {
         </div>
         <div css={headerItemStyle}>
           24시간 거래량
-          <button type="button" onClick={clickHandlers.pc1hSort} css={buttonStyle}>
+          <button type="button" onClick={clickHandlers.totalVolumeSort} css={buttonStyle}>
             <img src={orderNone} alt="None Order" />
           </button>
         </div>
         <div css={headerItemStyle}>
           1시간 변동폭
-          <button type="button" onClick={clickHandlers.currentPriceSort} css={buttonStyle}>
+          <button type="button" onClick={clickHandlers.pc1hSort} css={buttonStyle}>
             <img src={orderNone} alt="None Order" />
           </button>
         </div>
@@ -147,7 +146,7 @@ const CryptoMarketCapList = ({ cryptoList, clickHandlers, order }) => {
         const totalVolume = formatPrice(item.totalVolume);
         const volumePerPrice = item.volumePerPrice.toLocaleString();
         return (
-          <li key={item.id} css={itemStyle}>
+          <li key={item.marketCapRank} css={itemStyle}>
             <div>{item.marketCapRank}</div>
             <div>
               <img src={item.image} alt={`${item.id} Symbol`} css={imageStyle} />
