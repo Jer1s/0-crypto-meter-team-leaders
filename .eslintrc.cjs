@@ -14,7 +14,7 @@ module.exports = {
     sourceType: 'module',
   },
   settings: { react: { version: '18.2' } },
-  plugins: ['react', 'react-hooks', 'react-refresh', 'jsx-a11y'],
+  plugins: ['react', 'react-hooks', 'react-refresh', 'jsx-a11y', '@emotion'],
   rules: {
     'react-refresh/only-export-components': 'warn',
     'react/function-component-definition': [
@@ -34,5 +34,6 @@ module.exports = {
     'react/no-danger': 'off',
     'arrow-body-style': ['error', 'always'],
     'import/no-unresolved': 'off',
+    '@emotion/pkg-renaming': 'error',
   },
 };
