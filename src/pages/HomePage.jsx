@@ -1,17 +1,17 @@
 import HomePageMainLayout from 'components/HomePageMainLayout';
 import CoinDetails from 'components/CoinDetails';
 import CoinScenarioForm from 'components/CoinScenarioForm';
-import CryptoMarketCapList from 'components/CryptoMarketCapList';
+import CryptoMarketCap from 'components/CryptoMarketCap';
 import Gnb from 'components/Gnb';
 
 const HomePage = () => {
   return (
     <>
       <Gnb />
-      {/* <CoinScenarioForm /> */}
+      <CoinScenarioForm />
       <HomePageMainLayout>
         <CoinDetails />
-        <CryptoMarketCapList />
+        <CryptoMarketCap />
       </HomePageMainLayout>
     </>
   );

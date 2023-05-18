@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 const layoutStyle = css`
   display: flex;
   flex-direction: column;
+  align-items: center;
   flex-wrap: wrap;
   gap: 2.4rem;
 `;
