@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 const containerStyle = css`
   border-radius: 2.5rem;
   padding: 3.6rem 4.8rem 8rem;
-  max-width: 137.9rem;
   background-color: var(--white);
 `;
 

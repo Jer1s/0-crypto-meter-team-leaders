@@ -17,7 +17,6 @@ const headerStyle = css`
 `;
 
 const bodyStyle = css`
-  width: 125rem;
   margin-top: 1.6rem;
 `;
 
