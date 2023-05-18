@@ -3,7 +3,9 @@ import { Global, css } from '@emotion/react';
 const style = css`
   :root {
     --primary: #00A661;
+    --primary-light: #DAF1E5;
     --primary-red: #FD493D;
+    --primary-red-light: #F8EAE7;
     --primary-blue: #4C32ED;
     --black: #0B0E1B;
     --gray1: #161C2F;
