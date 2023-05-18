@@ -6,6 +6,7 @@ module.exports = {
     'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
     'airbnb',
+    'plugin:jsx-a11y/recommended',
   ],
   parserOptions: {
     ecmaFeatures: { jsx: true },
@@ -13,7 +14,7 @@ module.exports = {
     sourceType: 'module',
   },
   settings: { react: { version: '18.2' } },
-  plugins: ['react', 'react-hooks', 'react-refresh'],
+  plugins: ['react', 'react-hooks', 'react-refresh', 'jsx-a11y'],
   rules: {
     'react-refresh/only-export-components': 'warn',
     'react/function-component-definition': [
