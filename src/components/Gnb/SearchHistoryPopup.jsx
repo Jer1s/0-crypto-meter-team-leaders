@@ -5,7 +5,7 @@ import {
 } from 'recoil';
 import searchHistoryAtom from 'recoils/searchHistory/searchHistoryAtom';
 import useFormattedPrice from 'hooks/useFormattedPrice';
-import { COIN_NAME } from 'utils/constants';
+import { CRYPTO_NAME } from 'utils/constants';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import PropTypes from 'prop-types';
 import { navButtonStyle } from './navButtonStyle';
@@ -207,7 +207,7 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
               </div>
               <div css={scenarioResultStyle}>
                 <div>
-                  {`${COIN_NAME[cryptoId]}을 샀다면,`}
+                  {`${CRYPTO_NAME[cryptoId]}을 샀다면,`}
                 </div>
                 <div>
                   {`${outputYear}년 ${outputMonth}월 ${outputDay}일에는 `}

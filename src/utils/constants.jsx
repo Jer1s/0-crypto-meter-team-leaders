@@ -1,4 +1,4 @@
-export const COIN_NAME = Object.freeze({
+export const CRYPTO_NAME = Object.freeze({
   bitcoin: 'Bitcoin',
   dogecoin: 'Dogecoin',
   ethereum: '이더리움',
@@ -27,9 +27,8 @@ export const EXCHANGE_RATE = Object.freeze({
 
 export const BASE_CURRENCY = 'KRW';
 
-export const INITAIL_BITCOIN = {
+export const INITIAL_CRYPTO = Object.freeze({
   id: 'bitcoin',
   name: 'Bitcoin',
   image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
-
-};
+});
