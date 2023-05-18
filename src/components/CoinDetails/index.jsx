@@ -6,8 +6,11 @@ import facebook from 'assets/facebook.svg';
 import share from 'assets/share.svg';
 import MainContainer from 'components/MainContainer';
 import CoinScenarioResult from 'components/CoinDetails/CoinScenarioResult';
+import { useRecoilValue } from 'recoil';
+import scenarioOutputAtom from 'recoils/scenarioData/scenarioOutputAtom';
 import CoinChart from './CoinChart';
 import KakaoShareButton from './KakaoShareButton';
+import scenarioData from './mock';
 
 const CoinInfo = styled.div`
   display: flex;
@@ -99,6 +102,9 @@ const Button = styled.button`
 
 const CoinDetails = () => {
   const [isCopy, setisCopy] = useState(false);
+  const data = useRecoilValue(scenarioOutputAtom);
+  const { userInputData } = data;
+  const { coinType, image } = userInputData;
 
   const handleCopyClipBoard = async () => {
     try {
@@ -126,8 +132,8 @@ const CoinDetails = () => {
     <MainContainer>
       <div key="headerContent">
         <CoinInfo>
-          <img src={share} alt="Coin Icon" />
-          <p style={{ height: '3.1rem' }}>bitcoin</p>
+          <img src={image} alt="Coin Icon" />
+          <p style={{ height: '3.1rem' }}>{coinType}</p>
         </CoinInfo>
         <SocialIconGroup>
           {/* <KakaoShareButton /> */}

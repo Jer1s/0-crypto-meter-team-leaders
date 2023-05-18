@@ -19,6 +19,7 @@ const style = css`
     --background: #F5F8F9;
     --active-button-background: #DAF1E5;
     --stroke: #00a661;
+    --skyrocketed: #B9E7D0
   }
 
   * {

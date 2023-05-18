@@ -13,6 +13,8 @@ import {
 } from 'recharts';
 
 import useFetch from 'hooks/useFetch';
+import { useRecoilValue } from 'recoil';
+import scenarioOutputAtom from 'recoils/scenarioData/scenarioOutputAtom';
 import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 import bitcoin from './TermList/bitcoin';
 
@@ -69,6 +71,9 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const CoinChart = () => {
+  const data = useRecoilValue(scenarioOutputAtom);
+  const { calculatedData } = data;
+  const { isSkyrocketed } = calculatedData;
   const [selectedTerm, setSelectedTerm] = useState({ text: '전체', term: 'max' });
   // const [coinPriceList, setCoinPirceList] = useState([]);
   // const url = `https://api.coingecko.com/api/v3/coins/bitcoin/ohlc?vs_currency=krw&days=${selectedTerm.term}`;
@@ -131,8 +136,8 @@ const CoinChart = () => {
       >
         <defs>
           <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#B9E7D0" stopOpacity={1} />
-            <stop offset="95%" stopColor="#B9E7D0" stopOpacity={0} />
+            <stop offset="5%" stopColor={isSkyrocketed ? 'var(--skyrocketed}' : 'var(--primary-red'} stopOpacity={1} />
+            <stop offset="95%" stopColor={isSkyrocketed ? 'var(--skyrocketed}' : 'var(--primary-red'} stopOpacity={0} />
           </linearGradient>
         </defs>
         <CartesianGrid horizontal vertical={false} />
