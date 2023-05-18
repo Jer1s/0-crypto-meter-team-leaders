@@ -2,6 +2,9 @@
 import { css } from '@emotion/react';
 import useFormattedPrice from 'hooks/useFormattedPrice';
 import PropTypes from 'prop-types';
+import currencyConverter from 'utils/currencyConverter';
+import { useRecoilValue } from 'recoil';
+import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 
 const buttonStyle = css`
   padding : 0.6rem 1.2rem;
@@ -13,9 +16,10 @@ const buttonStyle = css`
 `;
 
 const AddPriceButton = ({ value, onBuyPrice }) => {
+  const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const formatPrice = useFormattedPrice();
   const handleClickPlusPrice = () => {
-    onBuyPrice((prev) => { return prev + value; });
+    onBuyPrice((prev) => { return prev + currencyConverter(value, localeCurrency); });
   };
   return (
     <button type="button" css={buttonStyle} onClick={handleClickPlusPrice}>{formatPrice(value)}</button>

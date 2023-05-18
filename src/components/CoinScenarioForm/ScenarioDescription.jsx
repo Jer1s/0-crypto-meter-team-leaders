@@ -3,6 +3,9 @@ import React from 'react';
 import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
 import useFormattedPrice from 'hooks/useFormattedPrice';
+import { BASE_CURRENCY, EXCHANGE_RATE } from 'utils/constants';
+import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
+import { useRecoilValue } from 'recoil';
 
 const h1Style = css`
   color : var(--gray5);
@@ -18,7 +21,9 @@ const ScenarioDescription = ({
   year, month, day, selectedCoin, price,
 }) => {
   const formatPrice = useFormattedPrice();
-  // const price = inputRef.current ? inputRef.current.value : 0
+  const localeCurrency = useRecoilValue(localeCurrencyAtom);
+  const convertedToKRW = localeCurrency === BASE_CURRENCY ? price : price / EXCHANGE_RATE[`${BASE_CURRENCY}TO${localeCurrency}`];
+  const formattedPrice = formatPrice(convertedToKRW);
 
   return (
     <h1 css={h1Style}>
@@ -30,7 +35,7 @@ const ScenarioDescription = ({
       </span>
 
       <div>
-        <span>{formatPrice(price)}</span>
+        <span>{formattedPrice}</span>
         으로
       </div>
       <div>
