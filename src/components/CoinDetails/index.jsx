@@ -60,7 +60,7 @@ const toolTipStyle = css`
   margin-top: 0.68rem;
   padding: 0.8rem 1.1rem;
   position: absolute;
-  z-index: 1
+  z-index: 1;
   width: 7rem;
   height: 3rem;
   text-align: center;

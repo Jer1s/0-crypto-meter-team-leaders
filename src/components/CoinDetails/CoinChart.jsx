@@ -164,7 +164,7 @@ const CoinChart = () => {
         <Area
           type="monotone"
           dataKey="price"
-          stroke="#00A661"
+          stroke="var(--stroke)"
           fill="url(#gradient)"
           fillOpacity={1}
         />

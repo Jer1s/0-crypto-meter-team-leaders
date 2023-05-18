@@ -18,6 +18,7 @@ const style = css`
     --white: #FFFFFF;
     --background: #F5F8F9;
     --active-button-background: #DAF1E5;
+    --stroke: #00a661;
   }
 
   * {
