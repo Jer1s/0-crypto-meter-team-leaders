@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-
 import { useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import {
   AreaChart,
@@ -63,7 +63,8 @@ const tooltipStyle = css`
    
 `;
 
-const CustomTooltip = ({ active, payload, label }) => {
+// eslint-disable-next-line consistent-return
+const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const { filteredDate, price } = payload[0].payload;
     return (
@@ -86,7 +87,7 @@ const CoinChart = () => {
   } else {
     viewportType = 4;
   }
-  console.log(viewportType);
+
   const data = useRecoilValue(scenarioOutputAtom);
   const { calculatedData } = data;
   const { isSkyrocketed } = calculatedData;
@@ -147,10 +148,12 @@ const CoinChart = () => {
             dataKey="date"
             tickSize={0}
             // dx={chartScaleInfo.dx}
+            // eslint-disable-next-line no-nested-ternary
             dx={viewportType === 'Desktop' ? 40 : viewportType === 'Tablet' ? 40 : 20}
             dy={10}
             axisLine={false}
             tickLine={false}
+            // eslint-disable-next-line no-nested-ternary
             tick={viewportType === 'Desktop' ? { fontSize: 14 } : viewportType === 'Tablet' ? { fontSize: 10 } : { fontSize: 8 }}
             interval={(convertCoinNestedArrayToObject?.length / viewportType) >> 0}
           />
@@ -176,6 +179,11 @@ const CoinChart = () => {
       </ResponsiveContainer>
     </div>
   );
+};
+
+CustomTooltip.propTypes = {
+  active: PropTypes.bool,
+  payload: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default CoinChart;

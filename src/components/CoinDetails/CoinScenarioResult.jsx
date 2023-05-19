@@ -2,7 +2,6 @@
 import { css } from '@emotion/react';
 import useFormattedPrice from 'hooks/useFormattedPrice';
 import { useRecoilValue } from 'recoil';
-import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import scenarioOutputAtom from 'recoils/scenarioData/scenarioOutputAtom';
 
 const ScenarioDescriptionStyle = css`
