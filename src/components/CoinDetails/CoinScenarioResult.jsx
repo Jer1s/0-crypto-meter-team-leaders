@@ -11,12 +11,20 @@ const ScenarioDescriptionStyle = css`
   line-height: 2.4rem;
   font-weight: 600;
   font-size: 1.8rem;
+
+  @media (max-width: 767px) {
+    font-size: 1.4rem;
+  }
 `;
 
 const resultStyle = css`
   font-weight: 700;
   font-size: 4.8rem;
   margin: 0 0 0.9rem;
+
+  @media (max-width: 767px) {
+    font-size: 3.2rem;
+  }
 `;
 
 const currentPriceStyle = ({ isSkyrocketed }) => {
@@ -33,26 +41,11 @@ const currentDateStyle = css`
 `;
 
 const CoinScenarioResult = () => {
-  const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const data = useRecoilValue(scenarioOutputAtom);
   const { userInputData, calculatedData } = data;
   const { date, price } = userInputData;
   const { calculatedPrice, isSkyrocketed, calculatedDate } = calculatedData;
   const func = useFormattedPrice(calculatedPrice);
-
-  // const getCurrentDate = () => {
-  //   const today = new Date();
-  //   const todayYear = today.getFullYear();
-  //   const todayMonth = today.getMonth() + 1;
-  //   const todayDay = today.getDate();
-
-  //   return `${todayYear}년 ${todayMonth}월 ${todayDay}일`;
-  // };
-
-  // 천 단위 , 설정
-  const priceWithCommas = price
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
   return (
     <>

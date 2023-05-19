@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import moment from 'moment';
 import {
   AreaChart,
@@ -26,6 +26,11 @@ const containerStyle = css`
   display: flex;
   flex-direction: column;
   align-items: end;
+  @media (max-width: 767px) {
+    align-items: start;
+
+  }
+
 `;
 
 const tooltipStyle = css`
@@ -58,8 +63,6 @@ const tooltipStyle = css`
    
 `;
 
-const chartScale = [{ term: 'max', dx: 55, interval: 3.4 }, { term: '365', dx: 50, interval: 3.43 }, { term: '30', dx: 40, interval: 3.4 }, { term: '7', dx: 50, interval: 3.7 }, { term: '1', dx: 60, interval: 3.6 }];
-
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     const { filteredDate, price } = payload[0].payload;
@@ -73,15 +76,23 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const CoinChart = () => {
-  const type = useResponsiveView();
-  console.log(type);
+  let viewportType = useResponsiveView();
+  if (viewportType === 'Desktop') {
+    viewportType = 3.3;
+  } else if (viewportType === 'Tablet') {
+    viewportType = 3.7;
+  } else if (viewportType === 'Mobile') {
+    viewportType = 3.4;
+  } else {
+    viewportType = 4;
+  }
+  console.log(viewportType);
   const data = useRecoilValue(scenarioOutputAtom);
   const { calculatedData } = data;
   const { isSkyrocketed } = calculatedData;
   const [selectedTerm, setSelectedTerm] = useState({ text: '전체', term: 'max' });
   const url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=krw&days=${selectedTerm.term}`;
   const { data: coinPriceList } = useFetch(url);
-  const [responsiveView, setResponsiveView] = useState('');
 
   const fomattingTerm = (date) => {
     if (selectedTerm.term === 'max' || selectedTerm.term === '365') {
@@ -94,13 +105,13 @@ const CoinChart = () => {
     return `${meridiem === 'AM' ? '오전' : '오후'} ${hour}시`;
   };
 
-  const convertCoinNestedArrayToObject = coinPriceList?.prices?.map((item) => {
+  const convertCoinNestedArrayToObject = useCallback(coinPriceList?.prices?.map((item) => {
     return {
       date: fomattingTerm(item[0]),
       price: item[1],
       filteredDate: moment(item[0]).format('YYYY년 M월 D일'),
     };
-  });
+  }), [coinPriceList]);
 
   // Y축 레이블 포맷 함수
   const formatYAxisLabel = (value) => {
@@ -108,14 +119,6 @@ const CoinChart = () => {
       return `${value / 10000}만`;
     }
     return `${value}원`;
-  };
-
-  const calculatingChartScale = () => {
-    const applyScale = chartScale.find((scale) => { return scale.term === selectedTerm.term; });
-    return {
-      dx: applyScale.dx,
-      interval: applyScale.interval,
-    };
   };
 
   return (
@@ -144,12 +147,12 @@ const CoinChart = () => {
             dataKey="date"
             tickSize={0}
             // dx={chartScaleInfo.dx}
-            dx={40}
-            dy={20}
+            dx={viewportType === 'Desktop' ? 40 : viewportType === 'Tablet' ? 40 : 20}
+            dy={10}
             axisLine={false}
             tickLine={false}
-            tick={{ fontSize: 14 }}
-            interval={(convertCoinNestedArrayToObject?.length / 3.35) >> 0}
+            tick={viewportType === 'Desktop' ? { fontSize: 14 } : viewportType === 'Tablet' ? { fontSize: 10 } : { fontSize: 8 }}
+            interval={(convertCoinNestedArrayToObject?.length / viewportType) >> 0}
           />
           <YAxis
             // y축 값에 있는 줄 삭제

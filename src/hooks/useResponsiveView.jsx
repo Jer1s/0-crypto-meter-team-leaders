@@ -6,8 +6,9 @@ const useViewportType = () => {
   const handleResize = useCallback(() => {
     const { innerWidth } = window;
     let type = '';
-
-    if (innerWidth < 768) {
+    if (innerWidth < 440) {
+      type = 'SuperMobile';
+    } else if (innerWidth < 768) {
       type = 'Mobile';
     } else if (innerWidth < 1200) {
       type = 'Tablet';
