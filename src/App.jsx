@@ -8,7 +8,6 @@ const App = () => {
     <RecoilRoot>
       <GlobalStyle />
       <HomePage />
-      <CoinDetails />
     </RecoilRoot>
   );
 };
