@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
-import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
+import scenarioInputAtom from 'recoils/scenarioData/scenarioInputAtom';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
-import { BASE_CURRENCY, INITIAL_CRYPTO } from 'utils/constants';
+import { BASE_CURRENCY, INITAIL_BITCOIN } from 'utils/constants';
 import DateInput from './DateInput';
 import BuyPriceInput from './BuyPriceInput';
 import CoinTypeDropDown from './CoinTypeDropDown';
@@ -53,11 +53,11 @@ const addPriceButtonContainerStyle = css`
 `;
 
 const CoinScenarioForm = () => {
-  const setScenarioData = useSetRecoilState(scenarioDataAtom);
+  const setScenarioData = useSetRecoilState(scenarioInputAtom);
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const [selectedDate, setSelectedDate] = useState(null);
   const [buyPrice, setBuyPrice] = useState(0);
-  const [selectedCoin, setSelectedCoin] = useState(INITIAL_CRYPTO);
+  const [selectedCoin, setSelectedCoin] = useState(INITAIL_BITCOIN);
 
   const [year, month, day] = selectedDate
     ? [selectedDate.getFullYear(), selectedDate.getMonth() + 1, selectedDate.getDate()]
@@ -70,17 +70,14 @@ const CoinScenarioForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setScenarioData({
-      input: {
-        date: { year, month, day },
-        price: buyPrice,
-        cryptoId: selectedCoin.id,
-        image: selectedCoin.image,
+      date: {
+        year,
+        month,
+        day,
       },
-      output: {
-        outputPrice: 10000,
-        isSkyrocketed: true,
-        outputDate: { year: 2023, month: 5, day: 19 },
-      },
+      price: buyPrice,
+      coinType: { id: selectedCoin.id, name: selectedCoin.name },
+
     });
     // const url = '';
     // const { data, loading, error } = useFetch(url);
