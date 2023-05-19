@@ -7,9 +7,10 @@ import share from 'assets/share.svg';
 import MainContainer from 'components/MainContainer';
 import CoinScenarioResult from 'components/CoinDetails/CoinScenarioResult';
 import { useRecoilValue } from 'recoil';
-import scenarioOutputAtom from 'recoils/scenarioData/scenarioOutputAtom';
+import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
+import { CRYPTO_NAME } from 'utils/constants';
 import CoinChart from './CoinChart';
-import KakaoShareButton from './KakaoShareButton';
+// import KakaoShareButton from './KakaoShareButton';
 
 const CoinInfo = styled.div`
   display: flex;
@@ -101,16 +102,16 @@ const Button = styled.button`
 
 const CoinDetails = () => {
   const [isCopy, setisCopy] = useState(false);
-  const data = useRecoilValue(scenarioOutputAtom);
-  const { userInputData } = data;
-  const { coinType, image } = userInputData;
+  const scenarioData = useRecoilValue(scenarioDataAtom);
+  const { input } = scenarioData;
+  const { cryptoId, image } = input;
 
   const handleCopyClipBoard = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
       setisCopy(true);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -132,7 +133,7 @@ const CoinDetails = () => {
       <div key="headerContent">
         <CoinInfo>
           <img src={image} alt="Coin Icon" />
-          <p style={{ height: '3.1rem' }}>{coinType}</p>
+          <p style={{ height: '3.1rem' }}>{CRYPTO_NAME[cryptoId]}</p>
         </CoinInfo>
         <SocialIconGroup>
           {/* <KakaoShareButton /> */}

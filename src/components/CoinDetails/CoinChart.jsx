@@ -14,7 +14,7 @@ import {
 
 import useFetch from 'hooks/useFetch';
 import { useRecoilValue } from 'recoil';
-import scenarioOutputAtom from 'recoils/scenarioData/scenarioOutputAtom';
+import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
 const containerStyle = css`
@@ -30,9 +30,9 @@ const tooltipStyle = css`
   height: 3.7rem;
   padding: 0.3rem 0.7rem;
   margin: 0;
-  background: rgba(29, 29, 29, 0.9);
+  background: var(--tooltip-background);
   border-radius: 0.8rem;
-  color: #fff;
+  color: var(--white);
 
   & p:first-of-type {
     margin: 0;
@@ -51,8 +51,6 @@ const tooltipStyle = css`
     height: 1.8rem;
     padding: 0;
   }
-  
-   
 `;
 
 const chartScale = [{ term: 'max', dx: 55, interval: 3.4 }, { term: '365', dx: 50, interval: 3.43 }, { term: '30', dx: 40, interval: 3.4 }, { term: '7', dx: 50, interval: 3.7 }, { term: '1', dx: 60, interval: 3.6 }];
@@ -70,9 +68,8 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const CoinChart = () => {
-  const data = useRecoilValue(scenarioOutputAtom);
-  const { calculatedData } = data;
-  const { isSkyrocketed } = calculatedData;
+  const data = useRecoilValue(scenarioDataAtom);
+  const { isSkyrocketed } = data.output;
   const [selectedTerm, setSelectedTerm] = useState({ text: '전체', term: 'max' });
   const url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=krw&days=${selectedTerm.term}`;
   const { data: coinPriceList, loading, error } = useFetch(url);
@@ -128,8 +125,8 @@ const CoinChart = () => {
       >
         <defs>
           <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor={isSkyrocketed ? 'var(--skyrocketed)' : 'var(--primary-red'} stopOpacity={1} />
-            <stop offset="95%" stopColor={isSkyrocketed ? 'var(--skyrocketed)' : 'var(--primary-red'} stopOpacity={0} />
+            <stop offset="5%" stopColor={isSkyrocketed ? 'var(--chart-green)' : 'var(--primary-red'} stopOpacity={1} />
+            <stop offset="95%" stopColor={isSkyrocketed ? 'var(--chart-green)' : 'var(--primary-red'} stopOpacity={0} />
           </linearGradient>
         </defs>
         <CartesianGrid horizontal vertical={false} />
@@ -158,7 +155,7 @@ const CoinChart = () => {
         <Area
           type="monotone"
           dataKey="price"
-          stroke={isSkyrocketed ? 'var(--stroke)' : 'var(--primary-red)'}
+          stroke={isSkyrocketed ? 'var(--primary)' : 'var(--primary-red)'}
           fill="url(#gradient)"
           fillOpacity={1}
         />

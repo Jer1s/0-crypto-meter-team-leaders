@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import restore from 'assets/restore.svg';
 import { useResetRecoilState } from 'recoil';
-import scenarioInputAtom from 'recoils/scenarioData/scenarioInputAtom';
+import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import { navButtonStyle } from './navButtonStyle';
 
 const buttonStyle = css`
@@ -32,7 +32,7 @@ const textStyle = css`
 `;
 
 const RecalculateButton = () => {
-  const resetScenarioData = useResetRecoilState(scenarioInputAtom);
+  const resetScenarioData = useResetRecoilState(scenarioDataAtom);
 
   return (
     <button type="button" onClick={resetScenarioData} css={[navButtonStyle, buttonStyle]}>
