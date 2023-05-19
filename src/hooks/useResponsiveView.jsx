@@ -19,7 +19,6 @@ const useViewportType = () => {
     setViewportType(type);
 
     const timer = setTimeout(() => {
-      console.log('랜더링');
       window.addEventListener('resize', handleResize);
       clearTimeout(timer);
     }, 500);

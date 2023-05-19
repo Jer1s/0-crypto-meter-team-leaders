@@ -15,8 +15,8 @@ import {
 
 import useFetch from 'hooks/useFetch';
 import { useRecoilValue } from 'recoil';
-import scenarioOutputAtom from 'recoils/scenarioData/scenarioOutputAtom';
 import useResponsiveView from 'hooks/useResponsiveView';
+import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
 const containerStyle = css`
@@ -88,11 +88,12 @@ const CoinChart = () => {
     viewportType = 4;
   }
 
-  const data = useRecoilValue(scenarioOutputAtom);
-  const { calculatedData } = data;
-  const { isSkyrocketed } = calculatedData;
+  const data = useRecoilValue(scenarioDataAtom);
+  const { input, output } = data;
+  const { cryptoId } = input;
+  const { isSkyrocketed } = output;
   const [selectedTerm, setSelectedTerm] = useState({ text: '전체', term: 'max' });
-  const url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=krw&days=${selectedTerm.term}`;
+  const url = `https://api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=krw&days=${selectedTerm.term}`;
   const { data: coinPriceList } = useFetch(url);
 
   const fomattingTerm = (date) => {
@@ -139,15 +140,14 @@ const CoinChart = () => {
         >
           <defs>
             <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={isSkyrocketed ? 'var(--skyrocketed)' : 'var(--primary-red'} stopOpacity={1} />
-              <stop offset="95%" stopColor={isSkyrocketed ? 'var(--skyrocketed)' : 'var(--primary-red'} stopOpacity={0} />
+              <stop offset="5%" stopColor={isSkyrocketed ? 'var(--chart-green)' : 'var(--primary-red'} stopOpacity={1} />
+              <stop offset="95%" stopColor={isSkyrocketed ? 'var(--chart-green)' : 'var(--primary-red'} stopOpacity={0} />
             </linearGradient>
           </defs>
           <CartesianGrid horizontal vertical={false} />
           <XAxis
             dataKey="date"
             tickSize={0}
-            // dx={chartScaleInfo.dx}
             // eslint-disable-next-line no-nested-ternary
             dx={viewportType === 'Desktop' ? 40 : viewportType === 'Tablet' ? 40 : 20}
             dy={10}
@@ -171,7 +171,7 @@ const CoinChart = () => {
           <Area
             type="monotone"
             dataKey="price"
-            stroke={isSkyrocketed ? 'var(--stroke)' : 'var(--primary-red)'}
+            stroke={isSkyrocketed ? 'var(--primary)' : 'var(--primary-red)'}
             fill="url(#gradient)"
             fillOpacity={1}
           />
