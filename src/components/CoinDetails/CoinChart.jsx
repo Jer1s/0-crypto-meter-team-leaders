@@ -10,15 +10,18 @@ import {
   Tooltip,
   Area,
   CartesianGrid,
+  ResponsiveContainer,
 } from 'recharts';
 
 import useFetch from 'hooks/useFetch';
 import { useRecoilValue } from 'recoil';
 import scenarioOutputAtom from 'recoils/scenarioData/scenarioOutputAtom';
+import useResponsiveView from 'hooks/useResponsiveView';
 import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
 const containerStyle = css`
   max-width: 91rem;
+  height:35.1rem;
   min-height: 35.1rem;
   display: flex;
   flex-direction: column;
@@ -70,12 +73,15 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const CoinChart = () => {
+  const type = useResponsiveView();
+  console.log(type);
   const data = useRecoilValue(scenarioOutputAtom);
   const { calculatedData } = data;
   const { isSkyrocketed } = calculatedData;
   const [selectedTerm, setSelectedTerm] = useState({ text: '전체', term: 'max' });
   const url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=krw&days=${selectedTerm.term}`;
-  const { data: coinPriceList, loading, error } = useFetch(url);
+  const { data: coinPriceList } = useFetch(url);
+  const [responsiveView, setResponsiveView] = useState('');
 
   const fomattingTerm = (date) => {
     if (selectedTerm.term === 'max' || selectedTerm.term === '365') {
@@ -118,51 +124,53 @@ const CoinChart = () => {
         selectedTerm={selectedTerm}
         setSelectedTerm={setSelectedTerm}
       />
-      <AreaChart
-        data={convertCoinNestedArrayToObject}
-        width={910}
-        height={299}
-        margin={{
-          top: 20, right: 20, bottom: 20, left: 20,
-        }}
-      >
-        <defs>
-          <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor={isSkyrocketed ? 'var(--skyrocketed)' : 'var(--primary-red'} stopOpacity={1} />
-            <stop offset="95%" stopColor={isSkyrocketed ? 'var(--skyrocketed)' : 'var(--primary-red'} stopOpacity={0} />
-          </linearGradient>
-        </defs>
-        <CartesianGrid horizontal vertical={false} />
-        <XAxis
-          dataKey="date"
-          tickSize={0}
-          // dx={chartScaleInfo.dx}
-          dx={40}
-          dy={20}
-          axisLine={false}
-          tickLine={false}
-          tick={{ fontSize: 14 }}
-          interval={(convertCoinNestedArrayToObject?.length / 3.35) >> 0}
-        />
-        <YAxis
-          // y축 값에 있는 줄 삭제
-          dataKey="price"
-          axisLine={false}
-          tickCount={7}
-          tickFormatter={formatYAxisLabel}
-          tickLine={false}
-          dx={-12}
-          tick={{ fontSize: 14 }}
-        />
-        <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
-        <Area
-          type="monotone"
-          dataKey="price"
-          stroke={isSkyrocketed ? 'var(--stroke)' : 'var(--primary-red)'}
-          fill="url(#gradient)"
-          fillOpacity={1}
-        />
-      </AreaChart>
+      <ResponsiveContainer>
+        <AreaChart
+          data={convertCoinNestedArrayToObject}
+          width={910}
+          height={299}
+          margin={{
+            top: 20, right: 20, bottom: 20, left: 20,
+          }}
+        >
+          <defs>
+            <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor={isSkyrocketed ? 'var(--skyrocketed)' : 'var(--primary-red'} stopOpacity={1} />
+              <stop offset="95%" stopColor={isSkyrocketed ? 'var(--skyrocketed)' : 'var(--primary-red'} stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <CartesianGrid horizontal vertical={false} />
+          <XAxis
+            dataKey="date"
+            tickSize={0}
+            // dx={chartScaleInfo.dx}
+            dx={40}
+            dy={20}
+            axisLine={false}
+            tickLine={false}
+            tick={{ fontSize: 14 }}
+            interval={(convertCoinNestedArrayToObject?.length / 3.35) >> 0}
+          />
+          <YAxis
+            // y축 값에 있는 줄 삭제
+            dataKey="price"
+            axisLine={false}
+            tickCount={7}
+            tickFormatter={formatYAxisLabel}
+            tickLine={false}
+            dx={-12}
+            tick={{ fontSize: 14 }}
+          />
+          <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
+          <Area
+            type="monotone"
+            dataKey="price"
+            stroke={isSkyrocketed ? 'var(--stroke)' : 'var(--primary-red)'}
+            fill="url(#gradient)"
+            fillOpacity={1}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
     </div>
   );
 };

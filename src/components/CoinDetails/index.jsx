@@ -110,7 +110,7 @@ const CoinDetails = () => {
       await navigator.clipboard.writeText(window.location.href);
       setisCopy(true);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -135,7 +135,7 @@ const CoinDetails = () => {
           <p style={{ height: '3.1rem' }}>{coinType}</p>
         </CoinInfo>
         <SocialIconGroup>
-          {/* <KakaoShareButton /> */}
+          <KakaoShareButton />
           <Button type="button" onClick={shareFacebook}>
             <img src={facebook} alt="Facebook Icon" />
           </Button>
