@@ -77,11 +77,6 @@ const ScenarioForm = ({
   } = formProps;
   const { viewportType } = useViewportType();
   const formClassName = (viewportType !== 'Desktop') ? 'bottomsheet' : 'form';
-  const localeCurrency = useRecoilValue(localeCurrencyAtom);
-
-  const addButtonData = localeCurrency === BASE_CURRENCY
-    ? [5000, 10000, 50000, 100000]
-    : [10000, 50000, 100000, 500000, 1000000];
 
   return (
     <form onSubmit={handleSubmit} className={formClassName} css={FormStyle}>

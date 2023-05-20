@@ -13,6 +13,19 @@ const buttonStyle = css`
   border-radius: 2.3rem;
   color: var(--gray9);
   font-size: 1.4rem;
+
+  @media (max-width: 1199px){
+    color: var(--gray2);
+    border: 0.1rem solid var(--gray3);
+  }
+
+  @media (max-width: 768px){
+    color: var(--gray2);
+    border: 0.1rem solid var(--gray3);
+    height: 2.3rem;
+    padding : 0.4rem 1rem;
+    font-size: 1.2rem;
+  }
 `;
 
 const AddPriceButton = ({ value, onBuyPrice }) => {

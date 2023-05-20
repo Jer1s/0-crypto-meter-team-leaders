@@ -23,9 +23,26 @@ const submitButtonStyle = css`
     color: var(--white);
   }
 
-  @media (max-width: 1199px){
-    height: 5.9rem;
+  @media (max-width: 1199px) {
+    .description-line{
+      display: flex; 
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1.1rem;
+    }
   }
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;    
+    font-size: 2.4rem;
+    /* display: grid;
+    grid-template-areas: 
+      "what-if" 
+      "date"
+      "price" 
+      "coin"; */
+  }  
 `;
 
 const inputContainerStyle = css`
