@@ -1,36 +1,46 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 
 const useViewportType = () => {
   const [viewportType, setViewportType] = useState('');
 
-  const handleResize = useCallback(() => {
-    const { innerWidth } = window;
-    let type = '';
-    if (innerWidth < 440) {
-      type = 'SuperMobile';
-    } else if (innerWidth < 768) {
-      type = 'Mobile';
-    } else if (innerWidth < 1200) {
-      type = 'Tablet';
-    } else {
-      type = 'Desktop';
-    }
-
-    setViewportType(type);
-
-    const timer = setTimeout(() => {
-      window.addEventListener('resize', handleResize);
-      clearTimeout(timer);
-    }, 500);
-
+  const debounce = (fn, ms) => {
+    let timer;
     return () => {
-      window.removeEventListener('resize', handleResize);
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        timer = null;
+        fn();
+      }, ms);
     };
-  }, []);
+  };
 
   useEffect(() => {
-    handleResize();
-  }, [handleResize]);
+    const handleResize = () => {
+      const { innerWidth } = window;
+      console.log(innerWidth);
+      let type = '';
+      if (innerWidth < 440) {
+        type = 'SuperMobile';
+      } else if (innerWidth < 768) {
+        type = 'Mobile';
+      } else if (innerWidth < 1200) {
+        type = 'Tablet';
+      } else {
+        type = 'Desktop';
+      }
+      setViewportType(type);
+    };
+
+    const debouncedHandleResize = debounce(handleResize, 500);
+
+    handleResize(); // 초기값 설정
+
+    window.addEventListener('resize', debouncedHandleResize);
+
+    return () => {
+      window.removeEventListener('resize', debouncedHandleResize);
+    };
+  }, []);
 
   return viewportType;
 };

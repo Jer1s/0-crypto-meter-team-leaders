@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 import { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import styles from 'components/CoinDetails/CoinChart';
 import {
   AreaChart,
   XAxis,
@@ -21,7 +22,7 @@ import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
 const containerStyle = css`
   max-width: 91rem;
-  height:35.1rem;
+  height: 35.1rem;
   min-height: 35.1rem;
   display: flex;
   flex-direction: column;
@@ -30,7 +31,6 @@ const containerStyle = css`
     align-items: start;
 
   }
-
 `;
 
 const tooltipStyle = css`
@@ -38,9 +38,9 @@ const tooltipStyle = css`
   height: 3.7rem;
   padding: 0.3rem 0.7rem;
   margin: 0;
-  background: rgba(29, 29, 29, 0.9);
+  background: var(--tooltip-background);
   border-radius: 0.8rem;
-  color: #fff;
+  color: var(--white);
 
   & p:first-of-type {
     margin: 0;
@@ -78,10 +78,11 @@ const CustomTooltip = ({ active, payload }) => {
 
 const CoinChart = () => {
   let viewportType = useResponsiveView();
+  console.log(viewportType);
   if (viewportType === 'Desktop') {
-    viewportType = 3.3;
+    viewportType = 3.2;
   } else if (viewportType === 'Tablet') {
-    viewportType = 3.7;
+    viewportType = 3.55;
   } else if (viewportType === 'Mobile') {
     viewportType = 3.4;
   } else {
@@ -137,6 +138,7 @@ const CoinChart = () => {
           margin={{
             top: 20, right: 20, bottom: 20, left: 20,
           }}
+          className="chart"
         >
           <defs>
             <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
@@ -154,8 +156,9 @@ const CoinChart = () => {
             axisLine={false}
             tickLine={false}
             // eslint-disable-next-line no-nested-ternary
-            tick={viewportType === 'Desktop' ? { fontSize: 14 } : viewportType === 'Tablet' ? { fontSize: 10 } : { fontSize: 8 }}
+            tick={viewportType === 'Desktop' ? { fontSize: 14 } : viewportType === 'Tablet' ? { fontSize: 14 } : { fontSize: 10 }}
             interval={(convertCoinNestedArrayToObject?.length / viewportType) >> 0}
+            domain={['auto', 'auto']}
           />
           <YAxis
             // y축 값에 있는 줄 삭제
