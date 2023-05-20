@@ -166,9 +166,14 @@ const decrementStyle = css`
 
 const SearchHistoryPopup = ({ setShowPopup }) => {
   const searchHistory = useRecoilValue(searchHistoryAtom);
-  const resetSearchHistory = useResetRecoilState(searchHistoryAtom);
-  const formatPrice = useFormattedPrice();
+  const resetSearchHistoryAtom = useResetRecoilState(searchHistoryAtom);
   const setScenarioData = useSetRecoilState(scenarioDataAtom);
+  const formatPrice = useFormattedPrice();
+
+  const resetSearchHistory = () => {
+    resetSearchHistoryAtom();
+    localStorage.removeItem('searchHistory');
+  };
 
   const recalculateHistory = (item) => {
     setScenarioData(item);
