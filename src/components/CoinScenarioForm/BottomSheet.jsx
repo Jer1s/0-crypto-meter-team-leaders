@@ -1,51 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import styled from '@emotion/styled';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import ScenarioForm from './ScenarioForm';
 
-const BottomSheet = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [startY, setStartY] = useState(0);
-  const [currentY, setCurrentY] = useState(0);
+const Puller = styled.div`
+  width: 30px;
+  height: 6px;
+  background-color: #dadada;
+  border-radius: 3px;
+  position: absolute;
+  top: 8px;
+  left: calc(50% - 15px);
+`;
 
-  const openBottomSheet = () => {
-    setIsOpen(true);
+const BottomSheet = ({
+  selectedCoin,
+  setSelectedCoin,
+  addButtonData,
+  setBuyPrice,
+  buyPrice,
+  setSelectedDate,
+  selectedDate,
+  handleSubmit,
+  isBottomSheetOpen,
+  setIsBottomSheetOpen,
+}) => {
+  const handleBottomSheetClose = () => {
+    setIsBottomSheetOpen(false);
   };
 
-  const closeBottomSheet = () => {
-    setIsOpen(false);
-  };
-
-  const handleTouchStart = (event) => {
-    setStartY(event.touches[0].clientY);
-    setCurrentY(event.touches[0].clientY);
-  };
-
-  const handleTouchMove = (event) => {
-    setCurrentY(event.touches[0].clientY);
-  };
-
-  const handleTouchEnd = () => {
-    const deltaY = currentY - startY;
-
-    if (deltaY > 100) {
-      closeBottomSheet();
-    } else if (deltaY < -100) {
-      openBottomSheet();
-    }
+  const handleBottomSheetOpen = () => {
+    setIsBottomSheetOpen(true);
   };
 
   return (
-    <div
-      className={`bottom-sheet-container ${isOpen ? 'open' : ''}`}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
+    <SwipeableDrawer
+      anchor="bottom"
+      open={isBottomSheetOpen}
+      onClose={handleBottomSheetClose}
+      onOpen={handleBottomSheetOpen}
+      disableSwipeToOpen={false}
+      ModalProps={{
+        keepMounted: true,
+      }}
     >
-      <button type="button" onClick={openBottomSheet}>Open Bottom Sheet</button>
-      <div className="bottom-sheet">
-        <h2>Bottom Sheet Content</h2>
-        <p>This is the content of the bottom sheet.</p>
-        <button type="button" onClick={closeBottomSheet}>Close</button>
+      <Puller />
+      <div>
+        <ScenarioForm
+          selectedCoin={selectedCoin}
+          setSelectedCoin={setSelectedCoin}
+          addButtonData={addButtonData}
+          setBuyPrice={setBuyPrice}
+          buyPrice={buyPrice}
+          setSelectedDate={setSelectedDate}
+          selectedDate={selectedDate}
+          handleSubmit={handleSubmit}
+          isBottomSheetOpen={isBottomSheetOpen}
+        />
+        {' '}
+
       </div>
-    </div>
+    </SwipeableDrawer>
   );
 };
 
