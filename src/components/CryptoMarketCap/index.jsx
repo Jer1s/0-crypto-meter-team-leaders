@@ -21,7 +21,7 @@ const bodyStyle = css`
 `;
 
 const CryptoMarketCap = () => {
-  const [order, setOrder] = useState('marketCap');
+  const [order, setOrder] = useState('marketCapRank');
   const [cryptoList, setCryptoList] = useState([]);
 
   const sortedCryptoList = cryptoList.sort((a, b) => {
@@ -31,6 +31,10 @@ const CryptoMarketCap = () => {
     if (orderVal.endsWith('Ascend')) {
       orderVal = orderVal.slice(0, -'Ascend'.length);
       isAscending = true;
+    }
+
+    if (orderVal.endsWith('Rank')) {
+      orderVal = orderVal.slice(0, -'Rank'.length);
     }
 
     const valueA = a[orderVal];
@@ -54,10 +58,10 @@ const CryptoMarketCap = () => {
 
   const clickHandlers = {
     marketCapRankSort: () => {
-      if (order === 'marketCapAscend') {
-        setOrder('marketCapAscend');
+      if (order === 'marketCapRank') {
+        setOrder('marketCapRankAscend');
       } else {
-        setOrder('marketCap');
+        setOrder('marketCapRank');
       }
     },
     nameSort: () => {
