@@ -16,7 +16,6 @@ const HomePage = () => {
         <CoinDetails key="main1" />
         <CryptoMarketCap key="main2" />
       </HomePageLayout>
-
     </>
   );
 };
