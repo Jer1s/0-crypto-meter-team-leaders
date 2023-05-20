@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import useViewportType from 'hooks/useResponsiveView';
-import ScenarioForm from './ScenarioForm';
+import PropTypes from 'prop-types';
 
 const BottomSheetStyle = css`
   padding: 6.4rem 5.4rem 5.6rem; 
@@ -25,16 +25,9 @@ const Puller = styled.div`
 `;
 
 const BottomSheet = ({
-  selectedCoin,
-  setSelectedCoin,
-  addButtonData,
-  setBuyPrice,
-  buyPrice,
-  setSelectedDate,
-  selectedDate,
-  handleSubmit,
   isBottomSheetOpen,
   setIsBottomSheetOpen,
+  children,
 }) => {
   const viewportType = useViewportType();
   const heightLookup = {
@@ -45,6 +38,9 @@ const BottomSheet = ({
 
   const bottomSheetHeight = heightLookup[viewportType];
 
+  const handleBottomSheeOpen = () => {
+    setIsBottomSheetOpen(true);
+  };
   const handleBottomSheetClose = () => {
     setIsBottomSheetOpen(false);
   };
@@ -53,6 +49,7 @@ const BottomSheet = ({
     <SwipeableDrawer
       anchor="bottom"
       open={isBottomSheetOpen}
+      onOpen={handleBottomSheeOpen}
       onClose={handleBottomSheetClose}
       disableSwipeToOpen={false}
       ModalProps={{
@@ -64,20 +61,16 @@ const BottomSheet = ({
     >
       <Puller />
       <div css={BottomSheetStyle}>
-        <ScenarioForm
-          selectedCoin={selectedCoin}
-          setSelectedCoin={setSelectedCoin}
-          addButtonData={addButtonData}
-          setBuyPrice={setBuyPrice}
-          buyPrice={buyPrice}
-          setSelectedDate={setSelectedDate}
-          selectedDate={selectedDate}
-          handleSubmit={handleSubmit}
-          isBottomSheetOpen={isBottomSheetOpen}
-        />
+        {children}
       </div>
     </SwipeableDrawer>
   );
 };
 
 export default BottomSheet;
+
+BottomSheet.propTypes = {
+  isBottomSheetOpen: PropTypes.bool.isRequired,
+  setIsBottomSheetOpen: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};
