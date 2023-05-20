@@ -3,9 +3,11 @@ import { RecoilRoot } from 'recoil';
 import GlobalStyle from 'components/GlobalStyle';
 import HomePage from 'pages/HomePage';
 
+const queryClient = new QueryClient();
+
 const App = () => {
   return (
-    <QueryClientProvider client={QueryClient}>
+    <QueryClientProvider client={queryClient}>
       <RecoilRoot>
         <GlobalStyle />
         <HomePage />
