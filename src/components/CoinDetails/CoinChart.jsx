@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
+import styles from 'components/CoinDetails/CoinChart';
 import {
   AreaChart,
   XAxis,
@@ -10,19 +11,26 @@ import {
   Tooltip,
   Area,
   CartesianGrid,
+  ResponsiveContainer,
 } from 'recharts';
 
 import useFetch from 'hooks/useFetch';
 import { useRecoilValue } from 'recoil';
+import useResponsiveView from 'hooks/useResponsiveView';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
 const containerStyle = css`
   max-width: 91rem;
+  height: 35.1rem;
   min-height: 35.1rem;
   display: flex;
   flex-direction: column;
   align-items: end;
+  @media (max-width: 767px) {
+    align-items: start;
+
+  }
 `;
 
 const tooltipStyle = css`
@@ -51,11 +59,12 @@ const tooltipStyle = css`
     height: 1.8rem;
     padding: 0;
   }
+  
+   
 `;
 
-const chartScale = [{ term: 'max', dx: 55, interval: 3.4 }, { term: '365', dx: 50, interval: 3.43 }, { term: '30', dx: 40, interval: 3.4 }, { term: '7', dx: 50, interval: 3.7 }, { term: '1', dx: 60, interval: 3.6 }];
-
-const CustomTooltip = ({ active, payload, label }) => {
+// eslint-disable-next-line consistent-return
+const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const { filteredDate, price } = payload[0].payload;
     return (
@@ -68,11 +77,24 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const CoinChart = () => {
+  let viewportType = useResponsiveView();
+  if (viewportType === 'Desktop') {
+    viewportType = 3.2;
+  } else if (viewportType === 'Tablet') {
+    viewportType = 3.55;
+  } else if (viewportType === 'Mobile') {
+    viewportType = 3.4;
+  } else {
+    viewportType = 4;
+  }
+
   const data = useRecoilValue(scenarioDataAtom);
-  const { isSkyrocketed } = data.output;
+  const { input, output } = data;
+  const { cryptoId } = input;
+  const { isSkyrocketed } = output;
   const [selectedTerm, setSelectedTerm] = useState({ text: '전체', term: 'max' });
-  const url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=krw&days=${selectedTerm.term}`;
-  const { data: coinPriceList, loading, error } = useFetch(url);
+  const url = `https://api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=krw&days=${selectedTerm.term}`;
+  const { data: coinPriceList } = useFetch(url);
 
   const fomattingTerm = (date) => {
     if (selectedTerm.term === 'max' || selectedTerm.term === '365') {
@@ -85,13 +107,13 @@ const CoinChart = () => {
     return `${meridiem === 'AM' ? '오전' : '오후'} ${hour}시`;
   };
 
-  const convertCoinNestedArrayToObject = coinPriceList?.prices?.map((item) => {
+  const convertCoinNestedArrayToObject = useCallback(coinPriceList?.prices?.map((item) => {
     return {
       date: fomattingTerm(item[0]),
       price: item[1],
       filteredDate: moment(item[0]).format('YYYY년 M월 D일'),
     };
-  });
+  }), [coinPriceList]);
 
   // Y축 레이블 포맷 함수
   const formatYAxisLabel = (value) => {
@@ -101,67 +123,69 @@ const CoinChart = () => {
     return `${value}원`;
   };
 
-  const calculatingChartScale = () => {
-    const applyScale = chartScale.find((scale) => { return scale.term === selectedTerm.term; });
-    return {
-      dx: applyScale.dx,
-      interval: applyScale.interval,
-    };
-  };
-
   return (
     <div css={containerStyle}>
       <CategoryButtonChipContainer
         selectedTerm={selectedTerm}
         setSelectedTerm={setSelectedTerm}
       />
-      <AreaChart
-        data={convertCoinNestedArrayToObject}
-        width={910}
-        height={299}
-        margin={{
-          top: 20, right: 20, bottom: 20, left: 20,
-        }}
-      >
-        <defs>
-          <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor={isSkyrocketed ? 'var(--chart-green)' : 'var(--primary-red'} stopOpacity={1} />
-            <stop offset="95%" stopColor={isSkyrocketed ? 'var(--chart-green)' : 'var(--primary-red'} stopOpacity={0} />
-          </linearGradient>
-        </defs>
-        <CartesianGrid horizontal vertical={false} />
-        <XAxis
-          dataKey="date"
-          tickSize={0}
-          // dx={chartScaleInfo.dx}
-          dx={40}
-          dy={20}
-          axisLine={false}
-          tickLine={false}
-          tick={{ fontSize: 14 }}
-          interval={(convertCoinNestedArrayToObject?.length / 3.35) >> 0}
-        />
-        <YAxis
-          // y축 값에 있는 줄 삭제
-          dataKey="price"
-          axisLine={false}
-          tickCount={7}
-          tickFormatter={formatYAxisLabel}
-          tickLine={false}
-          dx={-12}
-          tick={{ fontSize: 14 }}
-        />
-        <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
-        <Area
-          type="monotone"
-          dataKey="price"
-          stroke={isSkyrocketed ? 'var(--primary)' : 'var(--primary-red)'}
-          fill="url(#gradient)"
-          fillOpacity={1}
-        />
-      </AreaChart>
+      <ResponsiveContainer>
+        <AreaChart
+          data={convertCoinNestedArrayToObject}
+          width={910}
+          height={299}
+          margin={{
+            top: 20, right: 20, bottom: 20, left: 20,
+          }}
+          className="chart"
+        >
+          <defs>
+            <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor={isSkyrocketed ? 'var(--chart-green)' : 'var(--primary-red'} stopOpacity={1} />
+              <stop offset="95%" stopColor={isSkyrocketed ? 'var(--chart-green)' : 'var(--primary-red'} stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <CartesianGrid horizontal vertical={false} />
+          <XAxis
+            dataKey="date"
+            tickSize={0}
+            // eslint-disable-next-line no-nested-ternary
+            dx={viewportType === 'Desktop' ? 40 : viewportType === 'Tablet' ? 40 : 20}
+            dy={10}
+            axisLine={false}
+            tickLine={false}
+            // eslint-disable-next-line no-nested-ternary
+            tick={viewportType === 'Desktop' ? { fontSize: 14 } : viewportType === 'Tablet' ? { fontSize: 14 } : { fontSize: 10 }}
+            interval={(convertCoinNestedArrayToObject?.length / viewportType) >> 0}
+            domain={['auto', 'auto']}
+          />
+          <YAxis
+            // y축 값에 있는 줄 삭제
+            dataKey="price"
+            axisLine={false}
+            tickCount={7}
+            tickFormatter={formatYAxisLabel}
+            tickLine={false}
+            dx={-12}
+            tick={{ fontSize: 14 }}
+          />
+          <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
+          <Area
+            type="monotone"
+            dataKey="price"
+            stroke={isSkyrocketed ? 'var(--primary)' : 'var(--primary-red)'}
+            fill="url(#gradient)"
+            fillOpacity={1}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
     </div>
   );
+};
+
+CustomTooltip.propTypes = {
+  active: PropTypes.bool,
+  payload: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default CoinChart;
