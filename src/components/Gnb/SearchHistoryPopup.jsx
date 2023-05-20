@@ -30,7 +30,7 @@ const popupStyle = css`
     right: calc(6rem + (100vw - 1920px) / 2);
   }
 
-  @media (min-width: 768px) and (max-width: 1199px) {
+  @media (max-width: 1199px) {
     right: 2.4rem;
   }
   
