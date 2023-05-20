@@ -17,7 +17,6 @@ const useViewportType = () => {
   useEffect(() => {
     const handleResize = () => {
       const { innerWidth } = window;
-      console.log(innerWidth);
       let type = '';
       if (innerWidth < 440) {
         type = 'SuperMobile';
