@@ -30,7 +30,7 @@ const useViewportType = () => {
       setViewportType(type);
     };
 
-    const debouncedHandleResize = debounce(handleResize, 500);
+    const debouncedHandleResize = debounce(handleResize, 100);
 
     handleResize(); // 초기값 설정
 
