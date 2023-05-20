@@ -1,25 +1,27 @@
+import React from 'react';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
-import useViewportType from 'hooks/useResponsiveView';
-import { useRecoilValue } from 'recoil';
+import useFormattedPrice from 'hooks/useFormattedPrice';
+import { BASE_CURRENCY, EXCHANGE_RATE } from 'utils/constants';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
-import { BASE_CURRENCY } from 'utils/constants';
-import DateInput from './DateInput';
-import BuyPriceInput from './BuyPriceInput';
-import CoinTypeDropDown from './CoinTypeDropDown';
-import AddPriceButton from './AddPriceButton';
+import { useRecoilValue } from 'recoil';
 
-const submitButtonStyle = css`
-  width: 36.5rem;
-  height: 6.4rem;
+const h1Style = css`
+  font-size: 3.6rem;
+  color : var(--gray5);
+  margin : 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
 
-  background-color: var(--white);
-  border-radius: 3.5rem;
+  .description-line {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
 
-  @media (max-width: 1199px){
-    width: 100%;
-    background-color: var(--gray1);
+  span {
     color: var(--white);
   }
 
@@ -45,96 +47,51 @@ const submitButtonStyle = css`
   }  
 `;
 
-const inputContainerStyle = css`
-  /* margin: 5.5rem 0 0; */
-  display : flex;
-  flex-direction: column;
-  gap : 2.5rem;
-`;
-
-const buyPriceInputStyle = css`
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-
-  @media (max-width: 1199px){
-    gap: 0.8rem;
-  }
-`;
-
-const addPriceButtonContainerStyle = css`
-  display: flex;
-  flex-direction: row;
-  gap: 0.8rem;
-  justify-content: end;
-
-  @media (max-width: 1199px){
-    justify-content: start;
-
-  }
-`;
-
-const FormStyle = css`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-const ScenarioForm = ({
-  formProps,
+const ScenarioDescription = ({
+  year, month, day, selectedCoin, price,
 }) => {
-  const {
-    selectedCoin,
-    setSelectedCoin,
-    setBuyPrice,
-    buyPrice,
-    setSelectedDate,
-    selectedDate,
-    handleSubmit,
-  } = formProps;
-  const { viewportType } = useViewportType();
-  const formClassName = (viewportType !== 'Desktop') ? 'bottomsheet' : 'form';
+  const formatPrice = useFormattedPrice();
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
-
-  const addButtonData = localeCurrency === BASE_CURRENCY
-    ? [5000, 10000, 50000, 100000]
-    : [10000, 50000, 100000, 500000, 1000000];
+  const convertedToKRW = localeCurrency === BASE_CURRENCY ? price : price / EXCHANGE_RATE[`${BASE_CURRENCY}TO${localeCurrency}`];
+  const formattedPrice = formatPrice(convertedToKRW);
 
   return (
-    <form onSubmit={handleSubmit} className={formClassName} css={FormStyle}>
-      <div css={inputContainerStyle}>
-        <DateInput selectedDate={selectedDate} onSelectedDate={setSelectedDate} />
-        <div css={buyPriceInputStyle}>
-          <BuyPriceInput buyPrice={buyPrice} setBuyPrice={setBuyPrice} />
-          <div css={addPriceButtonContainerStyle}>
-            {addButtonData.map((value) => {
-              return <AddPriceButton key={value} value={value} onBuyPrice={setBuyPrice} />;
-            })}
-          </div>
+    <h1 css={h1Style}>
+      <div className="description-line">
+        <div>
+          내가 만약
         </div>
-        <CoinTypeDropDown selectedCoin={selectedCoin} onCoinSelect={setSelectedCoin} />
+        <span>
+          {`${year}년 ${month}월 ${day}일에`}
+        </span>
       </div>
-      <button type="submit" css={submitButtonStyle} onClick={handleSubmit}>오늘 얼마가 되었을까?</button>
+      <div className="description-line">
+        <div>
+          <span>{formattedPrice}</span>
+          으로
+        </div>
+        <div>
+          <span>{selectedCoin.name}</span>
+          을 샀다면,
+        </div>
 
-    </form>
-
+      </div>
+    </h1>
   );
 };
 
-export default ScenarioForm;
+ScenarioDescription.propTypes = {
+  year: PropTypes.string.isRequired,
+  month: PropTypes.string.isRequired,
+  day: PropTypes.string.isRequired,
 
-ScenarioForm.propTypes = {
-  formProps: PropTypes.shape({
-    selectedCoin: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      image: PropTypes.string.isRequired,
-    }).isRequired,
-    setSelectedCoin: PropTypes.func.isRequired,
-    setBuyPrice: PropTypes.func.isRequired,
-    buyPrice: PropTypes.number.isRequired,
-    setSelectedDate: PropTypes.func.isRequired,
-    selectedDate: PropTypes.instanceOf(Date),
-    handleSubmit: PropTypes.func.isRequired,
+  selectedCoin: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
   }).isRequired,
+
+  price: PropTypes.number.isRequired,
 };
+
+export default ScenarioDescription;
