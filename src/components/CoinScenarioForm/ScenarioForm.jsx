@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
-import useViewportType from 'hooks/useResponsiveView';
 import { useRecoilValue } from 'recoil';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import { BASE_CURRENCY } from 'utils/constants';
@@ -29,7 +28,6 @@ const submitButtonStyle = css`
 `;
 
 const inputContainerStyle = css`
-  /* margin: 5.5rem 0 0; */
   display : flex;
   flex-direction: column;
   gap : 2.5rem;
@@ -75,8 +73,6 @@ const ScenarioForm = ({
     selectedDate,
     handleSubmit,
   } = formProps;
-  const { viewportType } = useViewportType();
-  const formClassName = (viewportType !== 'Desktop') ? 'bottomsheet' : 'form';
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
 
   const addButtonData = localeCurrency === BASE_CURRENCY
@@ -84,7 +80,7 @@ const ScenarioForm = ({
     : [10000, 50000, 100000, 500000, 1000000];
 
   return (
-    <form onSubmit={handleSubmit} className={formClassName} css={FormStyle}>
+    <form onSubmit={handleSubmit} css={FormStyle}>
       <div css={inputContainerStyle}>
         <DateInput selectedDate={selectedDate} onSelectedDate={setSelectedDate} />
         <div css={buyPriceInputStyle}>

@@ -38,12 +38,6 @@ const h1Style = css`
     display: flex;
     flex-direction: column;    
     font-size: 2.4rem;
-    /* display: grid;
-    grid-template-areas: 
-      "what-if" 
-      "date"
-      "price" 
-      "coin"; */
   }  
 `;
 
