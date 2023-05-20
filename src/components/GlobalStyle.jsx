@@ -39,8 +39,14 @@ const style = css`
     font-size: 1.6rem;
     color: var(--black);
 
-    @media (max-width: 767px) {
-      background-color: var(--white);
+
+    @media (max-width: 1199px){
+    padding: 0 2.4rem;
+    background-color: var(--white);
+    }
+
+    @media (max-width: 768px){
+      padding: 0 1.6rem;
     }
   }
 
