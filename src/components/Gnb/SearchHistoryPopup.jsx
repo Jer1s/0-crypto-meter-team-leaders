@@ -107,7 +107,7 @@ const historyItemStyle = css`
 @media (max-width: 767px) {
   gap: 0.4rem 1.2rem;
   padding: 1.6rem 2rem;
-  height: 9.1rem;
+  height: 9.2rem;
 
   & > *:nth-of-type(3) {
     width: auto;
