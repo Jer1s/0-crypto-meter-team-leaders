@@ -40,6 +40,7 @@ const itemStyle = css`
 
   @media (max-width: 1880px) {
     width: 122rem;
+
     & > *:nth-of-type(1) {
       position: sticky;
       left: 0;
