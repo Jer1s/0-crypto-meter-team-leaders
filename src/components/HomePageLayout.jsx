@@ -11,7 +11,6 @@ const sidebarStyle = css`
   position: fixed;
   width: 44.5rem;
   left: 3.6rem;
-  height: calc(100vh - 13.5rem);
   
   @media (min-width: 1920px) {
     left: calc(3.6rem + (100vw - 1920px) / 2);
