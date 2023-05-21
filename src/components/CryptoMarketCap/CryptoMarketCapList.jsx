@@ -20,8 +20,7 @@ const listStyle = css`
 
 const itemStyle = css`
   display: grid;
-  grid-template-columns: 57fr 217fr 165fr 209fr 209fr 146fr 140fr 140fr;
-  grid-auto-flow: column;
+  grid-template-columns: 5.7rem minmax(15.9rem, 1fr) 16.5rem 20.9rem 20.9rem 14.6rem 14rem 14rem;
   align-items: center;
   border-bottom: 0.1rem solid var(--gray8);
   padding: 2rem 0;
@@ -41,11 +40,14 @@ const itemStyle = css`
     grid-template-columns: 3rem 1fr;
     grid-gap: 1.2rem;
   }
+
+  @media (max-width: 1199px) {
+  }
 `;
 
 const headerStyle = css`
   display: grid;
-  grid-template-columns: 57fr 217fr 165fr 209fr 209fr 146fr 140fr 140fr;
+  grid-template-columns: 5.7rem minmax(15.9rem, 1fr) 16.5rem 20.9rem 20.9rem 14.6rem 14rem 14rem;
   border-bottom: 0.1rem solid var(--gray8);
   padding: 0;
   padding-bottom: 1.8rem;
