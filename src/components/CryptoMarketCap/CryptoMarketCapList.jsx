@@ -38,7 +38,8 @@ const itemStyle = css`
     text-align: end;
   }
 
-  @media screen and (max-width: 1880px) {
+  @media (max-width: 1880px) {
+    width: 125rem;
     & > *:nth-of-type(1) {
       position: sticky;
       left: 0;
