@@ -13,7 +13,7 @@ import AddPriceButton from './AddPriceButton';
 
 const containerStyle = css`
   max-width : 44.5rem;
-  height: 94.5rem;
+  height: 100%;
   background-color: var(--gray1);
   border-radius: 2.4rem;
   padding: 6rem 4rem 7rem;
