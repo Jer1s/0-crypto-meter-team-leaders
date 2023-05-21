@@ -25,6 +25,7 @@ const sidebarStyle = css`
 
   @media (max-width: 767px) {
     margin-bottom: 5.2rem;
+    left: 1.6rem;
   }
 `;
 
