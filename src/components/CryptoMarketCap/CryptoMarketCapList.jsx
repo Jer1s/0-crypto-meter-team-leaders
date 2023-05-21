@@ -92,6 +92,10 @@ const headerItemStyle = css`
     & > *:first-child {
       gap: 0;
     }
+
+    & > *:nth-of-type(2) {
+      padding-left: 0.6rem;
+    }
   }
 `;
 
