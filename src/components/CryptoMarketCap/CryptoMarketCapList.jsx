@@ -11,6 +11,7 @@ import PriceChangeChip from './PriceChangeChip';
 const listStyle = css`
   display: flex;
   flex-direction: column;
+  margin: 0;
   padding: 0;
   font-size: 1.5rem;
   font-weight: 600;
@@ -27,21 +28,14 @@ const itemStyle = css`
   border-bottom: 0.1rem solid var(--gray8);
   height: 7.3rem;
 
-  & > *:nth-of-type(-n+2) {
+  & > *:nth-of-type(2) {
     align-items: center;
     height: 100%;
-    line-height: 100%;
   }
 
   & > *:nth-of-type(n+3) {
     justify-self: end;
     text-align: end;
-  }
-
-  & > *:nth-of-type(2) {
-    display: grid;
-    grid-template-columns: 3rem 1fr;
-    grid-gap: 1.2rem;
   }
 
   @media screen and (max-width: 1880px) {
@@ -61,8 +55,22 @@ const itemStyle = css`
 }
 `;
 
-const headerItemStyle = css`
+const cryptoNameStyle = css`
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  grid-gap: 1.2rem;
+`;
 
+const headerItemStyle = css`
+  height: 5.2rem;
+  
+  & > * {
+    gap: 0.4rem;
+  }
+  & > *:nth-of-type(2) {
+      display: flex;
+      grid-gap: 0;
+    }
 `;
 
 // const headerItemStyle = css`
@@ -79,6 +87,8 @@ const buttonStyle = css`
   cursor: pointer;
   padding: 0;
   border: none;
+  display: flex;
+  align-items: center;
 `;
 
 const secondLineStyle = css`
@@ -162,54 +172,38 @@ const CryptoMarketCapList = ({ cryptoList, clickHandlers, order }) => {
   return (
     <ul css={listStyle}>
       <li css={[itemStyle, headerItemStyle]}>
-        <div>
-          <button type="button" onClick={clickHandlers.marketCapRankSort} css={buttonStyle}>
-            #
-            <img src={srcList[0]} alt="Order" />
-          </button>
-        </div>
-        <div>
-          <button type="button" onClick={clickHandlers.nameSort} css={buttonStyle}>
-            화폐 이름
-            <img src={srcList[1]} alt="Order" />
-          </button>
-        </div>
-        <di>
-          <button type="button" onClick={clickHandlers.currentPriceSort} css={buttonStyle}>
-            가격
-            <img src={srcList[2]} alt="Order" />
-          </button>
-        </di>
-        <div>
-          <button type="button" onClick={clickHandlers.marketCapSort} css={buttonStyle}>
-            총 시가
-            <img src={srcList[3]} alt="Order" />
-          </button>
-        </div>
-        <div>
-          <button type="button" onClick={clickHandlers.totalVolumeSort} css={buttonStyle}>
-            24시간 거래량
-            <img src={srcList[4]} alt="Order" />
-          </button>
-        </div>
-        <div css={headerItemStyle}>
-          <button type="button" onClick={clickHandlers.pc1hSort} css={buttonStyle}>
-            1시간 변동폭
-            <img src={srcList[5]} alt="Order" />
-          </button>
-        </div>
-        <div css={headerItemStyle}>
-          <button type="button" onClick={clickHandlers.pc24hSort} css={buttonStyle}>
-            24시간 변동폭
-            <img src={srcList[6]} alt="Order" />
-          </button>
-        </div>
-        <div css={headerItemStyle}>
-          <button type="button" onClick={clickHandlers.pc7dSort} css={buttonStyle}>
-            7일 변동폭
-            <img src={srcList[7]} alt="Order" />
-          </button>
-        </div>
+        <button type="button" onClick={clickHandlers.marketCapRankSort} css={buttonStyle}>
+          #
+          <img src={srcList[0]} alt="Order" />
+        </button>
+        <button type="button" onClick={clickHandlers.nameSort} css={buttonStyle}>
+          화폐 이름
+          <img src={srcList[1]} alt="Order" />
+        </button>
+        <button type="button" onClick={clickHandlers.currentPriceSort} css={buttonStyle}>
+          가격
+          <img src={srcList[2]} alt="Order" />
+        </button>
+        <button type="button" onClick={clickHandlers.marketCapSort} css={buttonStyle}>
+          총 시가
+          <img src={srcList[3]} alt="Order" />
+        </button>
+        <button type="button" onClick={clickHandlers.totalVolumeSort} css={buttonStyle}>
+          24시간 거래량
+          <img src={srcList[4]} alt="Order" />
+        </button>
+        <button type="button" onClick={clickHandlers.pc1hSort} css={buttonStyle}>
+          1시간 변동폭
+          <img src={srcList[5]} alt="Order" />
+        </button>
+        <button type="button" onClick={clickHandlers.pc24hSort} css={buttonStyle}>
+          24시간 변동폭
+          <img src={srcList[6]} alt="Order" />
+        </button>
+        <button type="button" onClick={clickHandlers.pc7dSort} css={buttonStyle}>
+          7일 변동폭
+          <img src={srcList[7]} alt="Order" />
+        </button>
       </li>
       {cryptoList.map((item) => {
         const currentPrice = formatPrice(item.currentPrice);
@@ -221,7 +215,7 @@ const CryptoMarketCapList = ({ cryptoList, clickHandlers, order }) => {
             <div>
               {item.marketCapRank}
             </div>
-            <div>
+            <div css={cryptoNameStyle}>
               <img src={item.image} alt={`${item.id} Symbol`} css={imageStyle} />
               <div>
                 {item.name}
