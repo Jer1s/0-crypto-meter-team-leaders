@@ -74,16 +74,6 @@ const headerItemStyle = css`
     }
 `;
 
-// const headerItemStyle = css`
-//   display: flex;
-//   align-items: center;
-//   gap: 0.4rem;
-//   color: var(--black);
-//   font-weight: 600;
-//   font-size: 1.4rem;
-//   line-height: 1.8rem;
-// `;
-
 const buttonStyle = css`
   cursor: pointer;
   padding: 0;
@@ -170,41 +160,47 @@ const CryptoMarketCapList = ({ cryptoList, clickHandlers, order }) => {
     setSrcList(updatedSrcList);
   }, [order]);
 
+  const headerItems = [
+    {
+      label: '#', clickHandler: clickHandlers.marketCapRankSort, srcIndex: 0, alt: 'Order',
+    },
+    {
+      label: '화폐 이름', clickHandler: clickHandlers.nameSort, srcIndex: 1, alt: 'Order',
+    },
+    {
+      label: '가격', clickHandler: clickHandlers.currentPriceSort, srcIndex: 2, alt: 'Order',
+    },
+    {
+      label: '총 시가', clickHandler: clickHandlers.marketCapSort, srcIndex: 3, alt: 'Order',
+    },
+    {
+      label: '24시간 거래량', clickHandler: clickHandlers.totalVolumeSort, srcIndex: 4, alt: 'Order',
+    },
+    {
+      label: '1시간 변동폭', clickHandler: clickHandlers.pc1hSort, srcIndex: 5, alt: 'Order',
+    },
+    {
+      label: '24시간 변동폭', clickHandler: clickHandlers.pc24hSort, srcIndex: 6, alt: 'Order',
+    },
+    {
+      label: '7일 변동폭', clickHandler: clickHandlers.pc7dSort, srcIndex: 7, alt: 'Order',
+    },
+  ];
+
   return (
     <ul css={listStyle}>
       <li css={[itemStyle, headerItemStyle]}>
-        <button type="button" onClick={clickHandlers.marketCapRankSort} css={buttonStyle}>
-          #
-          <img src={srcList[0]} alt="Order" />
-        </button>
-        <button type="button" onClick={clickHandlers.nameSort} css={buttonStyle}>
-          화폐 이름
-          <img src={srcList[1]} alt="Order" />
-        </button>
-        <button type="button" onClick={clickHandlers.currentPriceSort} css={buttonStyle}>
-          가격
-          <img src={srcList[2]} alt="Order" />
-        </button>
-        <button type="button" onClick={clickHandlers.marketCapSort} css={buttonStyle}>
-          총 시가
-          <img src={srcList[3]} alt="Order" />
-        </button>
-        <button type="button" onClick={clickHandlers.totalVolumeSort} css={buttonStyle}>
-          24시간 거래량
-          <img src={srcList[4]} alt="Order" />
-        </button>
-        <button type="button" onClick={clickHandlers.pc1hSort} css={buttonStyle}>
-          1시간 변동폭
-          <img src={srcList[5]} alt="Order" />
-        </button>
-        <button type="button" onClick={clickHandlers.pc24hSort} css={buttonStyle}>
-          24시간 변동폭
-          <img src={srcList[6]} alt="Order" />
-        </button>
-        <button type="button" onClick={clickHandlers.pc7dSort} css={buttonStyle}>
-          7일 변동폭
-          <img src={srcList[7]} alt="Order" />
-        </button>
+        {headerItems.map((item) => {
+          const {
+            label, clickHandler, srcIndex, alt,
+          } = item;
+          return (
+            <button key={srcIndex} type="button" onClick={clickHandler} css={buttonStyle}>
+              {label}
+              <img src={srcList[srcIndex]} alt={alt} />
+            </button>
+          );
+        })}
       </li>
       {cryptoList.map((item) => {
         const currentPrice = formatPrice(item.currentPrice);
