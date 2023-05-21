@@ -39,7 +39,7 @@ const style = css`
     font-size: 1.6rem;
     color: var(--black);
 
-    @media (max-width: 767px) {
+    @media (max-width: 1199px) {
       background-color: var(--white);
     }
   }

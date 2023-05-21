@@ -11,9 +11,22 @@ const sidebarStyle = css`
   position: fixed;
   width: 44.5rem;
   left: 3.6rem;
+  height: calc(100vh - 13.5rem);
   
   @media (min-width: 1920px) {
     left: calc(3.6rem + (100vw - 1920px) / 2);
+  }
+
+  @media (max-width: 1199px) {
+    position: relative;
+    width: 100%;
+    left: 2.4rem;
+    margin-bottom: 6rem;
+  }
+
+  @media (max-width: 767px) {
+    margin-bottom: 5.2rem;
+    left: 1.6rem;
   }
 `;
 
@@ -23,6 +36,15 @@ const mainStyle = css`
   margin: 0 auto;
   width: calc(100vw - 56rem);
   max-width: 136rem;
+
+  @media (max-width: 1199px) {
+    padding: 0;
+    width: 90%;
+    
+    &:last-child {
+      padding-top: 8rem;
+    }
+  }
 `;
 
 const HomePageLayout = ({ children }) => {
