@@ -22,6 +22,7 @@ const style = css`
     --active-button-background: #DAF1E5;
     --chart-green: #B9E7D0;
     --tooltip-background: rgba(29, 29, 29, 0.9);
+    --market-cap-list-box-shadow: rgba(11, 14, 27, 0.08);
   }
 
   * {

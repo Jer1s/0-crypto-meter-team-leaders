@@ -13,9 +13,11 @@ const listStyle = css`
   flex-direction: column;
   padding: 0;
   font-size: 1.5rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: -0.3px;
   color: var(--gray2);
+  overflow-x: auto;
+  overflow-x: overlay;
 `;
 
 const itemStyle = css`
@@ -23,16 +25,17 @@ const itemStyle = css`
   grid-template-columns: 5.7rem minmax(15.9rem, 1fr) 16.5rem 20.9rem 20.9rem 14.6rem 14rem 14rem;
   align-items: center;
   border-bottom: 0.1rem solid var(--gray8);
-  padding: 2rem 0;
   height: 7.3rem;
 
-  * {
-    justify-self: end;
+  & > *:nth-of-type(-n+2) {
+    align-items: center;
+    height: 100%;
+    line-height: 100%;
   }
 
-  & > *:nth-of-type(1),
-  & > *:nth-of-type(2) {
-    justify-self: start;
+  & > *:nth-of-type(n+3) {
+    justify-self: end;
+    text-align: end;
   }
 
   & > *:nth-of-type(2) {
@@ -41,46 +44,46 @@ const itemStyle = css`
     grid-gap: 1.2rem;
   }
 
-  @media (max-width: 1199px) {
-  }
-`;
-
-const headerStyle = css`
-  display: grid;
-  grid-template-columns: 5.7rem minmax(15.9rem, 1fr) 16.5rem 20.9rem 20.9rem 14.6rem 14rem 14rem;
-  border-bottom: 0.1rem solid var(--gray8);
-  padding: 0;
-  padding-bottom: 1.8rem;
-
-  & > * {
-    justify-self: end;
-  }
-
-  & > *:nth-of-type(1),
-  & > *:nth-of-type(2) {
-    justify-self: start;
-  }
+  @media screen and (max-width: 1880px) {
+    & > *:nth-of-type(1) {
+      position: sticky;
+      left: 0;
+      background-color: var(--white);
+    }
+    
+    & > *:nth-of-type(2) {
+      position: sticky;
+      left: 5.7rem;
+      background-color: var(--white);
+      border-right: 0.1rem solid var(--gray8);
+      box-shadow: 0.4rem 0 1.5rem var(--market-cap-list-box-shadow);
+    }
+}
 `;
 
 const headerItemStyle = css`
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  color: var(--black);
-  font-weight: 600;
-  font-size: 1.4rem;
-  line-height: 1.8rem;
+
 `;
+
+// const headerItemStyle = css`
+//   display: flex;
+//   align-items: center;
+//   gap: 0.4rem;
+//   color: var(--black);
+//   font-weight: 600;
+//   font-size: 1.4rem;
+//   line-height: 1.8rem;
+// `;
 
 const buttonStyle = css`
   cursor: pointer;
-  display: flex;
   padding: 0;
   border: none;
 `;
 
 const secondLineStyle = css`
   font-size: 1.2rem;
+  font-weight: 500;
   color: var(--gray5);
 `;
 
@@ -158,32 +161,32 @@ const CryptoMarketCapList = ({ cryptoList, clickHandlers, order }) => {
 
   return (
     <ul css={listStyle}>
-      <li css={headerStyle}>
-        <div css={headerItemStyle}>
+      <li css={[itemStyle, headerItemStyle]}>
+        <div>
           <button type="button" onClick={clickHandlers.marketCapRankSort} css={buttonStyle}>
             #
             <img src={srcList[0]} alt="Order" />
           </button>
         </div>
-        <div css={headerItemStyle}>
+        <div>
           <button type="button" onClick={clickHandlers.nameSort} css={buttonStyle}>
             화폐 이름
             <img src={srcList[1]} alt="Order" />
           </button>
         </div>
-        <div css={headerItemStyle}>
+        <di>
           <button type="button" onClick={clickHandlers.currentPriceSort} css={buttonStyle}>
             가격
             <img src={srcList[2]} alt="Order" />
           </button>
-        </div>
-        <div css={headerItemStyle}>
+        </di>
+        <div>
           <button type="button" onClick={clickHandlers.marketCapSort} css={buttonStyle}>
             총 시가
             <img src={srcList[3]} alt="Order" />
           </button>
         </div>
-        <div css={headerItemStyle}>
+        <div>
           <button type="button" onClick={clickHandlers.totalVolumeSort} css={buttonStyle}>
             24시간 거래량
             <img src={srcList[4]} alt="Order" />
@@ -215,7 +218,9 @@ const CryptoMarketCapList = ({ cryptoList, clickHandlers, order }) => {
         const volumePerPrice = item.volumePerPrice.toLocaleString();
         return (
           <li key={item.marketCapRank} css={itemStyle}>
-            <div>{item.marketCapRank}</div>
+            <div>
+              {item.marketCapRank}
+            </div>
             <div>
               <img src={item.image} alt={`${item.id} Symbol`} css={imageStyle} />
               <div>
