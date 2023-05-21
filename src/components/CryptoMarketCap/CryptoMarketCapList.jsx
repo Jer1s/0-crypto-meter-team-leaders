@@ -42,7 +42,10 @@ const itemStyle = css`
     width: 122rem;
 
     & > *:nth-of-type(1) {
+      display: flex;
+      align-items: center;
       position: sticky;
+      height: 100%;
       left: 0;
       background-color: var(--white);
     }
@@ -54,6 +57,16 @@ const itemStyle = css`
       border-right: 0.1rem solid var(--gray8);
       box-shadow: 0.4rem 0 1.5rem var(--market-cap-list-box-shadow);
     }
+  
+  @media (max-width: 767px) {
+    width: 102rem;
+    grid-template-columns: 2.4rem 11.4rem 16.5rem 17.7rem 17.7rem 12rem 12rem 12rem;
+    font-size: 1.3rem;
+
+    & > *:nth-of-type(2) {
+      left: 2.4rem;
+    }
+  }
 }
 `;
 
@@ -69,10 +82,17 @@ const headerItemStyle = css`
   & > * {
     gap: 0.4rem;
   }
+
   & > *:nth-of-type(2) {
       display: flex;
       grid-gap: 0;
     }
+  
+  @media (max-width: 767px) {
+    & > *:first-child {
+      gap: 0;
+    }
+  }
 `;
 
 const buttonStyle = css`
