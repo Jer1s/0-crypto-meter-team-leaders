@@ -20,8 +20,6 @@ const buttonStyle = css`
   }
 
   @media (max-width: 768px){
-    color: var(--gray2);
-    border: 0.1rem solid var(--gray3);
     height: 2.3rem;
     padding : 0.4rem 1rem;
     font-size: 1.2rem;

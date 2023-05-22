@@ -33,6 +33,7 @@ export const coinScenarioInputStyle = css`
     max-width : 100%;
     & .inputBox{
       background-color: initial;
+      color: var(--gray1);
     }
   }
 

@@ -32,11 +32,11 @@ const containerStyle = css`
     border-radius: 0.6rem;
     height: 21.8rem;
   }
-  
+
   @media (max-width: 1199px) {
     max-width: none;
     height: 100%;
-    padding: 3.6rem  6.5rem  3.6rem 3.6rem ;
+    padding: 3.6rem 6.5rem 3.6rem 3.6rem ;
   }
 
   @media (max-width: 768px) {
@@ -57,7 +57,7 @@ const FilterButtonStyle = css`
     button {
       padding: 0;
       border: 0;
-      outline:0;
+      outline: 0;
       border-radius: 3rem;
       background-color: var(--gray3);
       width: 3.2rem;

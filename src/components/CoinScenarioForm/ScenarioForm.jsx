@@ -16,13 +16,13 @@ const submitButtonStyle = css`
   background-color: var(--white);
   border-radius: 3.5rem;
 
-  @media (max-width: 1199px){
+  @media (max-width: 1199px) {
     width: 100%;
     background-color: var(--gray1);
     color: var(--white);
   }
 
-  @media (max-width: 1199px){
+  @media (max-width: 1199px) {
     height: 5.9rem;
   }
 `;
@@ -60,6 +60,7 @@ const FormStyle = css`
   justify-content: space-between;
   gap: 5.5rem;
 `;
+
 const ScenarioForm = ({
   formProps,
 }) => {

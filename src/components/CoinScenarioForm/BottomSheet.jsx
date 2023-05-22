@@ -10,7 +10,7 @@ const BottomSheetStyle = css`
   height: 100%;
 
   @media (max-width: 768px){
-  padding: 4.4rem 2.4rem 4.8rem; 
+    padding: 4.4rem 2.4rem 4.8rem; 
   }
 `;
 
