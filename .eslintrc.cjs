@@ -38,6 +38,6 @@ module.exports = {
     '@emotion/pkg-renaming': 'error',
     '@tanstack/query/exhaustive-deps': 'error',
     '@tanstack/query/prefer-query-object-syntax': 'error',
-    'import/no-extraneous-dependencies': ['error', { projectDependencies: false }],
+    'import/no-extraneous-dependencies': 'error',
   },
 };
