@@ -6,8 +6,8 @@ const layoutStyle = css`
   max-width: 1920px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(2, auto); /* 첫 번째 열은 사이드바의 너비로, 두 번째 열은 남은 공간을 차지합니다. */
-  grid-template-rows: repeat(2, auto); /* 자동으로 행의 높이를 조정합니다. */
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: auto, 1fr;
   padding: 0 3.6rem;
   gap: 2.4rem;
 
