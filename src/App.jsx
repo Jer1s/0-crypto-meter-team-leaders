@@ -21,7 +21,6 @@ const App = () => {
   const [showDevtools, setShowDevtools] = useState(false);
 
   useEffect(() => {
-    // @ts-ignore
     window.toggleDevtools = () => { return setShowDevtools((old) => { return !old; }); };
   }, []);
 
