@@ -33,17 +33,18 @@ const containerStyle = css`
 `;
 
 const FilterButtonStyle = css`
-  position: absolute;
-
-  button {
-    padding: 0;
-    border: 0;
-    outline:0;
-    border-radius: 3rem;
-    background-color: var(--gray3);
-  }
+  display: none;
 
   @media (max-width: 1199px) {
+    position: absolute;
+    display: block;
+    button {
+      padding: 0;
+      border: 0;
+      outline:0;
+      border-radius: 3rem;
+      background-color: var(--gray3);
+    }
     top: 2.4rem;
     right: 2.4rem;
     margin: 0 10px;
@@ -121,14 +122,11 @@ const CoinScenarioForm = () => {
 
   return (
     <div css={containerStyle}>
-      {' '}
-      { viewportType !== 'Desktop' && (
       <div css={FilterButtonStyle}>
         <button type="button" onClick={handleBottomSheetClick}>
           <img src={filter} alt="filter icon" />
         </button>
       </div>
-      )}
       <ScenarioDescription
         year={year}
         month={month}
@@ -140,7 +138,6 @@ const CoinScenarioForm = () => {
         ? (
           <ScenarioForm
             formProps={formProps}
-
           />
         ) : (
           <BottomSheet
