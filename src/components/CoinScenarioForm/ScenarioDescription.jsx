@@ -12,21 +12,17 @@ const containerStyle = css`
   margin: 0;
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   gap: 0.7rem;
 
-  .description-line {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-  }
 
   @media (max-width: 1199px) {
-    .description-line {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 1.1rem;
-    }
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.1rem;
+
   }
 
   @media (max-width: 768px) {
@@ -55,28 +51,28 @@ const ScenarioDescription = ({
   const formattedPrice = formatPrice(convertedToKRW);
 
   return (
-    <div css={containerStyle}>
-      <h1 css={headingStyle}>
-        <div className="description-line">
-          <div>
-            내가 만약
-          </div>
+    <h1 css={headingStyle}>
+      <div css={containerStyle}>
+        <div>
+          내가 만약
+        </div>
+        <div>
           <span>
-            {`${year}년 ${month}월 ${day}일에`}
+            {`${year}년 ${month}월 ${day}일`}
           </span>
+          에
         </div>
-        <div className="description-line">
-          <div>
-            <span>{formattedPrice}</span>
-            으로
-          </div>
-          <div>
-            <span>{selectedCoin.name}</span>
-            을 샀다면,
-          </div>
+        <div>
+          <span>{formattedPrice}</span>
+          으로
         </div>
-      </h1>
-    </div>
+        <div>
+          <span>{selectedCoin.name}</span>
+          을 샀다면,
+        </div>
+      </div>
+    </h1>
+
   );
 };
 
