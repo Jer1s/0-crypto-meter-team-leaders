@@ -12,18 +12,17 @@ import BottomSheet from './BottomSheet';
 
 const containerStyle = css`
   position: relative;
-  max-width : 44.5rem;
-  height: 100%;
+  max-width : 100%;
+  height: calc(100vh - 13.5rem);
   background-color: var(--gray1);
   border-radius: 2.4rem;
   padding: 6rem 4rem 7rem;
-
   display:flex;
   flex-direction: column;
   gap: 5.5rem;
 
   @media (max-width: 1199px) {
-    max-width: 100%;
+    max-width: none;
     height: 100%;
     padding: 3.6rem  6.5rem  3.6rem 3.6rem ;
   }

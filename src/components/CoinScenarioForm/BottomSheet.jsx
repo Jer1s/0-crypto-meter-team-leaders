@@ -11,17 +11,23 @@ const BottomSheetStyle = css`
 
   @media (max-width: 768px){
   padding: 4.4rem 2.4rem 4.8rem; 
-
   }
 `;
+
+const PullerContainer = css`
+  padding-top: 2rem;
+
+  @media (max-width: 768px){
+    padding-top: 1.2rem; 
+  }
+`;
+
 const Puller = styled.div`
-  width: 30px;
-  height: 6px;
-  background-color: #dadada;
+  width: 8rem;
+  height: 0.6rem;
+  background-color: var(--gray7);
   border-radius: 3px;
-  position: absolute;
-  top: 8px;
-  left: calc(50% - 15px);
+  margin: 0 auto;
 `;
 
 const BottomSheet = ({
@@ -30,6 +36,7 @@ const BottomSheet = ({
   children,
 }) => {
   const viewportType = useViewportType();
+
   const heightLookup = {
     Tablet: '56.5rem',
     Mobile: '56.5rem',
@@ -59,7 +66,9 @@ const BottomSheet = ({
         style: { borderRadius: '2.4rem 2.4rem 0 0', height: bottomSheetHeight },
       }}
     >
-      <Puller />
+      <div css={PullerContainer}>
+        <Puller />
+      </div>
       <div css={BottomSheetStyle}>
         {children}
       </div>
