@@ -89,7 +89,7 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
       return;
     }
     onCoinSelect(data[0]);
-  }, [data]);
+  }, [data, onCoinSelect]);
 
   return (
     <div ref={dropdownRef}>

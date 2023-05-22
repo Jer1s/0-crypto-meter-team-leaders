@@ -15,9 +15,12 @@ const containerStyle = css`
   flex-wrap: wrap;
   gap: 0.7rem;
 
+  button {
+    all: unset;
+  }
+
 
   @media (max-width: 1199px) {
-
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -33,17 +36,18 @@ const containerStyle = css`
 
 const headingStyle = css`
   font-size: 3.6rem;
-  span {
-    color: var(--white);
-  }
 
   @media (max-width: 768px) {
     font-size: 2.4rem;
   }
 `;
 
+const strongText = css`
+  color: var(--white);
+`;
+
 const ScenarioDescription = ({
-  year, month, day, selectedCoin, price,
+  year, month, day, selectedCoin, price, onBottomSheetClick,
 }) => {
   const formatPrice = useFormattedPrice();
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
@@ -53,23 +57,23 @@ const ScenarioDescription = ({
   return (
     <h1 css={headingStyle}>
       <div css={containerStyle}>
-        <div>
+        <button type="button" css={strongText} onClick={onBottomSheetClick}>
           내가 만약
-        </div>
-        <div>
-          <span>
+        </button>
+        <button type="button" onClick={onBottomSheetClick}>
+          <span css={strongText}>
             {`${year}년 ${month}월 ${day}일`}
           </span>
           에
-        </div>
-        <div>
-          <span>{formattedPrice}</span>
+        </button>
+        <button type="button" onClick={onBottomSheetClick}>
+          <span css={strongText}>{formattedPrice}</span>
           으로
-        </div>
-        <div>
-          <span>{selectedCoin.name}</span>
+        </button>
+        <button type="button" onClick={onBottomSheetClick}>
+          <span css={strongText}>{selectedCoin.name}</span>
           을 샀다면,
-        </div>
+        </button>
       </div>
     </h1>
 
@@ -88,6 +92,7 @@ ScenarioDescription.propTypes = {
   }).isRequired,
 
   price: PropTypes.number.isRequired,
+  onBottomSheetClick: PropTypes.func,
 };
 
 export default ScenarioDescription;

@@ -12,9 +12,9 @@ import AddPriceButton from './AddPriceButton';
 const submitButtonStyle = css`
   width: 36.5rem;
   height: 6.4rem;
-
   background-color: var(--white);
   border-radius: 3.5rem;
+  cursor: pointer;
 
   @media (max-width: 1199px) {
     width: 100%;

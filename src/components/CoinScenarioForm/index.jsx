@@ -62,6 +62,7 @@ const FilterButtonStyle = css`
       background-color: var(--gray3);
       width: 3.2rem;
       height: 3.2rem;
+      cursor: pointer;
     }
 
 
@@ -145,6 +146,7 @@ const CoinScenarioForm = () => {
         day={day}
         selectedCoin={selectedCoin}
         price={buyPrice}
+        onBottomSheetClick={viewportType !== 'Desktop' && handleBottomSheetClick}
       />
       {viewportType === 'Desktop'
         ? (
