@@ -7,7 +7,7 @@ const layoutStyle = css`
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(2, auto);
-  grid-template-rows: auto, 1fr;
+  grid-template-rows: auto 1fr;
   padding: 0 3.6rem;
   gap: 2.4rem;
 
