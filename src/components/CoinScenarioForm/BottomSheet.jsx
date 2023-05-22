@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 
 const BottomSheetStyle = css`
   padding: 6.4rem 5.4rem 5.6rem; 
-  height: 100%;
 
   @media (max-width: 768px){
     padding: 4.4rem 2.4rem 4.8rem; 

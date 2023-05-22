@@ -9,9 +9,7 @@ import { useRecoilValue } from 'recoil';
 
 const containerStyle = css`
   color: var(--gray5);
-  margin: 0;
   display: flex;
-  flex-direction: column;
   flex-wrap: wrap;
   gap: 0.7rem;
 
@@ -36,7 +34,7 @@ const containerStyle = css`
 
 const headingStyle = css`
   font-size: 3.6rem;
-
+  margin: 0;
   @media (max-width: 768px) {
     font-size: 2.4rem;
   }

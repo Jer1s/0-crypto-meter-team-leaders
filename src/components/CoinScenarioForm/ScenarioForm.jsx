@@ -9,10 +9,19 @@ import BuyPriceInput from './BuyPriceInput';
 import CoinTypeDropDown from './CoinTypeDropDown';
 import AddPriceButton from './AddPriceButton';
 
+const FormStyle = css`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5.5rem;
+`;
+
 const submitButtonStyle = css`
-  width: 36.5rem;
-  height: 6.4rem;
+  flex-basis: 6.4rem;
+  flex-shrink: 0;
   background-color: var(--white);
+  border: none;
   border-radius: 3.5rem;
   cursor: pointer;
 
@@ -51,14 +60,6 @@ const addPriceButtonContainerStyle = css`
   @media (max-width: 1199px){
     justify-content: start;
   }
-`;
-
-const FormStyle = css`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 5.5rem;
 `;
 
 const ScenarioForm = ({

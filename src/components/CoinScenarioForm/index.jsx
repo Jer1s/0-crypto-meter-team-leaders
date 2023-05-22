@@ -22,7 +22,8 @@ const containerStyle = css`
   gap: 5.5rem;
   overflow-x: hidden;
   overflow-y: auto;
-
+  overflow-y: overlay;
+  
   &::-webkit-scrollbar {
   width: 0.6rem;
 }
@@ -30,7 +31,6 @@ const containerStyle = css`
   &::-webkit-scrollbar-thumb {
     background-color: var(--gray10);
     border-radius: 0.6rem;
-    height: 21.8rem;
   }
 
   @media (max-width: 1199px) {
