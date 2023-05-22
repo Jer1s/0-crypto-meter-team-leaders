@@ -13,7 +13,7 @@ const navStyle = css`
   padding: 2.8rem 6rem 3.2rem 5.6rem;
   max-width: 192rem;
 
-  @media (min-width: 768px) and (max-width: 1199px) {
+  @media (max-width: 1199px) {
     padding-right: 2.4rem;
     padding-left: 2.8rem;
   }

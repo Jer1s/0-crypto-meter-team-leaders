@@ -6,6 +6,10 @@ const containerStyle = css`
   border-radius: 2.5rem;
   padding: 3.6rem 4.8rem 8rem;
   background-color: var(--white);
+
+  @media (max-width: 1199px) {
+    padding: 0;
+  }
 `;
 
 const headerStyle = css`

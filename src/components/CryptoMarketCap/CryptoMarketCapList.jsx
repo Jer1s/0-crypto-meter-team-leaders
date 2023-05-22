@@ -11,74 +11,105 @@ import PriceChangeChip from './PriceChangeChip';
 const listStyle = css`
   display: flex;
   flex-direction: column;
+  margin: 0;
   padding: 0;
   font-size: 1.5rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: -0.3px;
   color: var(--gray2);
+  overflow-x: auto;
+  overflow-x: overlay;
 `;
 
 const itemStyle = css`
   display: grid;
-  grid-template-columns: 57fr 217fr 165fr 209fr 209fr 146fr 140fr 140fr;
-  grid-auto-flow: column;
+  grid-template-columns: 5.7rem minmax(15.9rem, 1fr) 16.5rem 20.9rem 20.9rem 14.6rem 14rem 14rem;
   align-items: center;
   border-bottom: 0.1rem solid var(--gray8);
-  padding: 2rem 0;
   height: 7.3rem;
 
-  * {
+  & > *:nth-of-type(2) {
+    align-items: center;
+    height: 100%;
+  }
+
+  & > *:nth-of-type(n+3) {
     justify-self: end;
+    text-align: end;
   }
 
-  & > *:nth-of-type(1),
-  & > *:nth-of-type(2) {
-    justify-self: start;
-  }
+  @media (max-width: 1880px) {
+    width: 122rem;
 
-  & > *:nth-of-type(2) {
-    display: grid;
-    grid-template-columns: 3rem 1fr;
-    grid-gap: 1.2rem;
+    & > *:nth-of-type(1) {
+      display: flex;
+      align-items: center;
+      position: sticky;
+      height: 100%;
+      left: 0;
+      background-color: var(--white);
+    }
+    
+    & > *:nth-of-type(2) {
+      position: sticky;
+      left: 5.7rem;
+      background-color: var(--white);
+      border-right: 0.1rem solid var(--gray8);
+      box-shadow: 0.4rem 0 1.5rem var(--market-cap-list-box-shadow);
+    }
+  
+  @media (max-width: 767px) {
+    width: 102rem;
+    grid-template-columns: 2.4rem 11.4rem 16.5rem 17.7rem 17.7rem 12rem 12rem 12rem;
+    font-size: 1.3rem;
+
+    & > *:nth-of-type(2) {
+      left: 2.4rem;
+    }
   }
+}
 `;
 
-const headerStyle = css`
+const cryptoNameStyle = css`
   display: grid;
-  grid-template-columns: 57fr 217fr 165fr 209fr 209fr 146fr 140fr 140fr;
-  border-bottom: 0.1rem solid var(--gray8);
-  padding: 0;
-  padding-bottom: 1.8rem;
-
-  & > * {
-    justify-self: end;
-  }
-
-  & > *:nth-of-type(1),
-  & > *:nth-of-type(2) {
-    justify-self: start;
-  }
+  grid-template-columns: 3rem 1fr;
+  grid-gap: 1.2rem;
 `;
 
 const headerItemStyle = css`
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  color: var(--black);
-  font-weight: 600;
-  font-size: 1.4rem;
-  line-height: 1.8rem;
+  height: 5.2rem;
+  
+  & > * {
+    gap: 0.4rem;
+  }
+
+  & > *:nth-of-type(2) {
+      display: flex;
+      grid-gap: 0;
+    }
+  
+  @media (max-width: 767px) {
+    & > *:first-child {
+      gap: 0;
+    }
+
+    & > *:nth-of-type(2) {
+      padding-left: 0.6rem;
+    }
+  }
 `;
 
 const buttonStyle = css`
   cursor: pointer;
-  display: flex;
   padding: 0;
   border: none;
+  display: flex;
+  align-items: center;
 `;
 
 const secondLineStyle = css`
   font-size: 1.2rem;
+  font-weight: 500;
   color: var(--gray5);
 `;
 
@@ -154,57 +185,47 @@ const CryptoMarketCapList = ({ cryptoList, clickHandlers, order }) => {
     setSrcList(updatedSrcList);
   }, [order]);
 
+  const headerItems = [
+    {
+      label: '#', clickHandler: clickHandlers.marketCapRankSort, srcIndex: 0, alt: 'Order',
+    },
+    {
+      label: '화폐 이름', clickHandler: clickHandlers.nameSort, srcIndex: 1, alt: 'Order',
+    },
+    {
+      label: '가격', clickHandler: clickHandlers.currentPriceSort, srcIndex: 2, alt: 'Order',
+    },
+    {
+      label: '총 시가', clickHandler: clickHandlers.marketCapSort, srcIndex: 3, alt: 'Order',
+    },
+    {
+      label: '24시간 거래량', clickHandler: clickHandlers.totalVolumeSort, srcIndex: 4, alt: 'Order',
+    },
+    {
+      label: '1시간 변동폭', clickHandler: clickHandlers.pc1hSort, srcIndex: 5, alt: 'Order',
+    },
+    {
+      label: '24시간 변동폭', clickHandler: clickHandlers.pc24hSort, srcIndex: 6, alt: 'Order',
+    },
+    {
+      label: '7일 변동폭', clickHandler: clickHandlers.pc7dSort, srcIndex: 7, alt: 'Order',
+    },
+  ];
+
   return (
     <ul css={listStyle}>
-      <li css={headerStyle}>
-        <div css={headerItemStyle}>
-          <button type="button" onClick={clickHandlers.marketCapRankSort} css={buttonStyle}>
-            #
-            <img src={srcList[0]} alt="Order" />
-          </button>
-        </div>
-        <div css={headerItemStyle}>
-          <button type="button" onClick={clickHandlers.nameSort} css={buttonStyle}>
-            화폐 이름
-            <img src={srcList[1]} alt="Order" />
-          </button>
-        </div>
-        <div css={headerItemStyle}>
-          <button type="button" onClick={clickHandlers.currentPriceSort} css={buttonStyle}>
-            가격
-            <img src={srcList[2]} alt="Order" />
-          </button>
-        </div>
-        <div css={headerItemStyle}>
-          <button type="button" onClick={clickHandlers.marketCapSort} css={buttonStyle}>
-            총 시가
-            <img src={srcList[3]} alt="Order" />
-          </button>
-        </div>
-        <div css={headerItemStyle}>
-          <button type="button" onClick={clickHandlers.totalVolumeSort} css={buttonStyle}>
-            24시간 거래량
-            <img src={srcList[4]} alt="Order" />
-          </button>
-        </div>
-        <div css={headerItemStyle}>
-          <button type="button" onClick={clickHandlers.pc1hSort} css={buttonStyle}>
-            1시간 변동폭
-            <img src={srcList[5]} alt="Order" />
-          </button>
-        </div>
-        <div css={headerItemStyle}>
-          <button type="button" onClick={clickHandlers.pc24hSort} css={buttonStyle}>
-            24시간 변동폭
-            <img src={srcList[6]} alt="Order" />
-          </button>
-        </div>
-        <div css={headerItemStyle}>
-          <button type="button" onClick={clickHandlers.pc7dSort} css={buttonStyle}>
-            7일 변동폭
-            <img src={srcList[7]} alt="Order" />
-          </button>
-        </div>
+      <li css={[itemStyle, headerItemStyle]}>
+        {headerItems.map((item) => {
+          const {
+            label, clickHandler, srcIndex, alt,
+          } = item;
+          return (
+            <button key={srcIndex} type="button" onClick={clickHandler} css={buttonStyle}>
+              {label}
+              <img src={srcList[srcIndex]} alt={alt} />
+            </button>
+          );
+        })}
       </li>
       {cryptoList.map((item) => {
         const currentPrice = formatPrice(item.currentPrice);
@@ -213,8 +234,10 @@ const CryptoMarketCapList = ({ cryptoList, clickHandlers, order }) => {
         const volumePerPrice = item.volumePerPrice.toLocaleString();
         return (
           <li key={item.marketCapRank} css={itemStyle}>
-            <div>{item.marketCapRank}</div>
             <div>
+              {item.marketCapRank}
+            </div>
+            <div css={cryptoNameStyle}>
               <img src={item.image} alt={`${item.id} Symbol`} css={imageStyle} />
               <div>
                 {item.name}
