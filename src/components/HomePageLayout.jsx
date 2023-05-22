@@ -58,7 +58,7 @@ const mainStyle = css`
 
   @media (max-width: 1199px) {
     padding: 0;
-    width: 90%;
+    width: 100%;
     
     &:last-child {
       padding-top: 8rem;
