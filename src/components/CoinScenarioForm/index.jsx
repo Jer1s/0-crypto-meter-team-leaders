@@ -20,7 +20,19 @@ const containerStyle = css`
   display:flex;
   flex-direction: column;
   gap: 5.5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
 
+  &::-webkit-scrollbar {
+  width: 0.6rem;
+}
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--gray10);
+    border-radius: 0.6rem;
+    height: 21.8rem;
+  }
+  
   @media (max-width: 1199px) {
     max-width: none;
     height: 100%;
@@ -38,24 +50,24 @@ const FilterButtonStyle = css`
   @media (max-width: 1199px) {
     position: absolute;
     display: block;
+    top: 2.4rem;
+    right: 2.4rem;
+    margin: 0 1rem;
+
     button {
       padding: 0;
       border: 0;
       outline:0;
       border-radius: 3rem;
       background-color: var(--gray3);
-    }
-    top: 2.4rem;
-    right: 2.4rem;
-    margin: 0 10px;
-    button {
       width: 3.2rem;
       height: 3.2rem;
     }
 
+
     img {
-      width: 16px;
-      height: 12px
+      width: 1.6rem;
+      height: 1.2rem
     }
   }
 
@@ -68,8 +80,8 @@ const FilterButtonStyle = css`
     }
 
     img {
-      width: 14px;
-      height: 10.5px;
+      width: 1.4rem;
+      height: 1.05rem;
     }
   }
 

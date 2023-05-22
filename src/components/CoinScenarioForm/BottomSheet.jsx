@@ -26,7 +26,7 @@ const Puller = styled.div`
   width: 8rem;
   height: 0.6rem;
   background-color: var(--gray7);
-  border-radius: 3px;
+  border-radius: 0.3rem;
   margin: 0 auto;
 `;
 

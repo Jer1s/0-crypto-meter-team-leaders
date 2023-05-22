@@ -7,10 +7,9 @@ import { BASE_CURRENCY, EXCHANGE_RATE } from 'utils/constants';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import { useRecoilValue } from 'recoil';
 
-const h1Style = css`
-  font-size: 3.6rem;
-  color : var(--gray5);
-  margin : 0;
+const containerStyle = css`
+  color: var(--gray5);
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
@@ -21,13 +20,9 @@ const h1Style = css`
     gap: 0.7rem;
   }
 
-  span {
-    color: var(--white);
-  }
-
   @media (max-width: 1199px) {
-    .description-line{
-      display: flex; 
+    .description-line {
+      display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       gap: 1.1rem;
@@ -36,9 +31,19 @@ const h1Style = css`
 
   @media (max-width: 768px) {
     display: flex;
-    flex-direction: column;    
+    flex-direction: column;
+  }
+`;
+
+const headingStyle = css`
+  font-size: 3.6rem;
+  span {
+    color: var(--white);
+  }
+
+  @media (max-width: 768px) {
     font-size: 2.4rem;
-  }  
+  }
 `;
 
 const ScenarioDescription = ({
@@ -50,27 +55,28 @@ const ScenarioDescription = ({
   const formattedPrice = formatPrice(convertedToKRW);
 
   return (
-    <h1 css={h1Style}>
-      <div className="description-line">
-        <div>
-          내가 만약
+    <div css={containerStyle}>
+      <h1 css={headingStyle}>
+        <div className="description-line">
+          <div>
+            내가 만약
+          </div>
+          <span>
+            {`${year}년 ${month}월 ${day}일에`}
+          </span>
         </div>
-        <span>
-          {`${year}년 ${month}월 ${day}일에`}
-        </span>
-      </div>
-      <div className="description-line">
-        <div>
-          <span>{formattedPrice}</span>
-          으로
+        <div className="description-line">
+          <div>
+            <span>{formattedPrice}</span>
+            으로
+          </div>
+          <div>
+            <span>{selectedCoin.name}</span>
+            을 샀다면,
+          </div>
         </div>
-        <div>
-          <span>{selectedCoin.name}</span>
-          을 샀다면,
-        </div>
-
-      </div>
-    </h1>
+      </h1>
+    </div>
   );
 };
 

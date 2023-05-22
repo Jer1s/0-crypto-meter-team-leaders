@@ -45,13 +45,11 @@ const buyPriceInputStyle = css`
 
 const addPriceButtonContainerStyle = css`
   display: flex;
-  flex-direction: row;
   gap: 0.8rem;
   justify-content: end;
 
   @media (max-width: 1199px){
     justify-content: start;
-
   }
 `;
 
@@ -60,6 +58,7 @@ const FormStyle = css`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 5.5rem;
 `;
 const ScenarioForm = ({
   formProps,
@@ -94,7 +93,6 @@ const ScenarioForm = ({
         <CoinTypeDropDown selectedCoin={selectedCoin} onCoinSelect={setSelectedCoin} />
       </div>
       <button type="submit" css={submitButtonStyle} onClick={handleSubmit}>오늘 얼마가 되었을까?</button>
-
     </form>
 
   );
