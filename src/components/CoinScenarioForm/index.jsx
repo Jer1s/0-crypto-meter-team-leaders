@@ -146,7 +146,7 @@ const CoinScenarioForm = () => {
         day={day}
         selectedCoin={selectedCoin}
         price={buyPrice}
-        onBottomSheetClick={viewportType !== 'Desktop' && handleBottomSheetClick}
+        onBottomSheetClick={viewportType !== 'Desktop' ? handleBottomSheetClick : undefined}
       />
       {viewportType === 'Desktop'
         ? (
