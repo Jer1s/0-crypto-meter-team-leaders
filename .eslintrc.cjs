@@ -7,6 +7,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'airbnb',
     'plugin:jsx-a11y/recommended',
+    'plugin:@tanstack/eslint-plugin-query/recommended',
   ],
   parserOptions: {
     ecmaFeatures: { jsx: true },
@@ -14,7 +15,7 @@ module.exports = {
     sourceType: 'module',
   },
   settings: { react: { version: '18.2' } },
-  plugins: ['react', 'react-hooks', 'react-refresh', 'jsx-a11y', '@emotion'],
+  plugins: ['react', 'react-hooks', 'react-refresh', 'jsx-a11y', '@emotion', '@tanstack/query'],
   rules: {
     'react-refresh/only-export-components': 'warn',
     'react/function-component-definition': [
@@ -35,5 +36,7 @@ module.exports = {
     'arrow-body-style': ['error', 'always'],
     'import/no-unresolved': 'off',
     '@emotion/pkg-renaming': 'error',
+    '@tanstack/query/exhaustive-deps': 'error',
+    '@tanstack/query/prefer-query-object-syntax': 'error',
   },
 };
