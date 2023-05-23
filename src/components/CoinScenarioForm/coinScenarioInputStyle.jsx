@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 export const coinScenarioInputStyle = css`
   position : relative;
 
-  & .inputBox{
+  & .inputBox {
   padding: 0 2.5rem;
   width: 100%;
   height: 7.4rem;

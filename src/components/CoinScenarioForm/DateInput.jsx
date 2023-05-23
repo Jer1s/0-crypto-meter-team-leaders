@@ -15,6 +15,12 @@ const DateInput = ({ selectedDate, onSelectedDate }) => {
     onSelectedDate(date);
   };
 
+  const filterPassedTime = (date) => {
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+    return date <= currentDate;
+  };
+
   return (
     <div css={coinScenarioInputStyle}>
       <DatePicker
@@ -24,6 +30,7 @@ const DateInput = ({ selectedDate, onSelectedDate }) => {
         placeholderText="년/월/일"
         dateFormat="yyyy년 MM월 dd일"
         shouldCloseOnSelect
+        filterDate={filterPassedTime}
       />
       <p>
         <img src={viewportType === 'Desktop' ? whiteInvertedTriangleIcon : invertedTriangleIcon} alt="Drop Down Triangle Icon" />
