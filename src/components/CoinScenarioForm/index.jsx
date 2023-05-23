@@ -7,6 +7,8 @@ import { useState, useEffect } from 'react';
 import useResponsiveView from 'hooks/useResponsiveView';
 import filter from 'assets/filter.svg';
 import { useQuery } from '@tanstack/react-query';
+import getCurrentDate from 'utils/getCurrentDate';
+import searchHistoryAtom from 'recoils/searchHistory/searchHistoryAtom';
 import ScenarioDescription from './ScenarioDescription';
 import ScenarioForm from './ScenarioForm';
 import BottomSheet from './BottomSheet';
@@ -105,8 +107,10 @@ const calculatePriceDiff = (currentPrice, historyPrice, selectedPrice) => {
 
   return { currentTotalCost, isSkyrocketed };
 };
+
 const CoinScenarioForm = () => {
   const setScenarioData = useSetRecoilState(scenarioDataAtom);
+  const setSearchHistory = useSetRecoilState(searchHistoryAtom);
   const viewportType = useResponsiveView();
 
   const [selectedDate, setSelectedDate] = useState(null);
@@ -128,15 +132,14 @@ const CoinScenarioForm = () => {
   useEffect(() => {
     if (!historyPrice) return;
 
-    const obj = calculatePriceDiff(
+    const scenarioInputData = calculatePriceDiff(
       selectedCoin.current_price,
       historyPrice.market_data.current_price.krw,
       buyPrice,
     );
-    const { currentTotalCost, isSkyrocketed } = obj;
-    const date = new Date();
+    const { currentTotalCost, isSkyrocketed } = scenarioInputData;
 
-    setScenarioData({
+    const newScenarioData = {
       input: {
         date: { year, month, day },
         price: buyPrice,
@@ -146,9 +149,12 @@ const CoinScenarioForm = () => {
       output: {
         outputPrice: currentTotalCost,
         isSkyrocketed,
-        outputDate: { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() },
+        outputDate: getCurrentDate(),
       },
-    });
+    };
+
+    setScenarioData(newScenarioData);
+    setSearchHistory((prevHistory) => { return [...prevHistory, newScenarioData]; });
   }, [historyPrice]);
 
   const handleSubmit = async (event) => {
