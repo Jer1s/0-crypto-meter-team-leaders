@@ -5,6 +5,8 @@ import MainContainer from 'components/MainContainer';
 import useCoinsMarketsJeris from 'hooks/useCoinsMarketsJeris'
 import CryptoMarketCapList from './CryptoMarketCapList';
 import { useQueryClient } from '@tanstack/react-query';
+import parseMarketCapData from 'utils/parseMarketCapData';
+import getCoinsMarkets from 'api/getCoinsMarkets';
 
 const headerStyle = css`
   margin: 0;
@@ -14,8 +16,9 @@ const headerStyle = css`
 
 const CryptoMarketCap = () => {
   const queryClient = useQueryClient();
-  const [page, setPage] = useState(11);
+  const [page, setPage] = useState(1);
   const { status, data, error, isPreviousData } = useCoinsMarketsJeris(page);
+
   const [cryptoList, setCryptoList] = useState([]);
   const [order, setOrder] = useState('marketCapRank');
 
@@ -112,7 +115,8 @@ const CryptoMarketCap = () => {
 
   const handleLoad = async () => {
     if (data) {
-      setCryptoList(data);
+      const parsedData = parseMarketCapData(data);
+      setCryptoList(parsedData);
     }
   }
 
@@ -121,10 +125,13 @@ const CryptoMarketCap = () => {
   }, [data, page, order]);
   
   useEffect(() => {
-    if (!isPreviousData && data?.hasMore) {
-      queryClient.prefetchQuery(['coinsMarkets', page + 1], useCoinsMarketsJeris);
+    if (!isPreviousData && page < 101) {
+      queryClient.prefetchQuery({
+        queryKey: ['coinsMarkets', page + 1],
+        queryFn: () => getCoinsMarkets(page + 1),
+      })
     }
-  }, [data, isPreviousData, page, queryClient]);
+  }, [isPreviousData, page, queryClient]);
 
   return (
     <MainContainer>
@@ -147,7 +154,7 @@ const CryptoMarketCap = () => {
         </div>
         <div>Current Page: {page}</div>
         <button onClick={() => setPage((old) => Math.max(old - 1, 1))}>prev Page</button>
-        <button onClick={() => setPage((old) => data.hasMore ? old + 1 : old)}>Next Page</button>
+        <button onClick={() => setPage((old) => old + 1)}>Next Page</button>
       </div>
     </MainContainer>
   );

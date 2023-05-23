@@ -233,9 +233,9 @@ const CryptoMarketCapList = ({ cryptoList, clickHandlers, order }) => {
         const totalVolume = item.totalVolume ? formatPrice(item.totalVolume) : '-';
         const volumePerPrice = item.volumePerPrice ? item.volumePerPrice.toLocaleString() : '-';
         return (
-          <li key={item.marketCapRank} css={itemStyle}>
+          <li key={item.id} css={itemStyle}>
             <div>
-              {item.marketCapRank}
+              {item.marketCapRank || '-'}
             </div>
             <div css={cryptoNameStyle}>
               <img src={item.image} alt={`${item.id} Symbol`} css={imageStyle} />
