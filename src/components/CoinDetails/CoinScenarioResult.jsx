@@ -44,6 +44,8 @@ const currentDateStyle = css`
   margin: 0;
 `;
 
+const today = new Date();
+
 const CoinScenarioResult = () => {
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const scenarioData = useRecoilValue(scenarioDataAtom);
@@ -62,7 +64,7 @@ const CoinScenarioResult = () => {
         </span>
         입니다.
       </p>
-      <p css={currentDateStyle}>{`(${outputDate.year}년 ${outputDate.month}월 ${outputDate.day}일 오전 ${outputDate.hour}시 기준)`}</p>
+      <p css={currentDateStyle}>{`(${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일 ${today.getHours() >= 12 ? '오후' : '오전'} ${today.getHours() >= 12 ? today.getHours() - 12 : today.getHours()}시 기준)`}</p>
     </>
   );
 };

@@ -66,7 +66,6 @@ const tooltipStyle = css`
 // eslint-disable-next-line consistent-return
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
-    console.log(active, payload);
     const { filteredDate, price } = payload[0].payload;
     return (
       <div css={tooltipStyle}>
