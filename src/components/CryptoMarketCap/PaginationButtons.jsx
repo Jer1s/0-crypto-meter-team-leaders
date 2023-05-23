@@ -6,16 +6,26 @@ import gt from 'assets/gt.svg'
 
 const containerStyle = css`
   display: flex;
-  width: 100%;
-  height: 2.2rem;
-  gap: 1rem;
+  justify-content: center;
+  gap: 1.2rem;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+  letter-spacing: 0.3rem;
 
   button {
     cursor: pointer;
     border: none;
-    padding: 0;
-    text-align: start;
+    padding: 0.2 0.75rem;
     color: var(--gray2);
+
+    img {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+
+    @media (max-width: 1199px) {
+    margin-bottom: 10rem;
+  }
   }
 
   button:disabled {
@@ -26,6 +36,7 @@ const containerStyle = css`
 
 const currentPageStyle = css`
   background-color: var(--primary);
+  border-radius: 0.4rem;
 `;
 
 const PaginationButtons = ({ totalPages, currentPage, onPageChange }) => {

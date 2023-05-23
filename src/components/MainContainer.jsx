@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const containerStyle = css`
   border-radius: 2.5rem;
-  padding: 3.6rem 4.8rem 8rem;
+  padding: 3.6rem 4.8rem 6rem;
   background-color: var(--white);
 
   @media (max-width: 1199px) {

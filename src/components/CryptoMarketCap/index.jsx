@@ -15,6 +15,18 @@ const headerStyle = css`
   letter-spacing: -0.3px;
 `;
 
+const tableMarginStyle = css`
+  margin-bottom: 3.2rem;
+
+  @media (max-width: 1199px) {
+    margin-bottom: 3.6rem;
+  }
+
+  @media (max-width: 767px) {
+    margin-bottom: 3.1rem;
+  }
+`;
+
 const CryptoMarketCap = () => {
   const queryClient = useQueryClient();
   const [currentPage, setCurrentPage] = useState(1);
@@ -144,7 +156,7 @@ const CryptoMarketCap = () => {
         <h2 css={headerStyle}>전체 암호화폐 시세</h2>
       </div>
       <div key="bodyContent">
-        <div>
+        <div css={tableMarginStyle}>
           {status === 'loading' ? (
             <div>Loading...</div>
           ) : status === 'error' ? (
