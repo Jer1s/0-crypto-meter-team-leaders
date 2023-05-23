@@ -11,12 +11,12 @@ const containerStyle = css`
   font-size: 1.4rem;
   line-height: 1.8rem;
   letter-spacing: 0.3rem;
+  color: var(--gray2);
 
   button {
     cursor: pointer;
     border: none;
     padding: 0.2 0.75rem;
-    color: var(--gray2);
 
     img {
       width: 1.2rem;
@@ -27,16 +27,12 @@ const containerStyle = css`
     margin-bottom: 10rem;
   }
   }
-
-  button:disabled {
-    color: inherit;
-    cursor: auto;
-  }
 `;
 
 const currentPageStyle = css`
   background-color: var(--primary);
   border-radius: 0.4rem;
+  color: var(--white);
 `;
 
 const PaginationButtons = ({ totalPages, currentPage, onPageChange }) => {
