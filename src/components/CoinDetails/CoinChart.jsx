@@ -21,6 +21,7 @@ import useInitialTerm from 'hooks/useInitialTerm';
 import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
 const PRO_API_KEY = import.meta.env.VITE_X_CG_PRO_API_KEY;
+const PRO_BASE_URL = import.meta.env.VITE_PRO_BASE_URL;
 
 const containerStyle = css`
   max-width: 91rem;
@@ -97,7 +98,7 @@ const CoinChart = () => {
   const { isSkyrocketed } = output;
 
   const getChart = async () => {
-    const response = await fetch(`https://pro-api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=krw&days=${selectedTerm.term}`, {
+    const response = await fetch(`${PRO_BASE_URL}/coins/${cryptoId}/market_chart?vs_currency=krw&days=${selectedTerm.term}`, {
       headers: {
         'Content-Type': 'application/json',
         'x-cg-pro-api-key': PRO_API_KEY,
