@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState, useEffect, useRef, useCallback,
+} from 'react';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import whiteInvertedTriangleIcon from 'assets/white-inverted-triangle.svg';
@@ -10,7 +12,6 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { coinScenarioInputStyle } from './coinScenarioInputStyle';
 
 const PRO_BASE_URL = import.meta.env.VITE_PRO_BASE_URL;
-const BASE_URL = import.meta.env.VITE_BASE_URL;
 const PRO_API_KEY = import.meta.env.VITE_X_CG_PRO_API_KEY;
 
 const dropDownBoxStyle = css`
@@ -87,7 +88,6 @@ const dropDownItemStyle = css`
 `;
 
 const fetchItems = async ({ pageParam = 1 }) => {
-  console.log(pageParam);
   const response = await fetch(
     `${PRO_BASE_URL}/coins/markets?vs_currency=krw&order=market_cap_desc&per_page=10&page=${pageParam}&sparkline=false&locale=en`,
     {
@@ -102,8 +102,6 @@ const fetchItems = async ({ pageParam = 1 }) => {
 const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
   const {
     data,
-    isLoading,
-    isError,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
@@ -120,7 +118,6 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const lastItemRef = useRef(null);
-  console.log(lastItemRef);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -151,12 +148,12 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
     onCoinSelect(data.pages[0][0]);
   }, [data, onCoinSelect]);
 
-  const handleIntersection = (entries) => {
+  const handleIntersection = useCallback((entries) => {
     const target = entries[0];
     if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  };
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(handleIntersection, {
@@ -170,7 +167,8 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
         observer.unobserve(lastItemRef.current);
       }
     };
-  }, [isOpen, lastItemRef.current, fetchNextPage, hasNextPage, isFetchingNextPage]);
+  }, [isOpen, fetchNextPage,
+    hasNextPage, isFetchingNextPage, handleIntersection]);
 
   return (
     <div ref={dropdownRef} css={css`display:flex; flex-direction: column; gap: 0.4rem;`}>
@@ -202,8 +200,7 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
                   return (
                     <li
                       key={coins.id}
-                      // ref={isLastItem ? lastItemRef : null}
-                      ref={lastItemRef}
+                      ref={isLastItem ? lastItemRef : null}
                     >
                       <button
                         type="button"
