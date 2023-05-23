@@ -7,6 +7,7 @@ import useResponsiveView from 'hooks/useResponsiveView';
 /** @jsxImportSource @emotion/react */
 import whiteInvertedTriangleIcon from 'assets/white-inverted-triangle.svg';
 import invertedTriangleIcon from 'assets/inverted-triangle.svg';
+import ko from 'date-fns/locale/ko';
 import { coinScenarioInputStyle } from './coinScenarioInputStyle';
 
 const DateInput = ({ selectedDate, onSelectedDate }) => {
@@ -15,11 +16,7 @@ const DateInput = ({ selectedDate, onSelectedDate }) => {
     onSelectedDate(date);
   };
 
-  const filterPassedTime = (date) => {
-    const currentDate = new Date();
-    currentDate.setHours(0, 0, 0, 0);
-    return date <= currentDate;
-  };
+  console.log(selectedDate);
 
   return (
     <div css={coinScenarioInputStyle}>
@@ -30,7 +27,8 @@ const DateInput = ({ selectedDate, onSelectedDate }) => {
         placeholderText="년/월/일"
         dateFormat="yyyy년 MM월 dd일"
         shouldCloseOnSelect
-        filterDate={filterPassedTime}
+        maxDate={new Date()}
+        locale={ko}
       />
       <p>
         <img src={viewportType === 'Desktop' ? whiteInvertedTriangleIcon : invertedTriangleIcon} alt="Drop Down Triangle Icon" />
