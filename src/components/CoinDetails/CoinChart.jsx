@@ -35,8 +35,21 @@ const containerStyle = css`
   align-items: end;
   @media (max-width: 767px) {
     align-items: start;
-
   }
+`;
+
+const chipContainerStyle = css`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  
+  @media (max-width: 430px) {
+    flex-wrap: wrap;
+    div:nth-of-type(1) button {
+      margin-bottom: 0
+    }
+  }
+  
 `;
 
 const tooltipStyle = css`
@@ -87,7 +100,7 @@ const CoinChart = () => {
   if (viewportType === 'Desktop') {
     viewportType = 3.2;
   } else if (viewportType === 'Tablet') {
-    viewportType = 3.55;
+    viewportType = 3.2;
   } else if (viewportType === 'Mobile') {
     viewportType = 3.4;
   } else {
@@ -126,19 +139,23 @@ const CoinChart = () => {
     return `${meridiem === 'AM' ? '오전' : '오후'} ${hour}시`;
   };
 
-  const abc = selectedType.term || 'prices';
+  const type = selectedType.term || 'prices';
 
   // Y축 레이블 포맷 함수
   const formatYAxisLabel = (value) => {
+    if (value >= 1000000000000) {
+      return `${value / 1000000000000}조`;
+    }
+    if (value >= 100000000) {
+      return `${value / 100000000}억`;
+    }
     if (value >= 10000) {
       return `${value / 10000}만`;
     }
     return `${value}원`;
   };
 
-  console.log(coinPriceList);
-
-  const convertCoinNestedArrayToObject = useCallback(coinPriceList[abc]?.map((item) => {
+  const convertCoinNestedArrayToObject = useCallback(coinPriceList[type]?.map((item) => {
     return {
       date: fomattingTerm(item[0]),
       price: item[1],
@@ -148,16 +165,18 @@ const CoinChart = () => {
 
   return (
     <div css={containerStyle}>
-      <CategoryButtonChipContainer
-        selected={selectedType}
-        setSelected={setSelectedType}
-        list={typeList}
-      />
-      <CategoryButtonChipContainer
-        selected={selectedTerm}
-        setSelected={setSelectedTerm}
-        list={termList}
-      />
+      <div css={chipContainerStyle}>
+        <CategoryButtonChipContainer
+          selected={selectedType}
+          setSelected={setSelectedType}
+          list={typeList}
+        />
+        <CategoryButtonChipContainer
+          selected={selectedTerm}
+          setSelected={setSelectedTerm}
+          list={termList}
+        />
+      </div>
       <ResponsiveContainer>
         <AreaChart
           data={convertCoinNestedArrayToObject}

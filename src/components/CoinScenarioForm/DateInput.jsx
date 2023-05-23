@@ -16,8 +16,6 @@ const DateInput = ({ selectedDate, onSelectedDate }) => {
     onSelectedDate(date);
   };
 
-  console.log(selectedDate);
-
   return (
     <div css={coinScenarioInputStyle}>
       <DatePicker

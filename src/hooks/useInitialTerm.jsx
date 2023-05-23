@@ -8,6 +8,7 @@ const useInitialTerm = (data) => {
     const inputDate = new Date(input.date.year, input.date.month - 1, input.date.day).getTime();
     const outputDate = new Date(output.outputDate.year, output.outputDate.month - 1, output.outputDate.day).getTime();
     const timeDiff = parseInt((outputDate - inputDate) / 1000 / 60 / 60); // 단위 시간
+
     switch (true) {
       case (timeDiff >= 1 && timeDiff <= 24):
         // 1시간 이상

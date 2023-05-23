@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const chipStyle = ({ text, selectedTerm }) => {
   return css`
-    /* width: 4.4rem; */
+    min-width: 4.4rem;
     height: 2.6rem;
     border-radius: 2.1rem;
     font-size: 1.4rem;

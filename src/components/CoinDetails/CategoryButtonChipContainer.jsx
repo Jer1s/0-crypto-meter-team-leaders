@@ -19,11 +19,11 @@ const CategoryButtonChipContainer = ({ selected, setSelected, list }) => {
 };
 
 CategoryButtonChipContainer.propTypes = {
-  selectedTerm: PropTypes.shape({
+  selected: PropTypes.shape({
     term: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
   }),
-  setSelectedTerm: PropTypes.func.isRequired,
+  setSelected: PropTypes.func.isRequired,
 };
 
 export default CategoryButtonChipContainer;
