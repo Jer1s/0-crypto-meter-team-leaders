@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import {
@@ -24,6 +24,7 @@ const PRO_API_KEY = import.meta.env.VITE_X_CG_PRO_API_KEY;
 const PRO_BASE_URL = import.meta.env.VITE_PRO_BASE_URL;
 
 const termList = [{ text: '전체', term: 'max' }, { text: '1년', term: '365' }, { text: '1개월', term: '30' }, { text: '1주', term: '7' }, { text: '1일', term: '1' }];
+const typeList = [{ text: '코인가격', term: 'prices' }, { text: '시가총액', term: 'market_caps' }, { text: '총거래량', term: 'total_volumes' }];
 
 const containerStyle = css`
   max-width: 91rem;
@@ -95,6 +96,7 @@ const CoinChart = () => {
 
   const data = useRecoilValue(scenarioDataAtom);
   const [selectedTerm, setSelectedTerm] = useInitialTerm(data);
+  const [selectedType, setSelectedType] = useState({ text: '코인가격', term: 'prices' });
   const { input, output } = data;
   const { cryptoId } = input;
   const { isSkyrocketed } = output;
@@ -109,7 +111,7 @@ const CoinChart = () => {
     return response.json();
   };
 
-  const { data: coinPriceList } = useQuery(['chart', cryptoId, selectedTerm.term], getChart, {
+  const { data: coinPriceList = { prices: [] } } = useQuery(['chart', cryptoId, selectedTerm.term], getChart, {
     keepPreviousData: true,
   });
 
@@ -124,13 +126,7 @@ const CoinChart = () => {
     return `${meridiem === 'AM' ? '오전' : '오후'} ${hour}시`;
   };
 
-  const convertCoinNestedArrayToObject = useCallback(coinPriceList?.prices?.map((item) => {
-    return {
-      date: fomattingTerm(item[0]),
-      price: item[1],
-      filteredDate: moment(item[0]).format('YYYY년 M월 D일'),
-    };
-  }), [coinPriceList]);
+  const abc = selectedType.term || 'prices';
 
   // Y축 레이블 포맷 함수
   const formatYAxisLabel = (value) => {
@@ -140,8 +136,23 @@ const CoinChart = () => {
     return `${value}원`;
   };
 
+  console.log(coinPriceList);
+
+  const convertCoinNestedArrayToObject = useCallback(coinPriceList[abc]?.map((item) => {
+    return {
+      date: fomattingTerm(item[0]),
+      price: item[1],
+      filteredDate: moment(item[0]).format('YYYY년 M월 D일'),
+    };
+  }), [coinPriceList, selectedTerm, selectedType]);
+
   return (
     <div css={containerStyle}>
+      <CategoryButtonChipContainer
+        selected={selectedType}
+        setSelected={setSelectedType}
+        list={typeList}
+      />
       <CategoryButtonChipContainer
         selected={selectedTerm}
         setSelected={setSelectedTerm}
