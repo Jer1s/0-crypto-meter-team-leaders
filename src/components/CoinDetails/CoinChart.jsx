@@ -1,9 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import styles from 'components/CoinDetails/CoinChart';
 import {
   AreaChart,
   XAxis,
@@ -14,10 +13,11 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-import useFetch from 'hooks/useFetch';
 import { useRecoilValue } from 'recoil';
 import useResponsiveView from 'hooks/useResponsiveView';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
+import { useQuery } from 'react-query';
+import useInitialTerm from 'hooks/useInitialTerm';
 import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
 const containerStyle = css`
@@ -89,12 +89,20 @@ const CoinChart = () => {
   }
 
   const data = useRecoilValue(scenarioDataAtom);
+  const [selectedTerm, setSelectedTerm] = useInitialTerm(data);
   const { input, output } = data;
   const { cryptoId } = input;
   const { isSkyrocketed } = output;
-  const [selectedTerm, setSelectedTerm] = useState({ text: '전체', term: 'max' });
+
   const url = `https://api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=krw&days=${selectedTerm.term}`;
-  const { data: coinPriceList } = useFetch(url);
+
+  const getChart = async () => {
+    const response = await fetch(`https://api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=krw&days=${selectedTerm.term}`);
+    return response.json();
+  };
+  const { data: coinPriceList } = useQuery(['chart', cryptoId, selectedTerm.term], getChart, {
+    keepPreviousData: true,
+  });
 
   const fomattingTerm = (date) => {
     if (selectedTerm.term === 'max' || selectedTerm.term === '365') {
