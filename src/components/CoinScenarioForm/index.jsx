@@ -101,7 +101,7 @@ const fetchHistoryData = async (date, cointype) => {
 
 const calculatePriceDiff = (currentPrice, historyPrice, selectedPrice) => {
   const currentTotalCost = (selectedPrice / historyPrice) * currentPrice;
-  const isSkyrocketed = (selectedPrice - currentTotalCost) >= 0;
+  const isSkyrocketed = (selectedPrice - currentTotalCost) <= 0;
 
   return { currentTotalCost, isSkyrocketed };
 };
@@ -134,6 +134,8 @@ const CoinScenarioForm = () => {
       buyPrice,
     );
     const { currentTotalCost, isSkyrocketed } = obj;
+    const date = new Date();
+
     setScenarioData({
       input: {
         date: { year, month, day },
@@ -144,7 +146,7 @@ const CoinScenarioForm = () => {
       output: {
         outputPrice: currentTotalCost,
         isSkyrocketed,
-        outputDate: { year: 2023, month: 5, day: 19 },
+        outputDate: { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() },
       },
     });
   }, [historyPrice]);
@@ -152,7 +154,6 @@ const CoinScenarioForm = () => {
   const handleSubmit = async (event) => {
     setIsBottomSheetOpen(!isBottomSheetOpen);
     event.preventDefault();
-    // const historyPrice = await fetchHistoryData(`${day}-${month}-${year}`, selectedCoin.id);
     refetch();
   };
   const handleBottomSheetClick = () => {
