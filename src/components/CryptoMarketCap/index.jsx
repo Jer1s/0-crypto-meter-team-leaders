@@ -7,6 +7,7 @@ import CryptoMarketCapList from './CryptoMarketCapList';
 import { useQueryClient } from '@tanstack/react-query';
 import parseMarketCapData from 'utils/parseMarketCapData';
 import getCoinsMarkets from 'api/getCoinsMarkets';
+import PaginationButtons from './PaginationButtons';
 
 const headerStyle = css`
   margin: 0;
@@ -16,8 +17,8 @@ const headerStyle = css`
 
 const CryptoMarketCap = () => {
   const queryClient = useQueryClient();
-  const [page, setPage] = useState(1);
-  const { status, data, error, isPreviousData } = useCoinsMarketsJeris(page);
+  const [currentPage, setCurrentPage] = useState(1);
+  const { status, data, error, isPreviousData } = useCoinsMarketsJeris(currentPage);
 
   const [cryptoList, setCryptoList] = useState([]);
   const [order, setOrder] = useState('marketCapRank');
@@ -122,16 +123,20 @@ const CryptoMarketCap = () => {
 
   useEffect(() => {
     handleLoad();
-  }, [data, page, order]);
+  }, [data, currentPage, order]);
   
   useEffect(() => {
-    if (!isPreviousData && page < 101) {
+    if (!isPreviousData && currentPage < 101) {
       queryClient.prefetchQuery({
-        queryKey: ['coinsMarkets', page + 1],
-        queryFn: () => getCoinsMarkets(page + 1),
+        queryKey: ['coinsMarkets', currentPage + 1],
+        queryFn: () => getCoinsMarkets(currentPage + 1),
       })
     }
-  }, [isPreviousData, page, queryClient]);
+  }, [isPreviousData, currentPage, queryClient]);
+
+  const handlecurrentPageChange = (page) => {
+    setCurrentPage(page);
+  }
 
   return (
     <MainContainer>
@@ -152,9 +157,7 @@ const CryptoMarketCap = () => {
           />
           )}
         </div>
-        <div>Current Page: {page}</div>
-        <button onClick={() => setPage((old) => Math.max(old - 1, 1))}>prev Page</button>
-        <button onClick={() => setPage((old) => old + 1)}>Next Page</button>
+        <PaginationButtons totalPages={100} currentPage={currentPage} onPageChange={handlecurrentPageChange} />
       </div>
     </MainContainer>
   );
