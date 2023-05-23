@@ -192,9 +192,9 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
       <div css={[dropDownBoxStyle, dropDownListContainerStyle]}>
         {isOpen && (
           <ul css={dropDownListStyle}>
-            {data.pages
-              && data.pages.map((page, pageIndex) => {
-                return page.map((coins, coinIndex) => {
+            {data?.pages
+              && data?.pages.map((page, pageIndex) => {
+                return page?.map((coins, coinIndex) => {
                   const isLastItem = pageIndex === data.pages.length - 1
                     && coinIndex === page.length - 1;
                   return (
