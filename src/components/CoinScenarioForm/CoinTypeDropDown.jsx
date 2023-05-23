@@ -85,7 +85,7 @@ const dropDownItemStyle = css`
     border-radius: 1.2rem;  
   }
 `;
-const fetchItems = async (pageParam = 1) => {
+const fetchItems = async ({ pageParam = 1 }) => {
   const response = await fetch(
     `${PRO_BASE_URL}/coins/markets?vs_currency=krw&order=market_cap_desc&per_page=10&page=${pageParam}&sparkline=false&locale=en`,
     {
@@ -99,7 +99,7 @@ const fetchItems = async (pageParam = 1) => {
 
 const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
   const {
-    data, isLoading, isError, fetchNextPage, hasNextPage,
+    data, isLoading, isError, fetchNextPage, hasNextPage, isFetchingNextPage,
   } = useInfiniteQuery(['coinsMarkets'], fetchItems, {
     getNextPageParam: (lastPage, allPages) => {
       return allPages.length < 100 && allPages.length + 1;
@@ -109,7 +109,6 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
     // retry: 1,
   });
 
-  console.log(data, hasNextPage);
   const viewportType = useResponsiveView();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -165,23 +164,30 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
       <div css={[dropDownBoxStyle, dropDownListContainerStyle]}>
         {isOpen && (
           <ul css={dropDownListStyle}>
-            {data.pages[0]
-                  && data.pages[0].map((item) => {
-                    return (
-                      <li
-                        key={item.id}
-                      >
-                        <button type="button" css={dropDownItemStyle} onClick={() => { return handleSelectCoin(item); }}>
-                          <img src={item.image} alt={item.name} className="coin-icon" />
-                          {item.name}
-                        </button>
-                      </li>
-                    );
-                  })}
+            {data.pages
+              && data.pages.map((page) => {
+                return page.map((coins) => {
+                  return (
+                    <li
+                      key={coins.id}
+                    >
+                      <button type="button" css={dropDownItemStyle} onClick={() => { return handleSelectCoin(coins); }}>
+                        <img src={coins.image} alt={coins.name} className="coin-icon" />
+                        {coins.name}
+                      </button>
+                    </li>
+                  );
+                });
+              })}
           </ul>
         )}
-      </div>
 
+      </div>
+      {hasNextPage && (
+        <button type="button" onClick={() => { return fetchNextPage(); }} disabled={isFetchingNextPage}>
+          {isFetchingNextPage ? 'Loading...' : 'Load more'}
+        </button>
+      )}
     </div>
   );
 };
