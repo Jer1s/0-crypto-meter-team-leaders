@@ -3,9 +3,10 @@ import { css } from '@emotion/react';
 import { useSetRecoilState } from 'recoil';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import { INITIAL_CRYPTO } from 'utils/constants';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useResponsiveView from 'hooks/useResponsiveView';
 import filter from 'assets/filter.svg';
+import { useQuery } from '@tanstack/react-query';
 import ScenarioDescription from './ScenarioDescription';
 import ScenarioForm from './ScenarioForm';
 import BottomSheet from './BottomSheet';
@@ -87,7 +88,23 @@ const FilterButtonStyle = css`
   }
 
 `;
+const fetchHistoryData = async (date, cointype) => {
+  const response = await fetch(
+    `https://api.coingecko.com/api/v3/coins/${cointype}/history?date=${date}&localization=ko`,
+  );
+  if (!response.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  const data = await response.json();
+  return data;
+};
 
+const calculatePriceDiff = (currentPrice, historyPrice, selectedPrice) => {
+  const currentTotalCost = (selectedPrice / historyPrice) * currentPrice;
+  const isSkyrocketed = (selectedPrice - currentTotalCost) >= 0;
+
+  return { currentTotalCost, isSkyrocketed };
+};
 const CoinScenarioForm = () => {
   const setScenarioData = useSetRecoilState(scenarioDataAtom);
   const viewportType = useResponsiveView();
@@ -102,9 +119,21 @@ const CoinScenarioForm = () => {
       (selectedDate.getMonth() + 1).toString(), selectedDate.getDate().toString()]
     : ['0000', '00', '00'];
 
-  const handleSubmit = async (event) => {
-    setIsBottomSheetOpen(!isBottomSheetOpen);
-    event.preventDefault();
+  const { data: historyPrice, refetch } = useQuery(
+    ['coinsHistory', selectedDate, selectedCoin],
+    () => { return fetchHistoryData(`${day}-${month}-${year}`, selectedCoin.id); },
+    { enabled: false }, // 초기 로드 비활성화
+  );
+
+  useEffect(() => {
+    if (!historyPrice) return;
+
+    const obj = calculatePriceDiff(
+      selectedCoin.current_price,
+      historyPrice.market_data.current_price.krw,
+      buyPrice,
+    );
+    const { currentTotalCost, isSkyrocketed } = obj;
     setScenarioData({
       input: {
         date: { year, month, day },
@@ -113,11 +142,18 @@ const CoinScenarioForm = () => {
         image: selectedCoin.image,
       },
       output: {
-        outputPrice: 10000,
-        isSkyrocketed: true,
+        outputPrice: currentTotalCost,
+        isSkyrocketed,
         outputDate: { year: 2023, month: 5, day: 19 },
       },
     });
+  }, [historyPrice]);
+
+  const handleSubmit = async (event) => {
+    setIsBottomSheetOpen(!isBottomSheetOpen);
+    event.preventDefault();
+    // const historyPrice = await fetchHistoryData(`${day}-${month}-${year}`, selectedCoin.id);
+    refetch();
   };
   const handleBottomSheetClick = () => {
     setIsBottomSheetOpen(!isBottomSheetOpen);
