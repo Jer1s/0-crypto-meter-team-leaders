@@ -22,7 +22,7 @@ const useViewportType = () => {
         type = 'SuperMobile';
       } else if (innerWidth < 768) {
         type = 'Mobile';
-      } else if (innerWidth < 1200) {
+      } else if (innerWidth < 1199) {
         type = 'Tablet';
       } else {
         type = 'Desktop';

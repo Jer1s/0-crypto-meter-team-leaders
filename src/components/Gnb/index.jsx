@@ -25,7 +25,7 @@ const navStyle = css`
 
 const logoStyle = css`
   background-image: url(${logo});
-  background-repeat: no-repeat;
+  background-repeat: no-;
   width: 18.6rem;
   height: 2.6rem;
 

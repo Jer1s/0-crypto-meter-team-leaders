@@ -2,11 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import whiteInvertedTriangleIcon from 'assets/white-inverted-triangle.svg';
+import invertedTriangleIcon from 'assets/inverted-triangle.svg';
 import useFetch from 'hooks/useFetch';
 import PropTypes from 'prop-types';
+import useResponsiveView from 'hooks/useResponsiveView';
 import { coinScenarioInputStyle } from './coinScenarioInputStyle';
 
 const dropDownBoxStyle = css`
+  position: relative;
   button {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -27,21 +30,43 @@ const dropDownBoxStyle = css`
   }
 `;
 
+const dropDownHeaderStyle = css`
+  order: 2;
+  z-index: 1;
+`;
+
+const dropDownListContainerStyle = css`
+  order: 3;
+  @media (max-width: 1199px){
+    order: 1;
+    position: relative;
+  }
+`;
+
 const dropDownListStyle = css`
-  width: 36.5rem;
+  position: absolute;
+  margin: 0;
+  width: 100%;
   max-height: 22.5rem; 
   overflow-x: hidden;
   overflow-y: scroll;
   padding: 1rem;
-  margin-Top: 0.4rem;
   border-radius: 1.2rem;
   background-color: var(--gray2);
+  box-shadow: 0 0 0.4rem var(--gray1);
   
   -ms-overflow-style: none; /* 익스플로러, 앳지 */
   scrollbar-width: none; /* 파이어폭스 */
 
   ::-webkit-scrollbar {
     display: none; 
+  }
+
+  @media (max-width: 1199px){
+    order: 1;
+    z-index: 3;
+    box-shadow: -0.1rem -0.1rem 0.4rem var(--black);
+    bottom: -3.7rem;
   }
 `;
 
@@ -58,7 +83,7 @@ const dropDownItemStyle = css`
 
 const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
   const { data } = useFetch('src/components/CoinScenarioForm/coinDropDownMockData.json');
-
+  const viewportType = useResponsiveView();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -89,13 +114,13 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
       return;
     }
     onCoinSelect(data[0]);
-  }, [data]);
+  }, [data, onCoinSelect]);
 
   return (
-    <div ref={dropdownRef}>
-      <div css={[coinScenarioInputStyle, dropDownBoxStyle]}>
+    <div ref={dropdownRef} css={css`display:flex; flex-direction: column; gap: 0.4rem;`}>
+      <div css={[coinScenarioInputStyle, dropDownBoxStyle, dropDownHeaderStyle]}>
         <p>
-          <img src={whiteInvertedTriangleIcon} alt="White Triangle Icon" />
+          <img src={viewportType === 'Desktop' ? whiteInvertedTriangleIcon : invertedTriangleIcon} alt="Drop Down Triangle Icon" />
         </p>
         <button
           type="button"
@@ -110,7 +135,7 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
           ) }
         </button>
       </div>
-      <div css={dropDownBoxStyle}>
+      <div css={[dropDownBoxStyle, dropDownListContainerStyle]}>
         {isOpen && (
           <ul css={dropDownListStyle}>
             {data

@@ -3,7 +3,6 @@ import { css } from '@emotion/react';
 
 export const coinScenarioInputStyle = css`
   position : relative;
-  max-width : 36.5rem;
 
   & .inputBox{
   padding: 0 2.5rem;
@@ -27,5 +26,23 @@ export const coinScenarioInputStyle = css`
     right: 1.5rem;
     transform: translateY(-50%);
     margin:0;
+
+  }
+  @media (max-width: 1199px){
+    max-width : 100%;
+    & .inputBox{
+      background-color: initial;
+      color: var(--gray1);
+    }
+
+  p {
+    color: var(--gray1)
+    }
+  }
+
+  @media (max-width: 768px){
+    & .inputBox{
+      height: 6.3rem;
+    }
   }
 `;

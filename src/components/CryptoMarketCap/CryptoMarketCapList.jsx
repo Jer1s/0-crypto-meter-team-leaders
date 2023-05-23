@@ -89,7 +89,7 @@ const headerItemStyle = css`
     }
   
   @media (max-width: 767px) {
-    & > *:first-child {
+    & > *:first-of-type {
       gap: 0;
     }
 

@@ -2,12 +2,15 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import PropTypes from 'prop-types';
+import useResponsiveView from 'hooks/useResponsiveView';
 
 /** @jsxImportSource @emotion/react */
 import whiteInvertedTriangleIcon from 'assets/white-inverted-triangle.svg';
+import invertedTriangleIcon from 'assets/inverted-triangle.svg';
 import { coinScenarioInputStyle } from './coinScenarioInputStyle';
 
 const DateInput = ({ selectedDate, onSelectedDate }) => {
+  const viewportType = useResponsiveView();
   const handleDateChange = (date) => {
     onSelectedDate(date);
   };
@@ -23,7 +26,7 @@ const DateInput = ({ selectedDate, onSelectedDate }) => {
         shouldCloseOnSelect
       />
       <p>
-        <img src={whiteInvertedTriangleIcon} alt="Drop Down Triangle Icon" />
+        <img src={viewportType === 'Desktop' ? whiteInvertedTriangleIcon : invertedTriangleIcon} alt="Drop Down Triangle Icon" />
       </p>
     </div>
   );

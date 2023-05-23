@@ -7,18 +7,45 @@ import { BASE_CURRENCY, EXCHANGE_RATE } from 'utils/constants';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import { useRecoilValue } from 'recoil';
 
-const h1Style = css`
-  color : var(--gray5);
-  margin : 0;
-  display: grid;
+const containerStyle = css`
+  color: var(--gray5);
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.7rem;
-  span {
-    color: var(--white);
+
+  button {
+    all: unset;
+  }
+
+
+  @media (max-width: 1199px) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.1rem;
+
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
   }
 `;
 
+const headingStyle = css`
+  font-size: 3.6rem;
+  margin: 0;
+  @media (max-width: 768px) {
+    font-size: 2.4rem;
+  }
+`;
+
+const strongText = css`
+  color: var(--white);
+`;
+
 const ScenarioDescription = ({
-  year, month, day, selectedCoin, price,
+  year, month, day, selectedCoin, price, onBottomSheetClick,
 }) => {
   const formatPrice = useFormattedPrice();
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
@@ -26,30 +53,35 @@ const ScenarioDescription = ({
   const formattedPrice = formatPrice(convertedToKRW);
 
   return (
-    <h1 css={h1Style}>
-      <div>
-        내가 만약
-      </div>
-      <span>
-        {`${year}년 ${month}월 ${day}일에`}
-      </span>
-
-      <div>
-        <span>{formattedPrice}</span>
-        으로
-      </div>
-      <div>
-        <span>{selectedCoin.name}</span>
-        을 샀다면,
+    <h1 css={headingStyle}>
+      <div css={containerStyle}>
+        <button type="button" css={strongText} onClick={onBottomSheetClick}>
+          내가 만약
+        </button>
+        <button type="button" onClick={onBottomSheetClick}>
+          <span css={strongText}>
+            {`${year}년 ${month}월 ${day}일`}
+          </span>
+          에
+        </button>
+        <button type="button" onClick={onBottomSheetClick}>
+          <span css={strongText}>{formattedPrice}</span>
+          으로
+        </button>
+        <button type="button" onClick={onBottomSheetClick}>
+          <span css={strongText}>{selectedCoin.name}</span>
+          을 샀다면,
+        </button>
       </div>
     </h1>
+
   );
 };
 
 ScenarioDescription.propTypes = {
-  year: PropTypes.number.isRequired,
-  month: PropTypes.number.isRequired,
-  day: PropTypes.number.isRequired,
+  year: PropTypes.string.isRequired,
+  month: PropTypes.string.isRequired,
+  day: PropTypes.string.isRequired,
 
   selectedCoin: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -58,6 +90,7 @@ ScenarioDescription.propTypes = {
   }).isRequired,
 
   price: PropTypes.number.isRequired,
+  onBottomSheetClick: PropTypes.func,
 };
 
 export default ScenarioDescription;
