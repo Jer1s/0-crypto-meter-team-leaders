@@ -214,8 +214,7 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
                           alt={coins.name}
                           className="coin-icon"
                         />
-                        {/* {coins.name} */}
-                        {coinIndex}
+                        {coins.name}
                       </button>
                     </li>
                   );
