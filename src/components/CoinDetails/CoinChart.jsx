@@ -23,6 +23,8 @@ import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 const PRO_API_KEY = import.meta.env.VITE_X_CG_PRO_API_KEY;
 const PRO_BASE_URL = import.meta.env.VITE_PRO_BASE_URL;
 
+const termList = [{ text: '전체', term: 'max' }, { text: '1년', term: '365' }, { text: '1개월', term: '30' }, { text: '1주', term: '7' }, { text: '1일', term: '1' }];
+
 const containerStyle = css`
   max-width: 91rem;
   height: 35.1rem;
@@ -106,6 +108,7 @@ const CoinChart = () => {
     });
     return response.json();
   };
+
   const { data: coinPriceList } = useQuery(['chart', cryptoId, selectedTerm.term], getChart, {
     keepPreviousData: true,
   });
@@ -140,8 +143,9 @@ const CoinChart = () => {
   return (
     <div css={containerStyle}>
       <CategoryButtonChipContainer
-        selectedTerm={selectedTerm}
-        setSelectedTerm={setSelectedTerm}
+        selected={selectedTerm}
+        setSelected={setSelectedTerm}
+        list={termList}
       />
       <ResponsiveContainer>
         <AreaChart
