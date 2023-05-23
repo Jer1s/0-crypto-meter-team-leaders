@@ -1,9 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import styles from 'components/CoinDetails/CoinChart';
 import {
   AreaChart,
   XAxis,
@@ -14,11 +13,15 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-import useFetch from 'hooks/useFetch';
 import { useRecoilValue } from 'recoil';
 import useResponsiveView from 'hooks/useResponsiveView';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
+import { useQuery } from '@tanstack/react-query';
+import useInitialTerm from 'hooks/useInitialTerm';
 import CategoryButtonChipContainer from './CategoryButtonChipContainer';
+
+const PRO_API_KEY = import.meta.env.VITE_X_CG_PRO_API_KEY;
+const PRO_BASE_URL = import.meta.env.VITE_PRO_BASE_URL;
 
 const containerStyle = css`
   max-width: 91rem;
@@ -89,12 +92,23 @@ const CoinChart = () => {
   }
 
   const data = useRecoilValue(scenarioDataAtom);
+  const [selectedTerm, setSelectedTerm] = useInitialTerm(data);
   const { input, output } = data;
   const { cryptoId } = input;
   const { isSkyrocketed } = output;
-  const [selectedTerm, setSelectedTerm] = useState({ text: '전체', term: 'max' });
-  const url = `https://api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=krw&days=${selectedTerm.term}`;
-  const { data: coinPriceList } = useFetch(url);
+
+  const getChart = async () => {
+    const response = await fetch(`${PRO_BASE_URL}/coins/${cryptoId}/market_chart?vs_currency=krw&days=${selectedTerm.term}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-cg-pro-api-key': PRO_API_KEY,
+      },
+    });
+    return response.json();
+  };
+  const { data: coinPriceList } = useQuery(['chart', cryptoId, selectedTerm.term], getChart, {
+    keepPreviousData: true,
+  });
 
   const fomattingTerm = (date) => {
     if (selectedTerm.term === 'max' || selectedTerm.term === '365') {
@@ -185,7 +199,7 @@ const CoinChart = () => {
 
 CustomTooltip.propTypes = {
   active: PropTypes.bool,
-  payload: PropTypes.arrayOf(PropTypes.string),
+  payload: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default CoinChart;
