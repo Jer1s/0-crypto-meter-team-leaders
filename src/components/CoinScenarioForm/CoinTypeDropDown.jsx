@@ -3,10 +3,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
 import whiteInvertedTriangleIcon from 'assets/white-inverted-triangle.svg';
 import invertedTriangleIcon from 'assets/inverted-triangle.svg';
-import useFetch from 'hooks/useFetch';
+// import useFetch from 'hooks/useFetch';
 import PropTypes from 'prop-types';
 import useResponsiveView from 'hooks/useResponsiveView';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { coinScenarioInputStyle } from './coinScenarioInputStyle';
+
+const PRO_BASE_URL = import.meta.env.VITE_PRO_BASE_URL;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+const PRO_API_KEY = import.meta.env.VITE_X_CG_PRO_API_KEY;
 
 const dropDownBoxStyle = css`
   position: relative;
@@ -80,9 +85,31 @@ const dropDownItemStyle = css`
     border-radius: 1.2rem;  
   }
 `;
+const fetchItems = async (pageParam = 1) => {
+  const response = await fetch(
+    `${PRO_BASE_URL}/coins/markets?vs_currency=krw&order=market_cap_desc&per_page=10&page=${pageParam}&sparkline=false&locale=en`,
+    {
+      headers: {
+        'x-cg-pro-api-key': PRO_API_KEY,
+      },
+    },
+  );
+  return response.json();
+};
 
 const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
-  const { data } = useFetch('src/components/CoinScenarioForm/coinDropDownMockData.json');
+  const {
+    data, isLoading, isError, fetchNextPage, hasNextPage,
+  } = useInfiniteQuery(['coinsMarkets'], fetchItems, {
+    getNextPageParam: (lastPage, allPages) => {
+      return allPages.length < 100 && allPages.length + 1;
+    },
+    // cacheTime: 5 * 60 * 1000,
+    // staleTime: 1 * 60 * 1000,
+    // retry: 1,
+  });
+
+  console.log(data, hasNextPage);
   const viewportType = useResponsiveView();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -113,7 +140,7 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
     if (!data) {
       return;
     }
-    onCoinSelect(data[0]);
+    onCoinSelect(data.pages[0][0]);
   }, [data, onCoinSelect]);
 
   return (
@@ -138,8 +165,8 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
       <div css={[dropDownBoxStyle, dropDownListContainerStyle]}>
         {isOpen && (
           <ul css={dropDownListStyle}>
-            {data
-                  && data.map((item) => {
+            {data.pages[0]
+                  && data.pages[0].map((item) => {
                     return (
                       <li
                         key={item.id}
