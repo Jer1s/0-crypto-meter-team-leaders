@@ -20,6 +20,8 @@ import { useQuery } from '@tanstack/react-query';
 import useInitialTerm from 'hooks/useInitialTerm';
 import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
+const PRO_API_KEY = import.meta.env.VITE_X_CG_PRO_API_KEY;
+
 const containerStyle = css`
   max-width: 91rem;
   height: 35.1rem;
@@ -95,7 +97,12 @@ const CoinChart = () => {
   const { isSkyrocketed } = output;
 
   const getChart = async () => {
-    const response = await fetch(`https://api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=krw&days=${selectedTerm.term}`);
+    const response = await fetch(`https://pro-api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=krw&days=${selectedTerm.term}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-cg-pro-api-key': PRO_API_KEY,
+      },
+    });
     return response.json();
   };
   const { data: coinPriceList } = useQuery(['chart', cryptoId, selectedTerm.term], getChart, {
