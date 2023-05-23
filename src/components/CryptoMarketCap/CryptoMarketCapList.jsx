@@ -228,10 +228,10 @@ const CryptoMarketCapList = ({ cryptoList, clickHandlers, order }) => {
         })}
       </li>
       {cryptoList.map((item) => {
-        const currentPrice = formatPrice(item.currentPrice);
-        const marketCap = formatPrice(item.marketCap);
-        const totalVolume = formatPrice(item.totalVolume);
-        const volumePerPrice = item.volumePerPrice.toLocaleString();
+        const currentPrice = item.currentPrice ? formatPrice(item.currentPrice) : '-';
+        const marketCap = item.marketCap ? formatPrice(item.marketCap) : '-';
+        const totalVolume = item.totalVolume ? formatPrice(item.totalVolume) : '-';
+        const volumePerPrice = item.volumePerPrice ? item.volumePerPrice.toLocaleString() : '-';
         return (
           <li key={item.marketCapRank} css={itemStyle}>
             <div>

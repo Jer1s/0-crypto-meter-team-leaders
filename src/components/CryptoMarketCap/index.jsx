@@ -14,8 +14,8 @@ const headerStyle = css`
 
 const CryptoMarketCap = () => {
   const queryClient = useQueryClient();
-  const [page, setPage] = useState(1);
-  const { status, data, error, isFetching, isPreviousData } = useCoinsMarketsJeris(page);
+  const [page, setPage] = useState(11);
+  const { status, data, error, isPreviousData } = useCoinsMarketsJeris(page);
   const [cryptoList, setCryptoList] = useState([]);
   const [order, setOrder] = useState('marketCapRank');
 
@@ -146,8 +146,8 @@ const CryptoMarketCap = () => {
           )}
         </div>
         <div>Current Page: {page}</div>
-        <button onClick={() => setPage((old) => old - 1)}>prev Page</button>
-        <button onClick={() => setPage((old) => old + 1)}>Next Page</button>
+        <button onClick={() => setPage((old) => Math.max(old - 1, 1))}>prev Page</button>
+        <button onClick={() => setPage((old) => data.hasMore ? old + 1 : old)}>Next Page</button>
       </div>
     </MainContainer>
   );
