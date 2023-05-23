@@ -8,6 +8,7 @@ const containerStyle = css`
   display: flex;
   width: 100%;
   height: 2.2rem;
+  gap: 1rem;
 
   button {
     cursor: pointer;

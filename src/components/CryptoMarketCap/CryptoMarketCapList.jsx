@@ -19,6 +19,22 @@ const listStyle = css`
   color: var(--gray2);
   overflow-x: auto;
   overflow-x: overlay;
+  -webkit-overflow-scrolling: touch; /* 모바일에서 부드러운 스크롤링 지원 */
+
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  /* 스크롤바 트랙 숨기기 */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* 스크롤바 썸네일 숨기기 */
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
 `;
 
 const itemStyle = css`
