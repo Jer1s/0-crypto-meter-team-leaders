@@ -169,7 +169,7 @@ const CryptoMarketCap = () => {
           />
           )}
         </div>
-        <PaginationButtons totalPages={100} currentPage={currentPage} onPageChange={handlecurrentPageChange} />
+        <PaginationButtons totalPages={1000} currentPage={currentPage} onPageChange={handlecurrentPageChange} />
       </div>
     </MainContainer>
   );
