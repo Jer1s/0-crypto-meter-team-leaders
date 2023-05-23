@@ -14,7 +14,7 @@ const headerStyle = css`
 
 const CryptoMarketCap = () => {
   const queryClient = useQueryClient();
-  const [page, setPage] = useState(11);
+  const [page, setPage] = useState(1);
   const { status, data, error, isFetching, isPreviousData } = useCoinsMarketsJeris(page);
   const [cryptoList, setCryptoList] = useState([]);
   const [order, setOrder] = useState('marketCapRank');
