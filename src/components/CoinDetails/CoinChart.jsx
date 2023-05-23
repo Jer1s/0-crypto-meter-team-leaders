@@ -16,7 +16,7 @@ import {
 import { useRecoilValue } from 'recoil';
 import useResponsiveView from 'hooks/useResponsiveView';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import useInitialTerm from 'hooks/useInitialTerm';
 import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
@@ -66,6 +66,7 @@ const tooltipStyle = css`
 // eslint-disable-next-line consistent-return
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
+    console.log(active, payload);
     const { filteredDate, price } = payload[0].payload;
     return (
       <div css={tooltipStyle}>
@@ -93,8 +94,6 @@ const CoinChart = () => {
   const { input, output } = data;
   const { cryptoId } = input;
   const { isSkyrocketed } = output;
-
-  const url = `https://api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=krw&days=${selectedTerm.term}`;
 
   const getChart = async () => {
     const response = await fetch(`https://api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=krw&days=${selectedTerm.term}`);
@@ -193,7 +192,7 @@ const CoinChart = () => {
 
 CustomTooltip.propTypes = {
   active: PropTypes.bool,
-  payload: PropTypes.arrayOf(PropTypes.string),
+  payload: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default CoinChart;
