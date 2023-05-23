@@ -5,7 +5,6 @@ import React, {
 import { css } from '@emotion/react';
 import whiteInvertedTriangleIcon from 'assets/white-inverted-triangle.svg';
 import invertedTriangleIcon from 'assets/inverted-triangle.svg';
-// import useFetch from 'hooks/useFetch';
 import PropTypes from 'prop-types';
 import useResponsiveView from 'hooks/useResponsiveView';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -109,9 +108,10 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
     getNextPageParam: (lastPage, allPages) => {
       return allPages.length + 1;
     },
-    // cacheTime: 5 * 60 * 1000,
-    // staleTime: 1 * 60 * 1000,
-    // retry: 1,
+    // 추후 변경
+    cacheTime: 5 * 60 * 1000,
+    staleTime: 1 * 60 * 1000,
+    retry: 1,
   });
 
   const viewportType = useResponsiveView();
