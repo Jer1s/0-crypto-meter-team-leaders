@@ -36,13 +36,14 @@ const BottomSheet = ({
 }) => {
   const viewportType = useViewportType();
 
-  const heightLookup = {
-    Tablet: '56.5rem',
-    Mobile: '56.5rem',
-    SuperMobile: '47.2rem',
-  };
+  // const heightLookup = {
+  //   Tablet: '56.5rem',
+  //   Mobile: '56.5rem',
+  //   SuperMobile: '47.2rem',
+  // };
 
-  const bottomSheetHeight = heightLookup[viewportType];
+  // const bottomSheetHeight = heightLookup[viewportType];
+  const bottomSheetHeight = '100%';
 
   const handleBottomSheeOpen = () => {
     setIsBottomSheetOpen(true);

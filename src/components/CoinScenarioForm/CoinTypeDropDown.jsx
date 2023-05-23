@@ -26,11 +26,11 @@ const dropDownBoxStyle = css`
     display: flex;
     font-size: 1.7rem;
     align-items: center;
-    gap : 1rem;
+    gap: 1rem;
   }
 
   .coin-icon {
-    width : 3rem;
+    width: 3rem;
     height: 3rem;
   }
 `;
@@ -42,7 +42,7 @@ const dropDownHeaderStyle = css`
 
 const dropDownListContainerStyle = css`
   order: 3;
-  @media (max-width: 1199px){
+  @media (max-width: 1199px) {
     order: 1;
     position: relative;
   }
@@ -52,22 +52,22 @@ const dropDownListStyle = css`
   position: absolute;
   margin: 0;
   width: 100%;
-  max-height: 22.5rem; 
+  max-height: 22.5rem;
   overflow-x: hidden;
   overflow-y: scroll;
   padding: 1rem;
   border-radius: 1.2rem;
   background-color: var(--gray2);
   box-shadow: 0 0 0.4rem var(--gray1);
-  
+
   -ms-overflow-style: none; /* 익스플로러, 앳지 */
   scrollbar-width: none; /* 파이어폭스 */
 
   ::-webkit-scrollbar {
-    display: none; 
+    display: none;
   }
 
-  @media (max-width: 1199px){
+  @media (max-width: 1199px) {
     order: 1;
     z-index: 3;
     box-shadow: -0.1rem -0.1rem 0.4rem var(--black);
@@ -76,16 +76,18 @@ const dropDownListStyle = css`
 `;
 
 const dropDownItemStyle = css`
-  width:34.5rem;
+  width: 34.5rem;
   height: 4.6rem;
   list-style-type: none;
 
-  :hover{
+  :hover {
     background-color: var(--black);
-    border-radius: 1.2rem;  
+    border-radius: 1.2rem;
   }
 `;
+
 const fetchItems = async ({ pageParam = 1 }) => {
+  console.log(pageParam);
   const response = await fetch(
     `${PRO_BASE_URL}/coins/markets?vs_currency=krw&order=market_cap_desc&per_page=10&page=${pageParam}&sparkline=false&locale=en`,
     {
@@ -99,10 +101,15 @@ const fetchItems = async ({ pageParam = 1 }) => {
 
 const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
   const {
-    data, isLoading, isError, fetchNextPage, hasNextPage, isFetchingNextPage,
+    data,
+    isLoading,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
   } = useInfiniteQuery(['coinsMarkets'], fetchItems, {
     getNextPageParam: (lastPage, allPages) => {
-      return allPages.length < 100 && allPages.length + 1;
+      return allPages.length + 1;
     },
     // cacheTime: 5 * 60 * 1000,
     // staleTime: 1 * 60 * 1000,
@@ -112,6 +119,8 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
   const viewportType = useResponsiveView();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const lastItemRef = useRef(null);
+  console.log(lastItemRef);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -142,6 +151,27 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
     onCoinSelect(data.pages[0][0]);
   }, [data, onCoinSelect]);
 
+  const handleIntersection = (entries) => {
+    const target = entries[0];
+    if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleIntersection, {
+      threshold: 0.5,
+    });
+    if (lastItemRef.current) {
+      observer.observe(lastItemRef.current);
+    }
+    return () => {
+      if (lastItemRef.current) {
+        observer.unobserve(lastItemRef.current);
+      }
+    };
+  }, [isOpen, lastItemRef.current, fetchNextPage, hasNextPage, isFetchingNextPage]);
+
   return (
     <div ref={dropdownRef} css={css`display:flex; flex-direction: column; gap: 0.4rem;`}>
       <div css={[coinScenarioInputStyle, dropDownBoxStyle, dropDownHeaderStyle]}>
@@ -154,26 +184,41 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
           onClick={toggleDropdown}
         >
           {selectedCoin && (
-          <>
-            <img src={selectedCoin.image} alt={selectedCoin.name} className="coin-icon" />
-            {selectedCoin.name}
-          </>
-          ) }
+            <>
+              <img src={selectedCoin.image} alt={selectedCoin.name} className="coin-icon" />
+              {selectedCoin.name}
+            </>
+          )}
         </button>
       </div>
       <div css={[dropDownBoxStyle, dropDownListContainerStyle]}>
         {isOpen && (
           <ul css={dropDownListStyle}>
             {data.pages
-              && data.pages.map((page) => {
-                return page.map((coins) => {
+              && data.pages.map((page, pageIndex) => {
+                return page.map((coins, coinIndex) => {
+                  const isLastItem = pageIndex === data.pages.length - 1
+                    && coinIndex === page.length - 1;
                   return (
                     <li
                       key={coins.id}
+                      // ref={isLastItem ? lastItemRef : null}
+                      ref={lastItemRef}
                     >
-                      <button type="button" css={dropDownItemStyle} onClick={() => { return handleSelectCoin(coins); }}>
-                        <img src={coins.image} alt={coins.name} className="coin-icon" />
-                        {coins.name}
+                      <button
+                        type="button"
+                        css={dropDownItemStyle}
+                        onClick={() => {
+                          return handleSelectCoin(coins);
+                        }}
+                      >
+                        <img
+                          src={coins.image}
+                          alt={coins.name}
+                          className="coin-icon"
+                        />
+                        {/* {coins.name} */}
+                        {coinIndex}
                       </button>
                     </li>
                   );
@@ -181,16 +226,11 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
               })}
           </ul>
         )}
-
       </div>
-      {hasNextPage && (
-        <button type="button" onClick={() => { return fetchNextPage(); }} disabled={isFetchingNextPage}>
-          {isFetchingNextPage ? 'Loading...' : 'Load more'}
-        </button>
-      )}
     </div>
   );
 };
+
 CoinTypeDropDown.propTypes = {
   selectedCoin: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -199,4 +239,5 @@ CoinTypeDropDown.propTypes = {
   }),
   onCoinSelect: PropTypes.func.isRequired,
 };
+
 export default CoinTypeDropDown;
