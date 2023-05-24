@@ -5,9 +5,10 @@ import React, {
 import { css } from '@emotion/react';
 import whiteInvertedTriangleIcon from 'assets/white-inverted-triangle.svg';
 import invertedTriangleIcon from 'assets/inverted-triangle.svg';
-import PropTypes from 'prop-types';
 import useResponsiveView from 'hooks/useResponsiveView';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { selectedCoinAtom } from 'recoils/scenarioInputData/scenarioInputDataAtom';
+import { useRecoilState } from 'recoil';
 import { coinScenarioInputStyle } from './coinScenarioInputStyle';
 
 const PRO_BASE_URL = import.meta.env.VITE_PRO_BASE_URL;
@@ -98,7 +99,9 @@ const fetchItems = async ({ pageParam = 1 }) => {
   return response.json();
 };
 
-const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
+const CoinTypeDropDown = () => {
+  const [selectedCoin, setSelectedCoin] = useRecoilState(selectedCoinAtom);
+
   const {
     data,
     fetchNextPage,
@@ -124,7 +127,7 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
   };
 
   const handleSelectCoin = (coin) => {
-    onCoinSelect(coin);
+    setSelectedCoin(coin);
     setIsOpen(false);
   };
 
@@ -145,8 +148,8 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
     if (!data) {
       return;
     }
-    onCoinSelect(data.pages[0][0]);
-  }, [data, onCoinSelect]);
+    setSelectedCoin(data.pages[0][0]);
+  }, [data, setSelectedCoin]);
 
   const handleIntersection = useCallback((entries) => {
     const target = entries[0];
@@ -225,15 +228,6 @@ const CoinTypeDropDown = ({ selectedCoin, onCoinSelect }) => {
       </div>
     </div>
   );
-};
-
-CoinTypeDropDown.propTypes = {
-  selectedCoin: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-  }),
-  onCoinSelect: PropTypes.func.isRequired,
 };
 
 export default CoinTypeDropDown;

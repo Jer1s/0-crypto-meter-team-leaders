@@ -1,9 +1,9 @@
 import React from 'react';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useRecoilValue } from 'recoil';
 import localeCurrencySelector from 'recoils/localeCurrency/localeCurrencySelector';
-import PropTypes from 'prop-types';
+import { buyPriceAtom } from 'recoils/scenarioInputData/scenarioInputDataAtom';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import { coinScenarioInputStyle } from './coinScenarioInputStyle';
 
 const buyPriceInputStyle = (buyPrice) => {
@@ -13,7 +13,9 @@ const buyPriceInputStyle = (buyPrice) => {
 }  
 `;
 };
-const BuyPriceInput = ({ buyPrice, setBuyPrice }) => {
+const BuyPriceInput = () => {
+  const [buyPrice, setBuyPrice] = useRecoilState(buyPriceAtom);
+
   const { currencyUnit, currencySign } = useRecoilValue(localeCurrencySelector);
 
   const validateInput = (value) => {
@@ -44,8 +46,4 @@ const BuyPriceInput = ({ buyPrice, setBuyPrice }) => {
   );
 };
 
-BuyPriceInput.propTypes = {
-  buyPrice: PropTypes.number.isRequired,
-  setBuyPrice: PropTypes.func.isRequired,
-};
 export default BuyPriceInput;
