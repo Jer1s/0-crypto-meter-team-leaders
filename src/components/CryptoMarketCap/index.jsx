@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import { useQueryClient } from '@tanstack/react-query';
 import MainContainer from 'components/MainContainer';
@@ -129,16 +129,16 @@ const CryptoMarketCap = () => {
     },
   };
 
-  const handleLoad = async () => {
+  const handleLoad = useCallback(() => {
     if (data) {
       const parsedData = parseMarketCapData(data);
       setCryptoList(parsedData);
     }
-  };
+  }, [data]);
 
   useEffect(() => {
     handleLoad();
-  }, [data, currentPage, order]);
+  }, [handleLoad]);
 
   useEffect(() => {
     if (!isPreviousData && currentPage < 101) {

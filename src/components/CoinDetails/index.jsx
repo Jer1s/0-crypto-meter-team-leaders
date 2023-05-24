@@ -10,7 +10,7 @@ import { useRecoilValue } from 'recoil';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import { CRYPTO_NAME } from 'utils/constants';
 import CoinChart from './CoinChart';
-// import KakaoShareButton from './KakaoShareButton';
+import KakaoShareButton from './KakaoShareButton';
 
 const CoinInfo = styled.div`
   display: flex;
@@ -136,7 +136,7 @@ const CoinDetails = () => {
           <p style={{ height: '3.1rem' }}>{CRYPTO_NAME[cryptoId]}</p>
         </CoinInfo>
         <SocialIconGroup>
-          {/* <KakaoShareButton /> */}
+          <KakaoShareButton />
           <Button type="button" onClick={shareFacebook}>
             <img src={facebook} alt="Facebook Icon" />
           </Button>
