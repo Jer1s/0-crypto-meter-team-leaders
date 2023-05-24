@@ -6,6 +6,7 @@ import MainContainer from 'components/MainContainer';
 import useCoinsMarketsJeris from 'hooks/useCoinsMarketsJeris';
 import getCoinsMarkets from 'api/getCoinsMarkets';
 import parseMarketCapData from 'utils/parseMarketCapData';
+import { TOTAL_PAGES } from 'utils/constants';
 import CryptoMarketCapList from './CryptoMarketCapList';
 import PaginationButtons from './PaginationButtons';
 
@@ -163,9 +164,7 @@ const CryptoMarketCap = () => {
             <div>Loading...</div>
           ) : status === 'error' ? (
             <div>
-              Error:
-              {' '}
-              {error.message}
+              {`Error: ${error.message}`}
             </div>
           ) : (
             <CryptoMarketCapList
@@ -176,7 +175,7 @@ const CryptoMarketCap = () => {
           )}
         </div>
         <PaginationButtons
-          totalPages={1000}
+          totalPages={TOTAL_PAGES}
           currentPage={currentPage}
           onPageChange={handlecurrentPageChange}
         />
