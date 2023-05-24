@@ -37,11 +37,7 @@ const BuyPriceInput = ({ buyPrice, setBuyPrice }) => {
     <div css={[coinScenarioInputStyle, buyPriceInputStyle(buyPrice)]}>
       <input type="text" css={buyPriceInputStyle} className="inputBox" value={formatValue(buyPrice)} onChange={handleInputChange} required />
       <p>
-        {currencyUnit}
-        {' '}
-        (
-        {currencySign}
-        )
+        {`${currencyUnit} (${currencySign})`}
       </p>
     </div>
 
