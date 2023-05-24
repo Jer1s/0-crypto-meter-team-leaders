@@ -155,9 +155,7 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
 
     setScenarioData(newScenarioData);
     setSearchHistory((prevHistory) => { return [...prevHistory, newScenarioData]; });
-  }, [historyPrice, buyPrice, day, month,
-    selectedCoin.current_price, selectedCoin.id,
-    selectedCoin.image, setScenarioData, setSearchHistory, year]);
+  }, [historyPrice, isSubmited]);
 
   useEffect(() => {
     if (!data) return; // historyPrice에 대한 api 요청 응답이 안왔을 때
