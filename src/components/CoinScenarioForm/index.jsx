@@ -134,7 +134,7 @@ const CoinScenarioForm = () => {
 
     const scenarioInputData = calculatePriceDiff(
       selectedCoin.current_price,
-      historyPrice.market_data.current_price.krw,
+      historyPrice.market_data.current_price.usd,
       buyPrice,
     );
     const { currentTotalCost, isSkyrocketed } = scenarioInputData;

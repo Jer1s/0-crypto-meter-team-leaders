@@ -88,7 +88,7 @@ const dropDownItemStyle = css`
 
 const fetchItems = async ({ pageParam = 1 }) => {
   const response = await fetch(
-    `${PRO_BASE_URL}/coins/markets?vs_currency=krw&order=market_cap_desc&per_page=10&page=${pageParam}&sparkline=false&locale=en`,
+    `${PRO_BASE_URL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=${pageParam}&sparkline=false&locale=en`,
     {
       headers: {
         'x-cg-pro-api-key': PRO_API_KEY,

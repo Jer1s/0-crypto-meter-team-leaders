@@ -22,10 +22,10 @@ export const LOCALE_CURRENCY = Object.freeze({
 });
 
 export const EXCHANGE_RATE = Object.freeze({
-  KRWTOUSD: 0.001,
+  USDTOKRW: 1000,
 });
 
-export const BASE_CURRENCY = 'KRW';
+export const BASE_CURRENCY = 'USD';
 
 export const INITIAL_CRYPTO = Object.freeze({
   id: 'bitcoin',

@@ -115,7 +115,7 @@ const CoinChart = () => {
   const { isSkyrocketed } = output;
 
   const getChart = async () => {
-    const response = await fetch(`${PRO_BASE_URL}/coins/${cryptoId}/market_chart?vs_currency=krw&days=${selectedTerm.term}`, {
+    const response = await fetch(`${PRO_BASE_URL}/coins/${cryptoId}/market_chart?vs_currency=usd&days=${selectedTerm.term}`, {
       headers: {
         'Content-Type': 'application/json',
         'x-cg-pro-api-key': PRO_API_KEY,

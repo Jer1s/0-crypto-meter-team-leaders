@@ -49,8 +49,8 @@ const ScenarioDescription = ({
 }) => {
   const formatPrice = useFormattedPrice();
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
-  const convertedToKRW = localeCurrency === BASE_CURRENCY ? price : price / EXCHANGE_RATE[`${BASE_CURRENCY}TO${localeCurrency}`];
-  const formattedPrice = formatPrice(convertedToKRW);
+  const convertedPrice = localeCurrency === BASE_CURRENCY ? price : price / EXCHANGE_RATE[`${BASE_CURRENCY}TO${localeCurrency}`];
+  const formattedPrice = formatPrice(convertedPrice);
 
   return (
     <h1 css={headingStyle}>

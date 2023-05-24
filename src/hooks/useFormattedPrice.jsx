@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import localeCurrencySelector from 'recoils/localeCurrency/localeCurrencySelector';
-import currencyConverter from 'utils/currencyConverter';
+import convertCurrency from 'utils/convertCurrency';
 
 const useFormattedPrice = (ignoreException) => {
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
