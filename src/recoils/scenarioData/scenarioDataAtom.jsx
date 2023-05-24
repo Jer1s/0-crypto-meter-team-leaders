@@ -12,7 +12,7 @@ const scenarioDataAtom = atom({
       image: bitcoinImage,
     },
     output: {
-      outputPrice: 0,
+      outputPrice: null,
       isSkyrocketed: null,
       outputDate: 0,
     },

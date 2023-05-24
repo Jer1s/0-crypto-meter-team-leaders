@@ -31,13 +31,18 @@ const currentPriceStyle = ({ isSkyrocketed }) => {
   return css`
     display: inline-block;
     margin-right: 1rem;
-    color: ${isSkyrocketed ? 'var(--primary)' : 'var(--primary-red)'};
+    color: ${isSkyrocketed === null ? 'var(--gray5)' : isSkyrocketed ? 'var(--chart-green)' : 'var(--primary-red'};
   `;
 };
 
 const zeroStyle = css`
   color: var(--gray5);
 `;
+
+const nullStyle = css`
+  color: var(--gray5);
+  text-decoration: line-through;
+`
 
 const currentDateStyle = css`
   color: var(--gray4);
@@ -52,6 +57,7 @@ const CoinScenarioResult = () => {
   const { date, price } = scenarioData.input;
   const { outputPrice, isSkyrocketed, outputDate } = scenarioData.output;
   const func = useFormattedPrice();
+  console.log(scenarioData)
 
   return (
     <>
@@ -59,8 +65,8 @@ const CoinScenarioResult = () => {
         {`${date.year}년 ${date.month}월 ${date.day}일에 ${func(price)}으로 샀다면 오늘`}
       </p>
       <p css={resultStyle}>
-        <span css={[currentPriceStyle({ isSkyrocketed }), (outputPrice === 0) && zeroStyle]}>
-          {func(outputPrice)}
+        <span css={[currentPriceStyle({ isSkyrocketed }), (outputPrice === null && nullStyle), (outputPrice === 0) && zeroStyle]}>
+          {outputPrice === null ? '0원' : func(outputPrice)}
         </span>
         입니다.
       </p>

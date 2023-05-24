@@ -189,8 +189,8 @@ const CoinChart = () => {
         >
           <defs>
             <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={isSkyrocketed ? 'var(--chart-green)' : 'var(--primary-red'} stopOpacity={1} />
-              <stop offset="95%" stopColor={isSkyrocketed ? 'var(--chart-green)' : 'var(--primary-red'} stopOpacity={0} />
+              <stop offset="5%" stopColor={isSkyrocketed === null ? 'var(--gray5)' : isSkyrocketed ? 'var(--chart-green)' : 'var(--primary-red'} stopOpacity={1} />
+              <stop offset="95%" stopColor={isSkyrocketed === null ? 'var(--gray5)' : isSkyrocketed ? 'var(--chart-green)' : 'var(--primary-red'} stopOpacity={0} />
             </linearGradient>
           </defs>
           <CartesianGrid horizontal vertical={false} />
@@ -221,7 +221,7 @@ const CoinChart = () => {
           <Area
             type="monotone"
             dataKey="price"
-            stroke={isSkyrocketed ? 'var(--primary)' : 'var(--primary-red)'}
+            stroke={isSkyrocketed === null ? 'var(--gray5)' : isSkyrocketed ? 'var(--chart-green)' : 'var(--primary-red'}
             fill="url(#gradient)"
             fillOpacity={1}
           />
