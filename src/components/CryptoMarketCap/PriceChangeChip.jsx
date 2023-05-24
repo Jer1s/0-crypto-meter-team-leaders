@@ -6,7 +6,9 @@ const containerStyle = css`
   margin: 0;
   border-radius: 0.4rem;
   padding: 0.2rem 0.8rem;
+  width: 6.6rem;
   height: 2.2rem;
+  text-align: center;
   font-size: 1.4rem;
   font-weight: 600;
   color: var(--primary);
@@ -31,7 +33,7 @@ const PriceChangeChip = ({ priceChange }) => {
 };
 
 PriceChangeChip.propTypes = {
-  priceChange: PropTypes.number.isRequired,
+  priceChange: PropTypes.number,
 };
 
 export default PriceChangeChip;

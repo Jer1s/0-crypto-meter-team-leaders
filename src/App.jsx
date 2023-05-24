@@ -7,7 +7,14 @@ import { RecoilRoot } from 'recoil';
 import GlobalStyle from 'components/GlobalStyle';
 import HomePage from 'pages/HomePage';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 10 * 60 * 1000,
+      cacheTime: 10 * 60 * 1000,
+    },
+  },
+});
 
 const ReactQueryDevtoolsProduction = lazy(async () => {
   return import('@tanstack/react-query-devtools/production').then((d) => {

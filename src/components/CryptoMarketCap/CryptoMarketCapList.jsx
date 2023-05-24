@@ -19,6 +19,22 @@ const listStyle = css`
   color: var(--gray2);
   overflow-x: auto;
   overflow-x: overlay;
+  -webkit-overflow-scrolling: touch; /* 모바일에서 부드러운 스크롤링 지원 */
+
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  /* 스크롤바 트랙 숨기기 */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* 스크롤바 썸네일 숨기기 */
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
 `;
 
 const itemStyle = css`
@@ -228,14 +244,14 @@ const CryptoMarketCapList = ({ cryptoList, clickHandlers, order }) => {
         })}
       </li>
       {cryptoList.map((item) => {
-        const currentPrice = formatPrice(item.currentPrice);
-        const marketCap = formatPrice(item.marketCap);
-        const totalVolume = formatPrice(item.totalVolume);
-        const volumePerPrice = item.volumePerPrice.toLocaleString();
+        const currentPrice = item.currentPrice ? formatPrice(item.currentPrice) : '-';
+        const marketCap = item.marketCap ? formatPrice(item.marketCap) : '-';
+        const totalVolume = item.totalVolume ? formatPrice(item.totalVolume) : '-';
+        const volumePerPrice = item.volumePerPrice ? item.volumePerPrice.toLocaleString() : '-';
         return (
-          <li key={item.marketCapRank} css={itemStyle}>
+          <li key={item.id} css={itemStyle}>
             <div>
-              {item.marketCapRank}
+              {item.marketCapRank || '-'}
             </div>
             <div css={cryptoNameStyle}>
               <img src={item.image} alt={`${item.id} Symbol`} css={imageStyle} />
