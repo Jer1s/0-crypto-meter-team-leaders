@@ -101,7 +101,7 @@ const fetchHistoryData = async (date, cointype) => {
   return data;
 };
 
-const calculatePriceDiff = (currentPrice, historyPrice, selectedPrice) => {
+const calculatePriceDiff = ({ currentPrice, historyPrice, selectedPrice }) => {
   const currentTotalCost = (selectedPrice / historyPrice) * currentPrice;
   const isSkyrocketed = (selectedPrice - currentTotalCost) <= 0;
 
@@ -112,7 +112,7 @@ const CoinScenarioForm = () => {
   const setScenarioData = useSetRecoilState(scenarioDataAtom);
   const setSearchHistory = useSetRecoilState(searchHistoryAtom);
   const viewportType = useResponsiveView();
-
+  const [isHistoryPriceValid,setIsHistoryPriceValid] = useState(true)
   const [selectedDate, setSelectedDate] = useState(null);
   const [buyPrice, setBuyPrice] = useState(0);
   const [selectedCoin, setSelectedCoin] = useState(INITIAL_CRYPTO);
@@ -130,12 +130,36 @@ const CoinScenarioForm = () => {
   );
 
   useEffect(() => {
-    if (!historyPrice) return;
+    const timer = setTimeout(() => {
+      setIsHistoryPriceValid(true);
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [isHistoryPriceValid]);
+
+  const handleHistoryPriceValidation = () => {
+  console.log("당시의 코인 가격을 알 수 없습니다. 날짜를 다시 선택해주세요.")
+  setIsHistoryPriceValid(false)
+  }
+
+  useEffect(() => {
+    if (!historyPrice) return; // historyPrice에 대한 api 요청 응답이 안왔을 때
+
+    const scenarioDataResult = {
+      currentPrice: selectedCoin.current_price,
+      historyPrice: historyPrice?.market_data?.current_price?.krw,
+      selectedPrice: buyPrice
+    }
+
+    // api 요청으로 받아온 hitoryPrice가 falsy값 일때
+    if (!scenarioDataResult.historyPrice) {
+      handleHistoryPriceValidation();
+      return 
+    }
 
     const scenarioInputData = calculatePriceDiff(
-      selectedCoin.current_price,
-      historyPrice.market_data.current_price.krw,
-      buyPrice,
+      scenarioDataResult
     );
     const { currentTotalCost, isSkyrocketed } = scenarioInputData;
 
