@@ -108,10 +108,14 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
   );
 
   const historyPrice = data?.market_data?.current_price?.krw;
+
+  useEffect(() => {
+  }, [isHistoryPriceValid]);
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsHistoryPriceValid(true);
     }, 2000);
+
     return () => {
       clearTimeout(timer);
     };
@@ -151,10 +155,12 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
 
     setScenarioData(newScenarioData);
     setSearchHistory((prevHistory) => { return [...prevHistory, newScenarioData]; });
-  }, [historyPrice]);
+  }, [historyPrice, buyPrice, day, month,
+    selectedCoin.current_price, selectedCoin.id,
+    selectedCoin.image, setScenarioData, setSearchHistory, year]);
 
   useEffect(() => {
-    // if (!historyPrice) return; // historyPrice에 대한 api 요청 응답이 안왔을 때
+    if (!data) return; // historyPrice에 대한 api 요청 응답이 안왔을 때
 
     // api 요청으로 받아온 hitoryPrice가 falsy값 일때
     if (!historyPrice) {
@@ -170,7 +176,6 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
   };
 
   useEffect(() => {
-    console.log(historyPrice);
     if (historyPrice) {
       setIsBottomSheetOpen(!isBottomSheetOpen);
     }
