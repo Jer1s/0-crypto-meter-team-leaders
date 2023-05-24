@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import { useQueryClient } from '@tanstack/react-query';
 import MainContainer from 'components/MainContainer';
 import useCoinsMarketsJeris from 'hooks/useCoinsMarketsJeris';
-import getCoinsMarkets from 'api/getCoinsMarkets';
+import { getCoinsMarkets } from 'api/getCoins';
 import parseMarketCapData from 'utils/parseMarketCapData';
 import { TOTAL_PAGES } from 'utils/constants';
 import CryptoMarketCapList from './CryptoMarketCapList';

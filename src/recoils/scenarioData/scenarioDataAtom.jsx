@@ -14,7 +14,7 @@ const scenarioDataAtom = atom({
     output: {
       outputPrice: 0,
       isSkyrocketed: true,
-      outputDate: 0,
+      outputDate: { year: 0, month: 0, day: 0 },
     },
   },
 });

@@ -1,13 +1,16 @@
 /** @jsxImportSource @emotion/react */
+import { useCallback, useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import {
   useRecoilValue, useResetRecoilState, useSetRecoilState,
 } from 'recoil';
 import searchHistoryAtom from 'recoils/searchHistory/searchHistoryAtom';
 import useFormattedPrice from 'hooks/useFormattedPrice';
-import { CRYPTO_NAME } from 'utils/constants';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import PropTypes from 'prop-types';
+import { useQuery } from '@tanstack/react-query';
+import { getCoinsHistory } from 'api/getCoins';
+import api from 'api';
 import { navButtonStyle } from './navButtonStyle';
 
 const popupStyle = css`
@@ -165,9 +168,12 @@ const decrementStyle = css`
 `;
 
 const SearchHistoryPopup = ({ setShowPopup }) => {
+  const [dateItem, setDateItem] = useState('01-01-2023');
+  const [cryptoIdItem, setCryptoIdItem] = useState('bitcoin');
   const searchHistory = useRecoilValue(searchHistoryAtom);
   const resetSearchHistoryAtom = useResetRecoilState(searchHistoryAtom);
   const setScenarioData = useSetRecoilState(scenarioDataAtom);
+
   const formatPrice = useFormattedPrice();
 
   const resetSearchHistory = () => {
@@ -175,10 +181,37 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
     localStorage.removeItem('searchHistory');
   };
 
-  const recalculateHistory = (item) => {
-    setScenarioData(item);
-    setShowPopup(false);
+  const fetchHistory = async () => {
+    const { data } = await api.get(
+      `/coins/${cryptoIdItem}`,
+    );
+    return data;
   };
+
+  const { data, isLoading, refetch } = useQuery('coinsHistory', fetchHistory, {
+    enable: false,
+  });
+  console.log(data);
+
+  const handleClick = async ({
+    day, month, year, cryptoId,
+  }) => {
+    const formattedDate = `${day}-${month}-${year}`;
+    setDateItem(formattedDate);
+    setCryptoIdItem(cryptoId);
+    await refetch();
+  };
+  // const recalculateHistory = (item) => {
+  //   setScenarioData(item);
+  //   setShowPopup(false);
+  // };
+
+  // export const getCoinsHistory = async ({ formattedDate = '01-01-2023', cryptoId = 'bitcoin' }) => {
+  //   const { data } = await api.get(
+  //     `/coins/${cryptoId}/history?date=${formattedDate}&localization=ko&x_cg_pro_api_key=CG-ReEFUZC8FpbDTSJ6AmbKy3m1`,
+  //   );
+  //   return data;
+  // };
 
   return (
     <div css={[navButtonStyle, popupStyle]}>
@@ -189,13 +222,15 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
       <div css={historyItemsStyle}>
         {searchHistory.map((item) => {
           const {
+            price, image, cryptoId, cryptoName, date,
+          } = item.input;
+          const {
             year, month, day,
-          } = item.input.date;
+          } = date;
+          const { outputPrice, isSkyrocketed, outputDate } = item.output;
           const {
             year: outputYear, month: outputMonth, day: outputDay,
-          } = item.output.outputDate;
-          const { price, image, cryptoId } = item.input;
-          const { outputPrice, isSkyrocketed } = item.output;
+          } = outputDate;
           const formattedPreviousPrice = formatPrice(price);
           const formattedResultPrice = formatPrice(outputPrice);
           let priceStyle = zeroStyle;
@@ -203,16 +238,25 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
             priceStyle = (isSkyrocketed === true) ? incrementStyle : decrementStyle;
           }
           return (
-            <button type="button" onClick={() => { return recalculateHistory(item); }} key={cryptoId} css={historyItemStyle}>
+            <button
+              type="button"
+              onClick={() => {
+                return handleClick({
+                  day, month, year, cryptoId,
+                });
+              }}
+              key={item.id}
+              css={historyItemStyle}
+            >
               <div css={symoblContainer}>
-                <img src={image} css={symbolStyle} alt="USDT Symbol" />
+                <img src={image} css={symbolStyle} alt="SYMBOL" />
               </div>
               <div css={scenarioDataStyle}>
                 {`만약 ${year}년 ${month}월 ${day}일에 ${formattedPreviousPrice}으로`}
               </div>
               <div css={scenarioResultStyle}>
                 <div>
-                  {`${CRYPTO_NAME[cryptoId]}을 샀다면,`}
+                  {`${cryptoName}을 샀다면,`}
                 </div>
                 <div>
                   {`${outputYear}년 ${outputMonth}월 ${outputDay}일에는 `}
