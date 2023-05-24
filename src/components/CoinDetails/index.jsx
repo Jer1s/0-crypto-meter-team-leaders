@@ -97,7 +97,7 @@ const toolTipStyle = css`
 
 const Button = styled.button`
   position: relative;
-  border: nonde;
+  border: none;
 `;
 
 const CoinDetails = () => {
