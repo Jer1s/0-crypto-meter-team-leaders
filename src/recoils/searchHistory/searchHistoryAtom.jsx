@@ -9,6 +9,7 @@ const searchHistoryAtom = atom({
         date: { year: 2022, month: 10, day: 12 },
         price: 100000,
         cryptoId: 'usd-coin',
+        cryptoName: 'USD Coin',
         image: 'https://assets.coingecko.com/coins/images/10481/large/Tether_Gold.png?1668148656',
       },
       output: {
@@ -22,6 +23,7 @@ const searchHistoryAtom = atom({
         date: { year: 2023, month: 4, day: 1 },
         price: 100000,
         cryptoId: 'dogecoin',
+        cryptoName: 'Dogecoin',
         image: 'https://assets.coingecko.com/coins/images/5/large/dogecoin.png?1547792256',
       },
       output: {
@@ -35,6 +37,7 @@ const searchHistoryAtom = atom({
         date: { year: 2021, month: 3, day: 22 },
         price: 5000,
         cryptoId: 'bitcoin',
+        cryptoName: 'Bitcoin',
         image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
       },
       output: {
@@ -48,6 +51,7 @@ const searchHistoryAtom = atom({
         date: { year: 2019, month: 12, day: 25 },
         price: 15300,
         cryptoId: 'staked-ether',
+        cryptoName: 'Lido Staked Ether',
         image: 'https://assets.coingecko.com/coins/images/13442/large/steth_logo.png?1608607546',
       },
       output: {
@@ -61,6 +65,7 @@ const searchHistoryAtom = atom({
         date: { year: 2019, month: 12, day: 25 },
         price: 2000,
         cryptoId: 'ethereum-classic',
+        cryptoName: '이더리움클래식',
         image: 'https://assets.coingecko.com/coins/images/453/large/ethereum-classic-logo.png?1547034169',
       },
       output: {
@@ -74,6 +79,7 @@ const searchHistoryAtom = atom({
         date: { year: 2019, month: 12, day: 25 },
         price: 2000,
         cryptoId: 'internet-computer',
+        cryptoName: 'Internet Computer',
         image: 'https://assets.coingecko.com/coins/images/14495/large/Internet_Computer_logo.png?1620703073',
       },
       output: {
@@ -87,6 +93,7 @@ const searchHistoryAtom = atom({
         date: { year: 2022, month: 12, day: 10 },
         price: 200000,
         cryptoId: 'true-usd',
+        cryptoName: '트루USD',
         image: 'https://assets.coingecko.com/coins/images/3449/large/tusd.png?1618395665',
       },
       output: {
@@ -113,6 +120,7 @@ const searchHistoryAtom = atom({
         date: { year: 2018, month: 12, day: 10 },
         price: 2000,
         cryptoId: 'ethereum',
+        cryptoName: '이더리움',
         image: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
       },
       output: {

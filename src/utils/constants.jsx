@@ -1,15 +1,3 @@
-export const CRYPTO_NAME = Object.freeze({
-  bitcoin: 'Bitcoin',
-  dogecoin: 'Dogecoin',
-  ethereum: '이더리움',
-  'usd-coin': 'USD Coin',
-  'staked-ether': 'Lido Staked Ether',
-  'ethereum-classic': '이더리움클래식',
-  'internet-computer': 'Internet Computer',
-  'true-usd': '트루USD',
-  'crypto-com-chain': 'Cronos',
-});
-
 export const LOCALE_CURRENCY = Object.freeze({
   KRW: {
     currencyUnit: '원',
