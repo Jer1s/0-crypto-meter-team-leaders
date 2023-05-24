@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 
 // 초기값 설정
-const INITIAL_CRYPTO = 'bitcoin';
+import { INITIAL_CRYPTO } from 'utils/constants';
 
 // Atom 정의
 export const selectedDateAtom = atom({

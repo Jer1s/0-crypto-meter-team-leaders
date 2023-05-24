@@ -40,9 +40,6 @@ module.exports = {
     '@tanstack/query/prefer-query-object-syntax': 'error',
     'import/no-extraneous-dependencies': [
       'error',
-      {
-        projectDependencies: false,
-      },
     ],
   },
 };
