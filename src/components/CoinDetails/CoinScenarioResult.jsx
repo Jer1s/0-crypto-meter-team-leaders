@@ -53,7 +53,7 @@ const today = new Date();
 const CoinScenarioResult = () => {
   const scenarioData = useRecoilValue(scenarioDataAtom);
   const { date, price } = scenarioData.input;
-  const { outputPrice, isSkyrocketed, outputDate } = scenarioData.output;
+  const { outputPrice, isSkyrocketed } = scenarioData.output;
   const func = useFormattedPrice();
 
   return (

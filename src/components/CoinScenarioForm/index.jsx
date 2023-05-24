@@ -1,14 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useSetRecoilState } from 'recoil';
-import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
-import { INITIAL_CRYPTO } from 'utils/constants';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import useResponsiveView from 'hooks/useResponsiveView';
 import filter from 'assets/filter.svg';
-import { useQuery } from '@tanstack/react-query';
-import getCurrentDate from 'utils/getCurrentDate';
-import searchHistoryAtom from 'recoils/searchHistory/searchHistoryAtom';
 import ScenarioDescription from './ScenarioDescription';
 import ScenarioForm from './ScenarioForm';
 import BottomSheet from './BottomSheet';
@@ -91,90 +85,14 @@ const FilterButtonStyle = css`
   }
 
 `;
-const fetchHistoryData = async (date, cointype) => {
-  const response = await fetch(
-    `https://api.coingecko.com/api/v3/coins/${cointype}/history?date=${date}&localization=ko`,
-  );
-  if (!response.ok) {
-    throw new Error('Failed to fetch data');
-  }
-  const data = await response.json();
-  return data;
-};
-
-const calculatePriceDiff = (currentPrice, historyPrice, selectedPrice) => {
-  const currentTotalCost = (selectedPrice / historyPrice) * currentPrice;
-  const isSkyrocketed = (selectedPrice - currentTotalCost) <= 0;
-
-  return { currentTotalCost, isSkyrocketed };
-};
 
 const CoinScenarioForm = () => {
-  const setScenarioData = useSetRecoilState(scenarioDataAtom);
-  const setSearchHistory = useSetRecoilState(searchHistoryAtom);
   const viewportType = useResponsiveView();
 
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [buyPrice, setBuyPrice] = useState(0);
-  const [selectedCoin, setSelectedCoin] = useState(INITIAL_CRYPTO);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
-  const [year, month, day] = selectedDate
-    ? [selectedDate.getFullYear().toString(),
-      (selectedDate.getMonth() + 1).toString(), selectedDate.getDate().toString()]
-    : ['0000', '00', '00'];
-
-  const { data: historyPrice, refetch } = useQuery(
-    ['coinsHistory', selectedDate, selectedCoin],
-    () => { return fetchHistoryData(`${day}-${month}-${year}`, selectedCoin.id); },
-    { enabled: false }, // 초기 로드 비활성화
-  );
-
-  useEffect(() => {
-    if (!historyPrice) return;
-
-    const scenarioInputData = calculatePriceDiff(
-      selectedCoin.current_price,
-      historyPrice.market_data.current_price.usd,
-      buyPrice,
-    );
-    const { currentTotalCost, isSkyrocketed } = scenarioInputData;
-
-    const newScenarioData = {
-      input: {
-        date: { year, month, day },
-        price: buyPrice,
-        cryptoId: selectedCoin.id,
-        image: selectedCoin.image,
-      },
-      output: {
-        outputPrice: currentTotalCost,
-        isSkyrocketed,
-        outputDate: getCurrentDate(),
-      },
-    };
-
-    setScenarioData(newScenarioData);
-    setSearchHistory((prevHistory) => { return [...prevHistory, newScenarioData]; });
-  }, [historyPrice]);
-
-  const handleSubmit = async (event) => {
-    setIsBottomSheetOpen(!isBottomSheetOpen);
-    event.preventDefault();
-    refetch();
-  };
   const handleBottomSheetClick = () => {
     setIsBottomSheetOpen(!isBottomSheetOpen);
-  };
-
-  const formProps = {
-    selectedCoin,
-    setSelectedCoin,
-    buyPrice,
-    setBuyPrice,
-    selectedDate,
-    setSelectedDate,
-    handleSubmit,
   };
 
   return (
@@ -185,17 +103,13 @@ const CoinScenarioForm = () => {
         </button>
       </div>
       <ScenarioDescription
-        year={year}
-        month={month}
-        day={day}
-        selectedCoin={selectedCoin}
-        price={buyPrice}
         onBottomSheetClick={viewportType !== 'Desktop' ? handleBottomSheetClick : undefined}
       />
       {viewportType === 'Desktop'
         ? (
           <ScenarioForm
-            formProps={formProps}
+            isBottomSheetOpen={isBottomSheetOpen}
+            setIsBottomSheetOpen={setIsBottomSheetOpen}
           />
         ) : (
           <BottomSheet
@@ -203,7 +117,8 @@ const CoinScenarioForm = () => {
             isBottomSheetOpen={isBottomSheetOpen}
           >
             <ScenarioForm
-              formProps={formProps}
+              isBottomSheetOpen={isBottomSheetOpen}
+              setIsBottomSheetOpen={setIsBottomSheetOpen}
             />
           </BottomSheet>
         )}
