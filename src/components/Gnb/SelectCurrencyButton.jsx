@@ -54,6 +54,7 @@ const SelectCurrencyButton = () => {
   const { currencyUnit, currencySign } = useRecoilValue(localeCurrencySelector);
 
   const [showPopup, setShowPopup] = useState(false);
+
   const node = useRef();
 
   useEffect(() => {
@@ -85,7 +86,7 @@ const SelectCurrencyButton = () => {
         <div css={mobileTextStyle}>{currencySign}</div>
         {showPopup ? <img css={imgStyle} src={Triangle} alt="Triangle" /> : <img css={imgStyle} src={invertedTriangle} alt="Inverted Triangle" />}
       </button>
-      {showPopup && (<SelectCurrencyPopup />)}
+      {showPopup && (<SelectCurrencyPopup setShowPopup={setShowPopup} />)}
     </div>
   );
 };

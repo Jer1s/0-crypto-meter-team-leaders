@@ -20,8 +20,8 @@ const imgStyle = css`
   height: 2rem;
 
   @media (max-width: 767px) {
-    width: 1.8rem;
-    height: 1.8rem;
+    width: 1.65rem;
+    height: 1.65rem;
   }
 `;
 
