@@ -4,9 +4,9 @@ import getCoinsMarkets from 'api/getCoinsMarkets';
 const useCoinsMarketsJeris = (page) => {
   return useQuery({
     queryKey: ['coinsMarkets', page],
-    queryFn: () => getCoinsMarkets(page),
+    queryFn: () => { return getCoinsMarkets(page); },
     keepPreviousData: true,
   });
-}
+};
 
 export default useCoinsMarketsJeris;
