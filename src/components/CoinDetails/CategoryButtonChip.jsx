@@ -2,9 +2,9 @@
 import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
 
-const chipStyle = ({ text, selectedTerm }) => {
+const chipStyle = ({ text, selectedTerm, customWidth }) => {
   return css`
-    min-width: 4.4rem;
+    width: ${customWidth};
     height: 2.6rem;
     border-radius: 2.1rem;
     font-size: 1.4rem;
@@ -23,7 +23,9 @@ const chipStyle = ({ text, selectedTerm }) => {
   `;
 };
 
-const CategoryButtonChip = ({ termItem, selectedTerm, setSelectedTerm }) => {
+const CategoryButtonChip = ({
+  termItem, selectedTerm, setSelectedTerm, width: customWidth,
+}) => {
   const { text } = termItem;
 
   const handleClick = () => {
@@ -34,7 +36,7 @@ const CategoryButtonChip = ({ termItem, selectedTerm, setSelectedTerm }) => {
     <button
       onClick={handleClick}
       type="button"
-      css={chipStyle({ text, selectedTerm })}
+      css={chipStyle({ text, selectedTerm, customWidth })}
     >
       {text}
     </button>
