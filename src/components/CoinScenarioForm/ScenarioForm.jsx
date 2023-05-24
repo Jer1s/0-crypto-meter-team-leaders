@@ -92,6 +92,7 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
   const [isHistoryPriceValid, setIsHistoryPriceValid] = useState(true);
   const setScenarioData = useSetRecoilState(scenarioDataAtom);
   const setSearchHistory = useSetRecoilState(searchHistoryAtom);
+  const [isSubmited, setIsSubmited] = useState(false);
 
   const [year, month, day] = selectedDate ? [selectedDate.getFullYear().toString(),
     (selectedDate.getMonth() + 1).toString(), selectedDate.getDate().toString()] : ['0000', '00', '0'];
@@ -100,12 +101,13 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
     ? [5, 10, 50, 100]
     : [10, 50, 100, 500, 1000];
 
-  const { data: historyPrice, refetch } = useQuery(
-    ['coinsHistory', selectedDate, selectedCoin],
+  const { data, refetch } = useQuery(
+    ['coinsHistory'],
     () => { return fetchHistoryData(`${day}-${month}-${year}`, selectedCoin.id); },
     { enabled: false }, // 초기 로드 비활성화
   );
 
+  const historyPrice = data?.market_data?.current_price?.krw;
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsHistoryPriceValid(true);
@@ -116,7 +118,6 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
   }, [isHistoryPriceValid]);
 
   const handleHistoryPriceValidation = () => {
-    console.log('당시의 코인 가격을 알 수 없습니다. 날짜를 다시 선택해주세요.');
     setIsHistoryPriceValid(false);
   };
 
@@ -125,15 +126,9 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
 
     const scenarioDataResult = {
       currentPrice: selectedCoin.current_price,
-      historyPrice: historyPrice?.market_data?.current_price?.krw,
+      historyPrice,
       selectedPrice: buyPrice,
     };
-
-    // api 요청으로 받아온 hitoryPrice가 falsy값 일때
-    if (!scenarioDataResult.historyPrice) {
-      handleHistoryPriceValidation();
-      return;
-    }
 
     const scenarioInputData = calculatePriceDiff(
       scenarioDataResult,
@@ -158,16 +153,34 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
     setSearchHistory((prevHistory) => { return [...prevHistory, newScenarioData]; });
   }, [historyPrice]);
 
+  useEffect(() => {
+    // if (!historyPrice) return; // historyPrice에 대한 api 요청 응답이 안왔을 때
+
+    // api 요청으로 받아온 hitoryPrice가 falsy값 일때
+    if (!historyPrice) {
+      handleHistoryPriceValidation();
+    }
+  }, [isSubmited, historyPrice]);
+
   const handleSubmit = async (event) => {
-    setIsBottomSheetOpen(!isBottomSheetOpen);
     event.preventDefault();
-    refetch();
+    await refetch();
+    setIsSubmited(!isSubmited);
+    // setIsBottomSheetOpen(!isBottomSheetOpen);
   };
+
+  useEffect(() => {
+    console.log(historyPrice);
+    if (historyPrice) {
+      setIsBottomSheetOpen(!isBottomSheetOpen);
+    }
+  }, [historyPrice]);
 
   return (
     <form onSubmit={handleSubmit} css={formStyle}>
       <div css={inputContainerStyle}>
-        <DateInput />
+
+        <DateInput isHistoryPriceValid={isHistoryPriceValid} />
         <div css={buyPriceInputStyle}>
           <BuyPriceInput />
           <div css={addPriceButtonContainerStyle}>

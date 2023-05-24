@@ -5,7 +5,6 @@ import React, {
 import { css } from '@emotion/react';
 import whiteInvertedTriangleIcon from 'assets/white-inverted-triangle.svg';
 import invertedTriangleIcon from 'assets/inverted-triangle.svg';
-import PropTypes from 'prop-types';
 import useResponsiveView from 'hooks/useResponsiveView';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { selectedCoinAtom } from 'recoils/scenarioInputData/scenarioInputDataAtom';
