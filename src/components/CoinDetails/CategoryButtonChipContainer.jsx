@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import CategoryButtonChip from './CategoryButtonChip';
 
-const CategoryButtonChipContainer = ({ selected, setSelected, list }) => {
+const CategoryButtonChipContainer = ({
+  selected, setSelected, list, width,
+}) => {
   return (
     <div>
       {list?.map((termItem) => {
@@ -11,6 +13,7 @@ const CategoryButtonChipContainer = ({ selected, setSelected, list }) => {
             setSelectedTerm={setSelected}
             key={termItem.text}
             termItem={termItem}
+            width={width}
           />
         );
       })}
@@ -19,6 +22,7 @@ const CategoryButtonChipContainer = ({ selected, setSelected, list }) => {
 };
 
 CategoryButtonChipContainer.propTypes = {
+  list: PropTypes.array,
   selected: PropTypes.shape({
     term: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
