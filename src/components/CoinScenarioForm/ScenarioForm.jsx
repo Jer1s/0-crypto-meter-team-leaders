@@ -3,13 +3,12 @@ import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
 import { useRecoilValue } from 'recoil';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
-import { BASE_CURRENCY } from 'utils/constants';
 import DateInput from './DateInput';
 import BuyPriceInput from './BuyPriceInput';
 import CoinTypeDropDown from './CoinTypeDropDown';
 import AddPriceButton from './AddPriceButton';
 
-const FormStyle = css`
+const formStyle = css`
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -76,12 +75,12 @@ const ScenarioForm = ({
   } = formProps;
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
 
-  const addButtonData = localeCurrency === BASE_CURRENCY
-    ? [5000, 10000, 50000, 100000]
-    : [10000, 50000, 100000, 500000, 1000000];
+  const addButtonData = localeCurrency === 'KRW'
+    ? [5, 10, 50, 100]
+    : [10, 50, 100, 500, 1000];
 
   return (
-    <form onSubmit={handleSubmit} css={FormStyle}>
+    <form onSubmit={handleSubmit} css={formStyle}>
       <div css={inputContainerStyle}>
         <DateInput selectedDate={selectedDate} onSelectedDate={setSelectedDate} />
         <div css={buyPriceInputStyle}>

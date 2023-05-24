@@ -2,7 +2,6 @@
 import { css } from '@emotion/react';
 import useFormattedPrice from 'hooks/useFormattedPrice';
 import { useRecoilValue } from 'recoil';
-import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 
 const ScenarioDescriptionStyle = css`
@@ -47,7 +46,6 @@ const currentDateStyle = css`
 const today = new Date();
 
 const CoinScenarioResult = () => {
-  const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const scenarioData = useRecoilValue(scenarioDataAtom);
   const { date, price } = scenarioData.input;
   const { outputPrice, isSkyrocketed, outputDate } = scenarioData.output;
