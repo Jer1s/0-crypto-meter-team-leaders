@@ -187,7 +187,7 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
         <button type="button" onClick={resetSearchHistory}>기록 모두 지우기</button>
       </div>
       <div css={historyItemsStyle}>
-        {searchHistory.map((item) => {
+        {searchHistory.slice(0).reverse().map((item) => {
           const {
             year, month, day,
           } = item.input.date;
