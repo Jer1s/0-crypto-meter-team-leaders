@@ -57,7 +57,6 @@ const CoinScenarioResult = () => {
   const { date, price } = scenarioData.input;
   const { outputPrice, isSkyrocketed, outputDate } = scenarioData.output;
   const func = useFormattedPrice();
-  console.log(scenarioData)
 
   return (
     <>
