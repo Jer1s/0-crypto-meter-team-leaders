@@ -97,6 +97,7 @@ const CustomTooltip = ({ active, payload }) => {
 
 const CoinChart = () => {
   let viewportType = useResponsiveView();
+  console.log(viewportType);
   if (viewportType === 'Desktop') {
     viewportType = 3.2;
   } else if (viewportType === 'Tablet') {
