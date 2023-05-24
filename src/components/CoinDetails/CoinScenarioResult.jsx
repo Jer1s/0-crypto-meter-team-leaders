@@ -30,7 +30,7 @@ const currentPriceStyle = ({ isSkyrocketed }) => {
   return css`
     display: inline-block;
     margin-right: 1rem;
-    color: ${isSkyrocketed === null ? 'var(--gray5)' : isSkyrocketed ? 'var(--chart-green)' : 'var(--primary-red'};
+    color: ${isSkyrocketed === null ? 'var(--gray5)' : isSkyrocketed ? 'var(--primary)' : 'var(--primary-red'};
   `;
 };
 
@@ -41,7 +41,7 @@ const zeroStyle = css`
 const nullStyle = css`
   color: var(--gray5);
   text-decoration: line-through;
-`
+`;
 
 const currentDateStyle = css`
   color: var(--gray4);
