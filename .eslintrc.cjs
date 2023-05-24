@@ -36,7 +36,8 @@ module.exports = {
     'arrow-body-style': ['error', 'always'],
     'import/no-unresolved': 'off',
     '@emotion/pkg-renaming': 'error',
-    '@tanstack/query/exhaustive-deps': 'error',
+    '@tanstack/query/exhaustive-deps': 'off',
     '@tanstack/query/prefer-query-object-syntax': 'error',
+    'no-nested-ternary': 'off',
   },
 };

@@ -44,3 +44,5 @@ export const INITIAL_CRYPTO = Object.freeze({
   name: 'Bitcoin',
   image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
 });
+
+export const TOTAL_PAGES = 1000;

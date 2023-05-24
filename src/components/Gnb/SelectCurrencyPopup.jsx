@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import PropTypes from 'prop-types';
 import { useRecoilState } from 'recoil';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import { LOCALE_CURRENCY } from 'utils/constants';
@@ -55,11 +56,12 @@ const mobileTextStyle = css`
   }
 `;
 
-const SelectCurrencyPopup = () => {
+const SelectCurrencyPopup = ({ setShowPopup }) => {
   const [localeCurrency, setLocaleCurrency] = useRecoilState(localeCurrencyAtom);
 
   const handleClick = (currencyKey) => {
     setLocaleCurrency(currencyKey);
+    setShowPopup(false);
   };
 
   return (
@@ -84,6 +86,10 @@ const SelectCurrencyPopup = () => {
       })}
     </div>
   );
+};
+
+SelectCurrencyPopup.propTypes = {
+  setShowPopup: PropTypes.func.isRequired,
 };
 
 export default SelectCurrencyPopup;

@@ -25,7 +25,6 @@ const navStyle = css`
 
 const logoStyle = css`
   background-image: url(${logo});
-  background-repeat: no-;
   width: 18.6rem;
   height: 2.6rem;
 
@@ -36,12 +35,7 @@ const logoStyle = css`
 
 const buttonContainerStyle = css`
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
   gap: 1.6rem;
-
-  @media (max-width: 767px) {
-  }
 `;
 
 const Gnb = () => {

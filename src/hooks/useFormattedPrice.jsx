@@ -8,7 +8,7 @@ const useFormattedPrice = (ignoreException) => {
   const { currencyUnit, currencySign } = useRecoilValue(localeCurrencySelector);
 
   return (price) => {
-    const convertedPrice = currencyConverter(price, localeCurrency);
+    const convertedPrice = convertCurrency(price, localeCurrency);
     const formattedPrice = convertedPrice?.toLocaleString();
 
     if (!ignoreException && localeCurrency === 'KRW') {

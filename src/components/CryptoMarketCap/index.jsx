@@ -1,12 +1,13 @@
 /** @jsxImportSource @emotion/react */
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { css } from '@emotion/react';
-import MainContainer from 'components/MainContainer';
-import useCoinsMarketsJeris from 'hooks/useCoinsMarketsJeris'
-import CryptoMarketCapList from './CryptoMarketCapList';
 import { useQueryClient } from '@tanstack/react-query';
-import parseMarketCapData from 'utils/parseMarketCapData';
+import MainContainer from 'components/MainContainer';
+import useCoinsMarketsJeris from 'hooks/useCoinsMarketsJeris';
 import getCoinsMarkets from 'api/getCoinsMarkets';
+import parseMarketCapData from 'utils/parseMarketCapData';
+import { TOTAL_PAGES } from 'utils/constants';
+import CryptoMarketCapList from './CryptoMarketCapList';
 import PaginationButtons from './PaginationButtons';
 
 const headerStyle = css`
@@ -30,7 +31,9 @@ const tableMarginStyle = css`
 const CryptoMarketCap = () => {
   const queryClient = useQueryClient();
   const [currentPage, setCurrentPage] = useState(1);
-  const { status, data, error, isPreviousData } = useCoinsMarketsJeris(currentPage);
+  const {
+    status, data, error, isPreviousData,
+  } = useCoinsMarketsJeris(currentPage);
 
   const [cryptoList, setCryptoList] = useState([]);
   const [order, setOrder] = useState('marketCapRank');
@@ -126,29 +129,29 @@ const CryptoMarketCap = () => {
     },
   };
 
-  const handleLoad = async () => {
+  const handleLoad = useCallback(() => {
     if (data) {
       const parsedData = parseMarketCapData(data);
       setCryptoList(parsedData);
     }
-  }
+  }, [data]);
 
   useEffect(() => {
     handleLoad();
-  }, [data, currentPage, order]);
-  
+  }, [handleLoad]);
+
   useEffect(() => {
     if (!isPreviousData && currentPage < 101) {
       queryClient.prefetchQuery({
         queryKey: ['coinsMarkets', currentPage + 1],
-        queryFn: () => getCoinsMarkets(currentPage + 1),
-      })
+        queryFn: () => { return getCoinsMarkets(currentPage + 1); },
+      });
     }
   }, [isPreviousData, currentPage, queryClient]);
 
   const handlecurrentPageChange = (page) => {
     setCurrentPage(page);
-  }
+  };
 
   return (
     <MainContainer>
@@ -160,16 +163,22 @@ const CryptoMarketCap = () => {
           {status === 'loading' ? (
             <div>Loading...</div>
           ) : status === 'error' ? (
-            <div>Error: {error.message}</div>
+            <div>
+              {`Error: ${error.message}`}
+            </div>
           ) : (
-          <CryptoMarketCapList
-            cryptoList={sortedCryptoList}
-            clickHandlers={clickHandlers}
-            order={order}
-          />
+            <CryptoMarketCapList
+              cryptoList={sortedCryptoList}
+              clickHandlers={clickHandlers}
+              order={order}
+            />
           )}
         </div>
-        <PaginationButtons totalPages={1000} currentPage={currentPage} onPageChange={handlecurrentPageChange} />
+        <PaginationButtons
+          totalPages={TOTAL_PAGES}
+          currentPage={currentPage}
+          onPageChange={handlecurrentPageChange}
+        />
       </div>
     </MainContainer>
   );
