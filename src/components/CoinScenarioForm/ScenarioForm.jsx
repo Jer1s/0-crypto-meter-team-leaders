@@ -139,7 +139,7 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
   const selectedCoin = useRecoilValue(selectedCoinAtom);
   const [isHistoryPriceValid, setIsHistoryPriceValid] = useState(true);
   const [scenarioData, setScenarioData] = useRecoilState(scenarioDataAtom);
-  const setSearchHistory = useSetRecoilState(searchHistoryAtom);
+  const [searchHistory, setSearchHistory] = useRecoilState(searchHistoryAtom);
   const [isSubmited, setIsSubmited] = useState(false);
 
   const [year, month, day] = selectedDate ? [selectedDate.getFullYear().toString(),
@@ -218,7 +218,11 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
 
   useEffect(() => {
     if (Object.keys(scenarioOutputData).length === 0) { return; }
-    setSearchHistory((prevHistory) => { return [...prevHistory, scenarioData]; });
+    const senarioDataWithID = {
+      id: searchHistory.length + 1,
+      ...scenarioData,
+    };
+    setSearchHistory((prevHistory) => { return [...prevHistory, senarioDataWithID]; });
   }, [scenarioData]);
 
   useEffect(() => {
