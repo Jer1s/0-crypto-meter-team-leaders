@@ -19,6 +19,7 @@ import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import { useQuery } from '@tanstack/react-query';
 import useInitialTerm from 'hooks/useInitialTerm';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
+import exchangeRateSelector from 'recoils/exchangeRate/exchangeRateSelector';
 import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
 const PRO_API_KEY = import.meta.env.VITE_X_CG_PRO_API_KEY;
@@ -122,6 +123,7 @@ const CoinChart = () => {
   }
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const data = useRecoilValue(scenarioDataAtom);
+  const exchangeRate = useRecoilValue(exchangeRateSelector);
   const [selectedTerm, setSelectedTerm] = useInitialTerm(data);
   const [selectedType, setSelectedType] = useState({ text: '코인 가격', term: 'prices' });
   const { input, output } = data;
@@ -175,7 +177,7 @@ const CoinChart = () => {
   const convertCoinNestedArrayToObject = (coinPriceList[type]?.map((item) => {
     return {
       date: fomattingTerm(item[0]),
-      price: item[1],
+      price: exchangeRate(item[1], localeCurrency),
       filteredDate: moment(item[0]).format('YYYY년 M월 D일'),
       localeCurrency,
     };
