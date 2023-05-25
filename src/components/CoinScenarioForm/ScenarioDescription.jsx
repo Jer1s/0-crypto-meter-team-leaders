@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import useFormattedPrice from 'hooks/useFormattedPrice';
 import { useRecoilValue } from 'recoil';
 import { selectedDateAtom, buyPriceAtom, selectedCoinAtom } from 'recoils/scenarioInputData/scenarioInputDataAtom';
-import exchangeRateAtom from 'recoils/exchangeRate/exchangeRateAtom';
 
 const containerStyle = css`
   color: var(--gray5);
