@@ -40,6 +40,14 @@ export const coinScenarioInputStyle = css`
     font-size: 1.6rem;
     border: none;
     padding: 0;
+    background-color: var(--white);
+  }
+
+  & .react-datepicker__header select {
+    text-align: center;
+    width: 6rem;
+    height: 3rem;
+    border-radius: 1rem;
   }
 
   & .react-datepicker__day {

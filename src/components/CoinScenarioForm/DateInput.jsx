@@ -51,6 +51,9 @@ const DateInput = ({ isHistoryPriceValid }) => {
         shouldCloseOnSelect
         maxDate={new Date()}
         locale={ko}
+        showMonthDropdown
+        showYearDropdown
+        dropdownMode="select"
       />
       <p>
         <img src={viewportType === 'Desktop' ? whiteInvertedTriangleIcon : invertedTriangleIcon} alt="Drop Down Triangle Icon" />
