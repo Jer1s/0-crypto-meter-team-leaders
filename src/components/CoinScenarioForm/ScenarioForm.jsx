@@ -187,7 +187,8 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
     if (!data) return; // historyPrice에 대한 api 요청 응답이 안왔을 때
 
     // api 요청으로 받아온 hitoryPrice가 falsy값 일때
-    if (!historyPrice) {
+    if (!(historyPrice.USD || historyPrice.KRW
+      || historyPrice.JPY || historyPrice.CNY || historyPrice.EUR)) {
       handleHistoryPriceValidation();
     }
   }, [isSubmited, historyPrice]);
