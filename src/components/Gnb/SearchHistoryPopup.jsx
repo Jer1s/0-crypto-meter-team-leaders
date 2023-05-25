@@ -171,7 +171,7 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
   const setScenarioData = useSetRecoilState(scenarioDataAtom);
   const resetSearchHistoryAtom = useResetRecoilState(searchHistoryAtom);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [selectedCrpytoId, setSelectedCryptoId] = useState('');
+  const [selectedCrpytoId, setSelectedCryptoId] = useState('bitcoin');
   const exchangeRate = useRecoilValue(exchangeRateAtom);
   const { data, refetch } = useQuery(['coin', selectedCrpytoId], () => { return getCoinCurrentData(selectedCrpytoId); });
 
@@ -188,7 +188,7 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
   };
 
   useEffect(() => {
-    if (data && selectedItem) {
+    if (data) {
       const price = data?.market_data?.current_price?.usd;
       const newScenarioData = {
         input: selectedItem.input,
