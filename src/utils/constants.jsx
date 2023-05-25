@@ -19,10 +19,6 @@ export const LOCALE_CURRENCY = Object.freeze({
     currencyUnit: 'USD',
     currencySign: '$',
   },
-  EUR: {
-    currencyUnit: 'EUR',
-    currencySign: '€',
-  },
   JPY: {
     currencyUnit: 'YEN',
     currencySign: '￥',
@@ -31,10 +27,10 @@ export const LOCALE_CURRENCY = Object.freeze({
     currencyUnit: 'CNY',
     currencySign: '元',
   },
-});
-
-export const EXCHANGE_RATE = Object.freeze({
-  USDTOKRW: 1000,
+  EUR: {
+    currencyUnit: 'EUR',
+    currencySign: '€',
+  },
 });
 
 export const BASE_CURRENCY = 'USD';
