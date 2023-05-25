@@ -7,6 +7,7 @@ const useFormattedPrice = (ignoreException) => {
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const { currencyUnit, currencySign } = useRecoilValue(localeCurrencySelector);
   const convertPrice = useRecoilValue(exchangeRateSelector);
+
   return (price) => {
     const convertedPrice = Number.isNaN(
       convertPrice(price, localeCurrency),
@@ -26,7 +27,9 @@ const useFormattedPrice = (ignoreException) => {
 
     if (!ignoreException && localeCurrency === 'KRW') {
       return `${formattedPrice}${currencyUnit}`;
-    } if (!ignoreException && localeCurrency === 'CNY') {
+    }
+
+    if (!ignoreException && localeCurrency === 'CNY') {
       return `${formattedPrice}${currencySign}`;
     }
 

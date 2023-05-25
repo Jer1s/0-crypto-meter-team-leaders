@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getCoinsMarkets } from 'api/getCoins';
 
-const useCoinsMarketsJeris = (page) => {
+const useCoinsMarkets = (page) => {
   return useQuery({
     queryKey: ['coinsMarkets', page],
     queryFn: () => { return getCoinsMarkets(page); },
@@ -9,4 +9,4 @@ const useCoinsMarketsJeris = (page) => {
   });
 };
 
-export default useCoinsMarketsJeris;
+export default useCoinsMarkets;

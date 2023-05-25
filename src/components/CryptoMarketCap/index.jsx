@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import { useQueryClient } from '@tanstack/react-query';
 import MainContainer from 'components/MainContainer';
-import useCoinsMarketsJeris from 'hooks/useCoinsMarketsJeris';
+import useCoinsMarkets from 'hooks/useCoinsMarkets';
 import { getCoinsMarkets } from 'api/getCoins';
 import parseMarketCapData from 'utils/parseMarketCapData';
 import { TOTAL_PAGES } from 'utils/constants';
@@ -33,7 +33,7 @@ const CryptoMarketCap = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const {
     status, data, error, isPreviousData,
-  } = useCoinsMarketsJeris(currentPage);
+  } = useCoinsMarkets(currentPage);
 
   const [cryptoList, setCryptoList] = useState([]);
   const [order, setOrder] = useState('marketCapRank');

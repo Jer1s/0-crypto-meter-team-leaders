@@ -6,6 +6,7 @@ import localeCurrencySelector from 'recoils/localeCurrency/localeCurrencySelecto
 const useFormatPriceToSign = (ignoreException) => {
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const { currencyUnit, currencySign } = useRecoilValue(localeCurrencySelector);
+
   return (price) => {
     let formattedPrice = price.toFixed(2);
     const checkingdecimal = (formattedPrice * 100) % 100;
@@ -17,11 +18,17 @@ const useFormatPriceToSign = (ignoreException) => {
       formattedPrice = Number(formattedPrice).toFixed(2);
     }
 
-    if (!ignoreException && localeCurrency === 'KRW') {
-      return `${formattedPrice}${currencyUnit}`;
-    }
-    if (!ignoreException && localeCurrency === 'CNY') {
-      return `${formattedPrice}${currencySign}`;
+    formattedPrice = new Intl.NumberFormat().format(formattedPrice);
+
+    if (!ignoreException) {
+      switch (localeCurrency) {
+        case 'KRW':
+          return `${formattedPrice}${currencyUnit}`;
+        case 'CNY':
+          return `${formattedPrice}${currencySign}`;
+        default:
+          break;
+      }
     }
 
     return `${currencySign}${formattedPrice}`;
