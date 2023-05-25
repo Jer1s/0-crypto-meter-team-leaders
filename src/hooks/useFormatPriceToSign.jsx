@@ -7,7 +7,15 @@ const useFormatPriceToSign = (ignoreException) => {
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const { currencyUnit, currencySign } = useRecoilValue(localeCurrencySelector);
   return (price) => {
-    const formattedPrice = price?.toLocaleString();
+    let formattedPrice = price.toFixed(2);
+    const checkingdecimal = (formattedPrice * 100) % 100;
+    if (checkingdecimal === 0) {
+      formattedPrice = Number(formattedPrice).toFixed(0);
+    } else if (checkingdecimal % 10 === 0) {
+      formattedPrice = Number(formattedPrice).toFixed(1);
+    } else {
+      formattedPrice = Number(formattedPrice).toFixed(2);
+    }
 
     if (!ignoreException && localeCurrency === 'KRW') {
       return `${formattedPrice}${currencyUnit}`;
