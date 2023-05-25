@@ -27,7 +27,9 @@ const useFormattedPrice = (ignoreException) => {
 
     if (!ignoreException && localeCurrency === 'KRW') {
       return `${formattedPrice}${currencyUnit}`;
-    } if (!ignoreException && localeCurrency === 'CNY') {
+    }
+
+    if (!ignoreException && localeCurrency === 'CNY') {
       return `${formattedPrice}${currencySign}`;
     }
 
