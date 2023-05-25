@@ -12,6 +12,9 @@ const useFormatPriceToSign = (ignoreException) => {
     if (!ignoreException && localeCurrency === 'KRW') {
       return `${formattedPrice}${currencyUnit}`;
     }
+    if (!ignoreException && localeCurrency === 'CNY') {
+      return `${formattedPrice}${currencySign}`;
+    }
 
     return `${currencySign}${formattedPrice}`;
   };
