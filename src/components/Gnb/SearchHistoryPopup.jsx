@@ -170,7 +170,7 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
   const setScenarioData = useSetRecoilState(scenarioDataAtom);
   const resetSearchHistoryAtom = useResetRecoilState(searchHistoryAtom);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [selectedCrpytoId, setSelectedCryptoId] = useState('bitcoin');
+  const [selectedCrpytoId, setSelectedCryptoId] = useState('');
   const exchangeRate = useRecoilValue(exchangeRateAtom);
   const { data, refetch } = useCoinCurrentData(selectedCrpytoId);
 
@@ -187,24 +187,24 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
   };
 
   useEffect(() => {
-    if (data && selectedItem) {
+    if (data) {
       const price = data?.market_data?.current_price?.usd;
       const newScenarioData = {
         input: selectedItem.input,
         output: {
           date: getCurrentDate(),
           price: {
-            USD: price,
-            KRW: price * exchangeRate[`${BASE_CURRENCY}TOKRW`],
-            JPY: price * exchangeRate[`${BASE_CURRENCY}TOJPY`],
-            EUR: price * exchangeRate[`${BASE_CURRENCY}TOEUR`],
-            CNY: price * exchangeRate[`${BASE_CURRENCY}TOCNY`],
+            USD: price * selectedItem.input.cryptoAmount,
+            KRW: price * selectedItem.input.cryptoAmount * exchangeRate[`${BASE_CURRENCY}TOKRW`],
+            JPY: price * selectedItem.input.cryptoAmount * exchangeRate[`${BASE_CURRENCY}TOJPY`],
+            EUR: price * selectedItem.input.cryptoAmount * exchangeRate[`${BASE_CURRENCY}TOEUR`],
+            CNY: price * selectedItem.input.cryptoAmount * exchangeRate[`${BASE_CURRENCY}TOCNY`],
           },
         },
       };
       setScenarioData(newScenarioData);
     }
-  }, [data, selectedItem, setScenarioData, exchangeRate]);
+  }, [data]);
 
   return (
     <div css={[navButtonStyle, popupStyle]}>

@@ -50,6 +50,7 @@ const today = new Date();
 const CoinScenarioResult = () => {
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const scenarioData = useRecoilValue(scenarioDataAtom);
+  console.log(scenarioData);
 
   const { input, output } = scenarioData;
   const { date, pastPrice } = input;
@@ -66,7 +67,7 @@ const CoinScenarioResult = () => {
       <p css={resultStyle}>
         <span
           css={[currentPriceStyle({ isSkyrocketed }),
-          (price[localeCurrency] === 0)
+            (price[localeCurrency] === 0)
           && zeroStyle]}
         >
           {price[localeCurrency] === null ? '0원' : formatPrice(price[localeCurrency], localeCurrency)}

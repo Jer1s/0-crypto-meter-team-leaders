@@ -7,7 +7,7 @@ export const getCoinsMarkets = async (page = 1) => {
   return data;
 };
 
-export const getCoinCurrentData = async (cryptoId = 'bitcoin') => {
+export const getCoinCurrentData = async (cryptoId) => {
   const { data } = await api.get(
     `coins/${cryptoId}?localization=false&tickers=false&community_data=false&developer_data=false&sparkline=false&x_cg_pro_api_key=${import.meta.env.VITE_X_CG_PRO_API_KEY}`,
   );
