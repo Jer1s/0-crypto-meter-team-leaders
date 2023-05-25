@@ -8,7 +8,6 @@ import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import { useRecoilValue } from 'recoil';
 import { selectedDateAtom, buyPriceAtom, selectedCoinAtom } from 'recoils/scenarioInputData/scenarioInputDataAtom';
 import exchangeRateAtom from 'recoils/exchangeRate/exchangeRateAtom';
-import exchangeRateSelector from 'recoils/exchangeRate/exchangeRateSelector';
 
 const containerStyle = css`
   color: var(--gray5);
@@ -62,7 +61,6 @@ const lineStyle = css`
 const ScenarioDescription = ({
   onBottomSheetClick,
 }) => {
-  const convertCurrency = useRecoilValue(exchangeRateSelector);
   const price = useRecoilValue(buyPriceAtom);
   const selectedDate = useRecoilValue(selectedDateAtom);
   const selectedCoin = useRecoilValue(selectedCoinAtom);
