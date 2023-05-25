@@ -6,6 +6,7 @@ import localeCurrencySelector from 'recoils/localeCurrency/localeCurrencySelecto
 const useFormatPriceToSign = (ignoreException) => {
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const { currencyUnit, currencySign } = useRecoilValue(localeCurrencySelector);
+
   return (price) => {
     let formattedPrice = price.toFixed(2);
     const checkingdecimal = (formattedPrice * 100) % 100;
