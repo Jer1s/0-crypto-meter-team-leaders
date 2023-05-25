@@ -28,7 +28,6 @@ const useExchangeRate = () => {
         exchangerRateObj[localeCurrency] = value;
       }
     }
-
     setExchangeRate(exchangerRateObj);
   }, [data, setExchangeRate]);
 };

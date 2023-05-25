@@ -9,7 +9,7 @@ const useFormattedPrice = (ignoreException) => {
   const convertCurrency = useRecoilValue(exchangeRateSelector);
 
   return (price) => {
-    const convertedPrice = convertCurrency(price, localeCurrency);
+    const convertedPrice = Number.isNaN(convertCurrency(price, localeCurrency)) ? 0 : convertCurrency(price, localeCurrency);
     let formattedPrice = convertedPrice?.toLocaleString();
     let checkingdecimal = formattedPrice;
     checkingdecimal = (checkingdecimal * 100) % 100;
@@ -18,6 +18,8 @@ const useFormattedPrice = (ignoreException) => {
     } else if (checkingdecimal !== 0 && checkingdecimal <= 99) {
       formattedPrice = Number(formattedPrice).toFixed(2);
     }
+
+    console.log(formattedPrice);
 
     if (!ignoreException && localeCurrency === 'KRW') {
       return `${formattedPrice}${currencyUnit}`;
