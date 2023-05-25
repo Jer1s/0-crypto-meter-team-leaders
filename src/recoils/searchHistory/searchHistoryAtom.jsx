@@ -27,7 +27,7 @@ const searchHistoryAtom = atom({
     input: {
       date: { year: 2019, month: 12, day: 25 },
       pastPrice: {
-        USD: 15, KRW: 75200, JPY: 6350, EUR: 110, CNY: 510,
+        USD: 12222225, KRW: 75200, JPY: 6350, EUR: 110, CNY: 510,
       },
       cryptoAmount: 10,
       cryptoId: 'staked-ether',

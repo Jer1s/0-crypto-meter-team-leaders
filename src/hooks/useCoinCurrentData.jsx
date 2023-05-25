@@ -3,7 +3,7 @@ import { getCoinCurrentData } from 'api/getCoins';
 
 const useCoinCurrentData = (cryptoId) => {
   return useQuery({
-    queryKey: ['coin', cryptoId],
+    queryKey: ['coin'],
     queryFn: () => { return getCoinCurrentData(cryptoId); },
     enabled: false,
   });
