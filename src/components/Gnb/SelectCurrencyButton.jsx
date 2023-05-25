@@ -11,6 +11,7 @@ import SelectCurrencyPopup from './SelectCurrencyPopup';
 const containerStyle = css`
   display: flex;
   flex-direction: column;
+  width: fit-content;
 `;
 
 const buttonStyle = css`

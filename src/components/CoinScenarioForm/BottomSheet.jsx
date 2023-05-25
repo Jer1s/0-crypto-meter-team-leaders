@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import useViewportType from 'hooks/useResponsiveView';
 import PropTypes from 'prop-types';
+import { waitForNone } from 'recoil';
 
 const BottomSheetStyle = css`
   padding: 6.4rem 5.4rem 5.6rem; 
@@ -37,7 +38,7 @@ const BottomSheet = ({
   const viewportType = useViewportType();
 
   const heightLookup = {
-    Tablet: '56.5rem',
+    Tablet: '60rem',
     Mobile: '56.5rem',
     SuperMobile: '47.2rem',
   };
@@ -62,7 +63,7 @@ const BottomSheet = ({
         keepMounted: true,
       }}
       PaperProps={{
-        style: { borderRadius: '2.4rem 2.4rem 0 0', height: bottomSheetHeight },
+        style: { borderRadius: '2.4rem 2.4rem 0 0', height: bottomSheetHeight, overflow: 'visible' },
       }}
     >
       <div css={PullerContainer}>
