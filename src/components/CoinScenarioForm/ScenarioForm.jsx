@@ -10,6 +10,8 @@ import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import getCurrentDate from 'utils/getCurrentDate';
 import searchHistoryAtom from 'recoils/searchHistory/searchHistoryAtom';
 import exchangeRateReverseSelector from 'recoils/exchangeRate/exchangeRateReverseSelector';
+import exchangeRateAtom from 'recoils/exchangeRate/exchangeRateAtom';
+import { BASE_CURRENCY } from 'utils/constants';
 import AddPriceButton from './AddPriceButton';
 import CoinTypeDropDown from './CoinTypeDropDown';
 import BuyPriceInput from './BuyPriceInput';
@@ -80,13 +82,39 @@ const fetchHistoryData = async (date, cointype) => {
   return data;
 };
 
-const calculatePriceDiff = ({ currentPrice, historyPrice, selectedPrice }) => {
-  const currentTotalCost = (selectedPrice / historyPrice) * currentPrice;
-  const isSkyrocketed = (selectedPrice - currentTotalCost) <= 0;
-  return { currentTotalCost, isSkyrocketed };
+const calculatePriceDiff = (scenarioDataResult, exchangeRate) => {
+  const { currentPrice, historyPrice, buyPrice } = scenarioDataResult;
+
+  const {
+    USD, KRW, JPY, EUR, CNY,
+  } = historyPrice;
+  const amount = (buyPrice / USD);
+  const pastPrice = {
+    USD: amount * USD, KRW: KRW * USD, JPY: JPY * USD, EUR: EUR * USD, CNY: CNY * USD,
+  };
+  const usdPrice = amount * currentPrice;
+  const exchangedRate = (targetCurrency) => {
+    return exchangeRate[`${BASE_CURRENCY}TO${targetCurrency}`];
+  };
+  const price = {
+    USD: usdPrice,
+    KRW: usdPrice * exchangedRate('KRW'),
+    JPY: usdPrice * exchangedRate('KRW'),
+    EUR: usdPrice * exchangedRate('KRW'),
+    CNY: usdPrice * exchangedRate('KRW'),
+  };
+  // const currentTotalCost =amount * currentPrice;
+  // const isSkyrocketed = (buyPrice - currentTotalCost) <= 0;
+  return {
+    pastPrice,
+    price,
+  };
+  // return { currentTotalCost, isSkyrocketed };
 };
 const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
   const convertPriceToBase = useRecoilValue(exchangeRateReverseSelector);
+  const exchangeRate = useRecoilValue(exchangeRateAtom);
+
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const selectedDate = useRecoilValue(selectedDateAtom);
   const buyPrice = useRecoilValue(buyPriceAtom);
@@ -109,8 +137,13 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
     { enabled: false }, // 초기 로드 비활성화
   );
 
-  const historyPrice = data?.market_data?.current_price?.usd;
-
+  const historyPrice = {
+    USD: data?.market_data?.current_price?.usd,
+    KRW: data?.market_data?.current_price?.krw,
+    JPY: data?.market_data?.current_price?.jpy,
+    CNY: data?.market_data?.current_price?.cny,
+    EUR: data?.market_data?.current_price?.eur,
+  };
   useEffect(() => {
   }, [isHistoryPriceValid]);
   useEffect(() => {
@@ -127,43 +160,46 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
     setIsHistoryPriceValid(false);
   };
 
-  const [scenarioInputData, setScenarioInputData] = useState({});
+  const [scenarioOutputData, setScenarioOutputData] = useState({});
 
   useEffect(() => {
     if (!data && !loading) {
-      if (!historyPrice) return;
+      if (!(historyPrice.USD || historyPrice.KRW
+        || historyPrice.JPY || historyPrice.CNY || historyPrice.EUR)) return;
     } // historyPrice에 대한 api 요청 응답이 안왔을 때
     const scenarioDataResult = {
       currentPrice: selectedCoin.current_price,
       historyPrice,
       selectedPrice: buyPrice,
     };
-    const temp = calculatePriceDiff(
-      scenarioDataResult,
-    );
-    setScenarioInputData(temp);
+
+    setScenarioOutputData(calculatePriceDiff( // output.price 계산 하는 로직
+      scenarioDataResult, exchangeRate));
   }, [isSubmited]);
+
+  // scenarioData set
 
   useEffect(() => {
     const newScenarioData = {
       input: {
         date: { year, month, day },
-        price: buyPrice,
+        pastPrice: scenarioOutputData.pastPrice,
+        buyPrice,
         cryptoId: selectedCoin.id,
+        cryptoName: selectedCoin.Name,
         image: selectedCoin.image,
       },
       output: {
-        outputPrice: scenarioInputData.currentTotalCost,
-        isSkyrocketed: scenarioInputData.isSkyrocketed,
+        price: scenarioOutputData.price,
         outputDate: getCurrentDate(),
       },
     };
 
     setScenarioData(newScenarioData);
-  }, [scenarioInputData]);
+  }, [scenarioOutputData]);
 
   useEffect(() => {
-    if (Object.keys(scenarioInputData).length === 0) { return; }
+    if (Object.keys(scenarioOutputData).length === 0) { return; }
     setSearchHistory((prevHistory) => { return [...prevHistory, scenarioData]; });
   }, [scenarioData]);
 
