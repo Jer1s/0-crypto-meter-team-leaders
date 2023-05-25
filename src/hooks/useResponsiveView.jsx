@@ -19,6 +19,8 @@ const useViewportType = () => {
       setViewportType(type);
     };
 
+    handleResize();
+
     window.addEventListener('resize', handleResize);
 
     return () => {
