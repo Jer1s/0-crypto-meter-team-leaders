@@ -58,6 +58,7 @@ const CoinScenarioResult = () => {
   const { input, output } = scenarioData;
   const { date, pastPrice } = input;
   const { price } = output;
+  console.log(price[localeCurrency], pastPrice[localeCurrency]);
   const isSkyrocketed = isNaN(price[localeCurrency] - pastPrice[localeCurrency]) ? null : price[localeCurrency] - pastPrice[localeCurrency] > 0;
 
   return (
@@ -68,7 +69,7 @@ const CoinScenarioResult = () => {
       <p css={resultStyle}>
         <span
           css={[currentPriceStyle({ isSkyrocketed }),
-          (price[localeCurrency] === 0)
+            (price[localeCurrency] === 0)
           && zeroStyle]}
         >
           {price[localeCurrency] === null ? '0원' : formatPrice(price[localeCurrency], localeCurrency)}

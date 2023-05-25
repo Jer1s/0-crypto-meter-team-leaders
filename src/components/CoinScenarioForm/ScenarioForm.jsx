@@ -117,9 +117,9 @@ const calculatePriceDiff = (scenarioDataResult, exchangeRate) => {
   const price = {
     USD: usdPrice,
     KRW: usdPrice * exchangedRate('KRW'),
-    JPY: usdPrice * exchangedRate('KRW'),
-    EUR: usdPrice * exchangedRate('KRW'),
-    CNY: usdPrice * exchangedRate('KRW'),
+    JPY: usdPrice * exchangedRate('JPY'),
+    EUR: usdPrice * exchangedRate('EUR'),
+    CNY: usdPrice * exchangedRate('CNY'),
   };
   // const currentTotalCost =amount * currentPrice;
   // const isSkyrocketed = (buyPrice - currentTotalCost) <= 0;
@@ -143,7 +143,7 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
   const [isSubmited, setIsSubmited] = useState(false);
 
   const [year, month, day] = selectedDate ? [selectedDate.getFullYear().toString(),
-  (selectedDate.getMonth() + 1).toString(), selectedDate.getDate().toString()] : ['0000', '00', '0'];
+    (selectedDate.getMonth() + 1).toString(), selectedDate.getDate().toString()] : ['0000', '00', '0'];
 
   const addButtonData = localeCurrency === 'KRW'
     ? [5000, 10000, 50000, 100000]

@@ -12,7 +12,7 @@ const HomePage = () => {
 
   return (
     <>
-      <Gnb />
+      {/* <Gnb /> */}
       <HomePageLayout>
         <CoinScenarioForm key="sideBar" />
         <CoinDetails key="main1" />
