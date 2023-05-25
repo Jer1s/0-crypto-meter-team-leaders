@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 import useFormattedPrice from 'hooks/useFormattedPrice';
 import { useRecoilValue } from 'recoil';
 import { selectedDateAtom, buyPriceAtom, selectedCoinAtom } from 'recoils/scenarioInputData/scenarioInputDataAtom';
-import exchangeRateSelector from 'recoils/exchangeRate/exchangeRateSelector';
-import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 
 const containerStyle = css`
   color: var(--gray5);
@@ -61,9 +59,7 @@ const ScenarioDescription = ({
   onBottomSheetClick,
 }) => {
   const price = useRecoilValue(buyPriceAtom);
-  const localeCurrency = useRecoilValue(localeCurrencyAtom);
-  const convertPrice = useRecoilValue(exchangeRateSelector);
-  const [formattedPrice, setFormattedPrice] = useState(0);
+  const [formattedPrice, setFormattedPrice] = useState('');
   const selectedDate = useRecoilValue(selectedDateAtom);
   const selectedCoin = useRecoilValue(selectedCoinAtom);
   const formatPrice = useFormattedPrice();

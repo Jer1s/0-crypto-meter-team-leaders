@@ -91,7 +91,7 @@ const calculatePriceDiff = ({ currentPrice, historyPrice, selectedPrice }) => {
   return { currentTotalCost, isSkyrocketed };
 };
 const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
-  const convertToBasePrice = useRecoilValue(exchangeRateReverseSelector);
+  const convertPriceToBase = useRecoilValue(exchangeRateReverseSelector);
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const selectedDate = useRecoilValue(selectedDateAtom);
   const buyPrice = useRecoilValue(buyPriceAtom);
@@ -193,7 +193,7 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
           <BuyPriceInput />
           <div css={addPriceButtonContainerStyle}>
             {addButtonData.map((value) => {
-              const convertedValue = convertToBasePrice(value, localeCurrency);
+              const convertedValue = convertPriceToBase(value, localeCurrency);
               return (
                 <AddPriceButton
                   key={value}
