@@ -32,7 +32,8 @@ const currentPriceStyle = ({ isSkyrocketed }) => {
     display: inline-block;
     margin-right: 1rem;
     color: ${isSkyrocketed === null ? 'var(--gray5)' : isSkyrocketed ? 'var(--primary)' : 'var(--primary-red)'};
-    `;
+    text-decoration : ${isSkyrocketed === null ? 'line-through' : 'none'};
+  `;
 };
 
 const zeroStyle = css`
@@ -53,7 +54,10 @@ const CoinScenarioResult = () => {
   const { input, output } = scenarioData;
   const { date, pastPrice } = input;
   const { price } = output;
-  const isSkyrocketed = Number.isNaN(price[localeCurrency] - pastPrice[localeCurrency]) ? null : price[localeCurrency] - pastPrice[localeCurrency] > 0;
+  const isSkyrocketed = Number.isNaN(price[localeCurrency] - pastPrice[localeCurrency])
+    ? null
+    : price[localeCurrency] - pastPrice[localeCurrency] > 0;
+
   return (
     <>
       <p css={ScenarioDescriptionStyle}>

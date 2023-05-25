@@ -105,7 +105,6 @@ const CoinChart = () => {
   } else {
     viewportType = 4;
   }
-
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const data = useRecoilValue(scenarioDataAtom);
   const [selectedTerm, setSelectedTerm] = useInitialTerm(data);

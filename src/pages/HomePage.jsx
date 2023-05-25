@@ -14,7 +14,7 @@ const HomePage = () => {
     <>
       <Gnb />
       <HomePageLayout>
-        {/* <CoinScenarioForm key="sideBar" /> */}
+        <CoinScenarioForm key="sideBar" />
         <CoinDetails key="main1" />
         <CryptoMarketCap key="main2" />
       </HomePageLayout>
