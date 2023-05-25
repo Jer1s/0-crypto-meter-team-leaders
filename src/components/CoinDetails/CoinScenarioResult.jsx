@@ -62,7 +62,11 @@ const CoinScenarioResult = () => {
         {`${date.year}년 ${date.month}월 ${date.day}일에 ${func(price)}으로 샀다면 오늘`}
       </p>
       <p css={resultStyle}>
-        <span css={[currentPriceStyle({ isSkyrocketed }), (outputPrice === null && nullStyle), (outputPrice === 0) && zeroStyle]}>
+        <span
+          css={[currentPriceStyle({ isSkyrocketed }),
+            (outputPrice === null && nullStyle), (outputPrice === 0)
+          && zeroStyle]}
+        >
           {outputPrice === null ? '0원' : func(outputPrice)}
         </span>
         입니다.

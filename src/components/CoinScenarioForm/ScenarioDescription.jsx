@@ -3,10 +3,11 @@ import React from 'react';
 import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
 import useFormattedPrice from 'hooks/useFormattedPrice';
-import { BASE_CURRENCY, EXCHANGE_RATE } from 'utils/constants';
+import { BASE_CURRENCY } from 'utils/constants';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import { useRecoilValue } from 'recoil';
 import { selectedDateAtom, buyPriceAtom, selectedCoinAtom } from 'recoils/scenarioInputData/scenarioInputDataAtom';
+import exchangeRateSelector from 'recoils/exchangeRate/exchangeRateSelector';
 
 const containerStyle = css`
   color: var(--gray5);
@@ -48,12 +49,15 @@ const strongText = css`
 const ScenarioDescription = ({
   onBottomSheetClick,
 }) => {
+  const convertCurrency = useRecoilValue(exchangeRateSelector);
   const price = useRecoilValue(buyPriceAtom);
   const selectedDate = useRecoilValue(selectedDateAtom);
   const selectedCoin = useRecoilValue(selectedCoinAtom);
   const formatPrice = useFormattedPrice();
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
-  const convertedPrice = localeCurrency === BASE_CURRENCY ? price : price / EXCHANGE_RATE[`${BASE_CURRENCY}TO${localeCurrency}`];
+  const convertedPrice = localeCurrency === BASE_CURRENCY
+    ? price
+    : convertCurrency(price, localeCurrency);
   const formattedPrice = formatPrice(convertedPrice);
 
   const [year, month, day] = selectedDate

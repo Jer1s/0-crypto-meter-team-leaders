@@ -2,10 +2,10 @@
 import { css } from '@emotion/react';
 import useFormattedPrice from 'hooks/useFormattedPrice';
 import PropTypes from 'prop-types';
-import convertCurrency from 'utils/convertCurrency';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import { buyPriceAtom } from 'recoils/scenarioInputData/scenarioInputDataAtom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import exchangeRateSelector from 'recoils/exchangeRate/exchangeRateSelector';
 
 const buttonStyle = css`
   padding : 0.6rem 1.2rem;
@@ -29,6 +29,7 @@ const buttonStyle = css`
 
 const AddPriceButton = ({ value }) => {
   const setBuyPrice = useSetRecoilState(buyPriceAtom);
+  const convertCurrency = useRecoilValue(exchangeRateSelector);
 
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const formatPrice = useFormattedPrice();

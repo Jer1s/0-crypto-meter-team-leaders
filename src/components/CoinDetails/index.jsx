@@ -136,7 +136,7 @@ const CoinDetails = () => {
           <p style={{ height: '3.1rem' }}>{CRYPTO_NAME[cryptoId]}</p>
         </CoinInfo>
         <SocialIconGroup>
-          {/* <KakaoShareButton /> */}
+          <KakaoShareButton />
           <Button type="button" onClick={shareFacebook}>
             <img src={facebook} alt="Facebook Icon" />
           </Button>
