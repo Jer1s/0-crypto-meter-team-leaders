@@ -8,22 +8,21 @@ import ScenarioForm from './ScenarioForm';
 import BottomSheet from './BottomSheet';
 
 const containerStyle = css`
-  position: relative;
-  max-width : 100%;
-  height: 100%;
-  background-color: var(--gray1);
-  border-radius: 2.4rem;
-  padding: 6rem 4rem 7rem;
   display: flex;
   flex-direction: column;
   gap: 5.5rem;
+  position: relative;
+  background-color: var(--gray1);
+  border-radius: 2.4rem;
+  padding: 6rem 4rem 7rem;
+  height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
   overflow-y: overlay;
   
   &::-webkit-scrollbar {
-  width: 0.6rem;
-}
+    width: 0.6rem;
+  }
 
   &::-webkit-scrollbar-thumb {
     background-color: var(--gray10);
@@ -31,14 +30,12 @@ const containerStyle = css`
   }
 
   @media (max-width: 1199px) {
-    max-width: none;
-    height: 100%;
-    padding: 3.6rem 6.5rem 3.6rem 3.6rem ;
+    padding: 3.6rem;
     overflow: hidden;
   }
 
   @media (max-width: 768px) {
-    padding: 2.8rem 6rem 2.4rem 2.8rem ;
+    padding: 2.8rem 2.4rem ;
   }
 `;
 
@@ -49,8 +46,7 @@ const FilterButtonStyle = css`
     position: absolute;
     display: block;
     top: 2.4rem;
-    right: 2.4rem;
-    margin: 0 1rem;
+    right: 3.4rem;
 
     button {
       padding: 0;
@@ -62,7 +58,6 @@ const FilterButtonStyle = css`
       height: 3.2rem;
       cursor: pointer;
     }
-
 
     img {
       width: 1.6rem;

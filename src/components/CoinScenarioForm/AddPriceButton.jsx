@@ -7,6 +7,7 @@ import useCurrencyConverter from 'hooks/useCurrencyConverter';
 import { buyPriceAtom } from 'recoils/scenarioInputData/scenarioInputDataAtom';
 import { useSetRecoilState } from 'recoil';
 import useFormatPriceToSign from 'hooks/useFormatPriceToSign';
+import exchangeRateSelector from 'recoils/exchangeRate/exchangeRateSelector';
 
 const buttonStyle = css`
   padding : 0.6rem 1.2rem;

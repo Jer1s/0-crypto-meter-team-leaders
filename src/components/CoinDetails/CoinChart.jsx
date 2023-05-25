@@ -24,7 +24,7 @@ const PRO_API_KEY = import.meta.env.VITE_X_CG_PRO_API_KEY;
 const PRO_BASE_URL = import.meta.env.VITE_PRO_BASE_URL;
 
 const termList = [{ text: '전체', term: 'max' }, { text: '1년', term: '365' }, { text: '1개월', term: '30' }, { text: '1주', term: '7' }, { text: '1일', term: '1' }];
-const typeList = [{ text: '코인가격', term: 'prices' }, { text: '시가총액', term: 'market_caps' }, { text: '총거래량', term: 'total_volumes' }];
+const typeList = [{ text: '코인 가격', term: 'prices' }, { text: '시가총액', term: 'market_caps' }, { text: '총 거래량', term: 'total_volumes' }];
 
 const containerStyle = css`
   max-width: 91rem;
@@ -109,7 +109,7 @@ const CoinChart = () => {
 
   const data = useRecoilValue(scenarioDataAtom);
   const [selectedTerm, setSelectedTerm] = useInitialTerm(data);
-  const [selectedType, setSelectedType] = useState({ text: '코인가격', term: 'prices' });
+  const [selectedType, setSelectedType] = useState({ text: '코인 가격', term: 'prices' });
   const { input, output } = data;
   const { cryptoId } = input;
   const { isSkyrocketed } = output;
@@ -170,11 +170,13 @@ const CoinChart = () => {
           selected={selectedType}
           setSelected={setSelectedType}
           list={typeList}
+          width="8rem"
         />
         <CategoryButtonChipContainer
           selected={selectedTerm}
           setSelected={setSelectedTerm}
           list={termList}
+          width="4.4rem"
         />
       </div>
       <ResponsiveContainer>

@@ -3,17 +3,6 @@ import { useState, useEffect } from 'react';
 const useViewportType = () => {
   const [viewportType, setViewportType] = useState('');
 
-  const debounce = (fn, ms) => {
-    let timer;
-    return () => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        timer = null;
-        fn();
-      }, ms);
-    };
-  };
-
   useEffect(() => {
     const handleResize = () => {
       const { innerWidth } = window;
@@ -30,16 +19,14 @@ const useViewportType = () => {
       setViewportType(type);
     };
 
-    const debouncedHandleResize = debounce(handleResize, 100);
+    handleResize();
 
-    handleResize(); // 초기값 설정
-
-    window.addEventListener('resize', debouncedHandleResize);
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener('resize', debouncedHandleResize);
+      window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  });
 
   return viewportType;
 };

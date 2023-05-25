@@ -16,9 +16,9 @@ const useKakaoShare = (containerId, key) => {
         objectType: 'feed',
         content: {
           title: 'Cryptometer',
-          description: '#Cryptometer',
+          description: '화성 갈끄니까!!!',
           imageUrl:
-            'https://mud-kage.kakao.com/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg',
+            'https://tago.kr/images/sub/TG300-D02_img01.png',
           link: {
             webUrl: window.location.href,
             mobileWebUrl: window.location.href,

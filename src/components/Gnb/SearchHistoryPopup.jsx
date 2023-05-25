@@ -203,7 +203,7 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
             priceStyle = (isSkyrocketed === true) ? incrementStyle : decrementStyle;
           }
           return (
-            <button type="button" onClick={() => { return recalculateHistory(item); }} key={item.cryptoId} css={historyItemStyle}>
+            <button type="button" onClick={() => { return recalculateHistory(item); }} key={cryptoId} css={historyItemStyle}>
               <div css={symoblContainer}>
                 <img src={image} css={symbolStyle} alt="USDT Symbol" />
               </div>

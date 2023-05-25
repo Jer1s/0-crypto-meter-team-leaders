@@ -4,6 +4,7 @@ import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
 import useFormattedPrice from 'hooks/useFormattedPrice';
 import { BASE_CURRENCY } from 'utils/constants';
+import { BASE_CURRENCY } from 'utils/constants';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import { useRecoilValue } from 'recoil';
 import { selectedDateAtom, buyPriceAtom, selectedCoinAtom } from 'recoils/scenarioInputData/scenarioInputDataAtom';
@@ -46,9 +47,22 @@ const strongText = css`
   color: var(--white);
 `;
 
+const lineStyle = css`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 1.1rem;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+`;
+
 const ScenarioDescription = ({
   onBottomSheetClick,
 }) => {
+  const convertCurrency = useRecoilValue(exchangeRateSelector);
   const price = useRecoilValue(buyPriceAtom);
   const selectedDate = useRecoilValue(selectedDateAtom);
   const selectedCoin = useRecoilValue(selectedCoinAtom);
@@ -67,23 +81,27 @@ const ScenarioDescription = ({
   return (
     <h1 css={headingStyle}>
       <div css={containerStyle}>
-        <button type="button" css={strongText} onClick={onBottomSheetClick}>
-          내가 만약
-        </button>
-        <button type="button" onClick={onBottomSheetClick}>
-          <span css={strongText}>
-            {`${year}년 ${month}월 ${day}일`}
-          </span>
-          에
-        </button>
-        <button type="button" onClick={onBottomSheetClick}>
-          <span css={strongText}>{formattedPrice}</span>
-          으로
-        </button>
-        <button type="button" onClick={onBottomSheetClick}>
-          <span css={strongText}>{selectedCoin.name}</span>
-          을 샀다면,
-        </button>
+        <div css={lineStyle}>
+          <button type="button" css={strongText} onClick={onBottomSheetClick}>
+            내가 만약
+          </button>
+          <button type="button" onClick={onBottomSheetClick}>
+            <span css={strongText}>
+              {`${year}년 ${month}월 ${day}일`}
+            </span>
+            에
+          </button>
+        </div>
+        <div css={lineStyle}>
+          <button type="button" onClick={onBottomSheetClick}>
+            <span css={strongText}>{formattedPrice}</span>
+            으로
+          </button>
+          <button type="button" onClick={onBottomSheetClick}>
+            <span css={strongText}>{selectedCoin.name}</span>
+            을 샀다면,
+          </button>
+        </div>
       </div>
     </h1>
 
