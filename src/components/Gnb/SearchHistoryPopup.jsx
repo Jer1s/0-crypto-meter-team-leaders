@@ -5,7 +5,6 @@ import {
 } from 'recoil';
 import searchHistoryAtom from 'recoils/searchHistory/searchHistoryAtom';
 import useFormattedPrice from 'hooks/useFormattedPrice';
-import { CRYPTO_NAME } from 'utils/constants';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import PropTypes from 'prop-types';
 import { navButtonStyle } from './navButtonStyle';
@@ -187,14 +186,14 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
         <button type="button" onClick={resetSearchHistory}>기록 모두 지우기</button>
       </div>
       <div css={historyItemsStyle}>
-        {searchHistory.map((item) => {
+        {searchHistory.slice(0).reverse().map((item) => {
           const {
             year, month, day,
           } = item.input.date;
           const {
             year: outputYear, month: outputMonth, day: outputDay,
           } = item.output.outputDate;
-          const { price, image, cryptoId } = item.input;
+          const { price, image, cryptoId, cryptoName } = item.input;
           const { outputPrice, isSkyrocketed } = item.output;
           const formattedPreviousPrice = formatPrice(price);
           const formattedResultPrice = formatPrice(outputPrice);
@@ -212,7 +211,7 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
               </div>
               <div css={scenarioResultStyle}>
                 <div>
-                  {`${CRYPTO_NAME[cryptoId]}을 샀다면,`}
+                  {`${cryptoName}을 샀다면,`}
                 </div>
                 <div>
                   {`${outputYear}년 ${outputMonth}월 ${outputDay}일에는 `}

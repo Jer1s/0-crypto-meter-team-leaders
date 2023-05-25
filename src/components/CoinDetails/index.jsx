@@ -8,7 +8,6 @@ import MainContainer from 'components/MainContainer';
 import CoinScenarioResult from 'components/CoinDetails/CoinScenarioResult';
 import { useRecoilValue } from 'recoil';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
-import { CRYPTO_NAME } from 'utils/constants';
 import CoinChart from './CoinChart';
 // import KakaoShareButton from './KakaoShareButton';
 
@@ -104,7 +103,7 @@ const CoinDetails = () => {
   const [isCopy, setisCopy] = useState(false);
   const scenarioData = useRecoilValue(scenarioDataAtom);
   const { input } = scenarioData;
-  const { cryptoId, image } = input;
+  const { cryptoName, image } = input;
 
   const handleCopyClipBoard = async () => {
     try {
@@ -133,7 +132,7 @@ const CoinDetails = () => {
       <div key="headerContent">
         <CoinInfo>
           <img src={image} alt="Coin Icon" />
-          <p style={{ height: '3.1rem' }}>{CRYPTO_NAME[cryptoId]}</p>
+          <p style={{ height: '3.1rem' }}>{cryptoName}</p>
         </CoinInfo>
         <SocialIconGroup>
           {/* <KakaoShareButton /> */}
