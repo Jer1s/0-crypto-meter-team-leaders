@@ -12,14 +12,17 @@ const useFormattedPrice = (ignoreException) => {
       convertPrice(price, localeCurrency),
     )
       ? 0 : convertPrice(price, localeCurrency);
-    let formattedPrice = convertedPrice?.toLocaleString();
-    let checkingdecimal = formattedPrice;
-    checkingdecimal = (checkingdecimal * 100) % 100;
-    if (checkingdecimal !== 0 && checkingdecimal <= 9) {
+    let formattedPrice = convertedPrice?.toFixed(2);
+    const checkingdecimal = (formattedPrice * 100) % 100;
+    if (checkingdecimal === 0) {
+      formattedPrice = Number(formattedPrice).toFixed(0);
+    } else if (checkingdecimal % 10 === 0) {
       formattedPrice = Number(formattedPrice).toFixed(1);
-    } else if (checkingdecimal !== 0 && checkingdecimal <= 99) {
+    } else {
       formattedPrice = Number(formattedPrice).toFixed(2);
     }
+
+    formattedPrice = new Intl.NumberFormat().format(formattedPrice);
 
     if (!ignoreException && localeCurrency === 'KRW') {
       return `${formattedPrice}${currencyUnit}`;

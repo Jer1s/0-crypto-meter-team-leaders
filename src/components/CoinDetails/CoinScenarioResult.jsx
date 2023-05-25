@@ -66,8 +66,8 @@ const CoinScenarioResult = () => {
       <p css={resultStyle}>
         <span
           css={[currentPriceStyle({ isSkyrocketed }),
-            (price[localeCurrency] === 0)
-            && zeroStyle]}
+          (price[localeCurrency] === 0)
+          && zeroStyle]}
         >
           {price[localeCurrency] === null ? '0원' : formatPrice(price[localeCurrency], localeCurrency)}
         </span>
