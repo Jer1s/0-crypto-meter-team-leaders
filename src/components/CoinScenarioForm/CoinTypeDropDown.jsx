@@ -34,6 +34,13 @@ const dropDownBoxStyle = css`
     width: 3rem;
     height: 3rem;
   }
+
+  @media (max-width: 1199px) {
+    button {
+      color: var(--black);
+    }
+  }
+
 `;
 
 const dropDownHeaderStyle = css`
@@ -71,8 +78,10 @@ const dropDownListStyle = css`
   @media (max-width: 1199px) {
     order: 1;
     z-index: 3;
-    box-shadow: -0.1rem -0.1rem 0.4rem var(--black);
-    bottom: -3.7rem;
+    box-shadow: -0.1rem -0.1rem 0.4rem var(--gray7);
+    background-color: var(--gray9);
+    bottom: 1rem; 
+    max-height: 50rem;
   }
 `;
 
@@ -83,7 +92,14 @@ const dropDownItemStyle = css`
 
   :hover {
     background-color: var(--black);
+    width : 100%;
     border-radius: 1.2rem;
+  }
+  
+  @media (max-width: 1199px) {
+    :hover{
+      background-color: var(--gray8);
+    }
   }
 `;
 
