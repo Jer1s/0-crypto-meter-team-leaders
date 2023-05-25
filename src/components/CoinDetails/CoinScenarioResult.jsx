@@ -31,7 +31,7 @@ const currentPriceStyle = ({ isSkyrocketed }) => {
   return css`
     display: inline-block;
     margin-right: 1rem;
-    color: ${isSkyrocketed === null ? 'var(--gray5)' : isSkyrocketed ? 'var(--primary)' : 'var(--primary-red'};
+    color: ${isSkyrocketed === null ? 'var(--gray5)' : isSkyrocketed ? 'var(--primary)' : 'var(--primary-red)'};
     text-decoration : ${isSkyrocketed === null ? 'line-through' : 'none'};
   `;
 };
@@ -50,11 +50,13 @@ const today = new Date();
 const CoinScenarioResult = () => {
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const scenarioData = useRecoilValue(scenarioDataAtom);
+
   const { input, output } = scenarioData;
   const { date, pastPrice } = input;
   const { price } = output;
   const isSkyrocketed = Number.isNaN(price[localeCurrency] - pastPrice[localeCurrency])
-    ? null : price[localeCurrency] - pastPrice[localeCurrency] > 0;
+    ? null
+    : price[localeCurrency] - pastPrice[localeCurrency] > 0;
 
   return (
     <>
@@ -65,7 +67,7 @@ const CoinScenarioResult = () => {
         <span
           css={[currentPriceStyle({ isSkyrocketed }),
             (price[localeCurrency] === 0)
-          && zeroStyle]}
+            && zeroStyle]}
         >
           {price[localeCurrency] === null ? '0원' : formatPrice(price[localeCurrency], localeCurrency)}
         </span>

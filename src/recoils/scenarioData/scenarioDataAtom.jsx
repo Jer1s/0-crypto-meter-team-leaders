@@ -9,7 +9,7 @@ const scenarioDataAtom = atom({
       pastPrice: {
         USD: 0, KRW: 0, JPY: 0, EUR: 0, CNY: 0,
       },
-      buyPrice: 0,
+      cryptoAmount: 0,
       cryptoId: 'bitcoin',
       cryptoName: 'BitCoin',
       image: bitcoinImage,

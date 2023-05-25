@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import getCoinsMarkets from 'api/getCoinsMarkets';
+import { getCoinsMarkets } from 'api/getCoins';
 
 const useCoinsMarketsJeris = (page) => {
   return useQuery({
