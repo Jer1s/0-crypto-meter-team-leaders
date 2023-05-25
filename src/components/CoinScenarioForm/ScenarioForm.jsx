@@ -9,9 +9,7 @@ import { useState, useEffect } from 'react';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import getCurrentDate from 'utils/getCurrentDate';
 import searchHistoryAtom from 'recoils/searchHistory/searchHistoryAtom';
-import { BASE_CURRENCY } from 'utils/constants';
-import exchangeRateAtom from 'recoils/exchangeRate/exchangeRateAtom';
-import useCurrencyConverter from 'hooks/useCurrencyConverter';
+import exchangeRateReverseSelector from 'recoils/exchangeRate/exchangeRateReverseSelector';
 import AddPriceButton from './AddPriceButton';
 import CoinTypeDropDown from './CoinTypeDropDown';
 import BuyPriceInput from './BuyPriceInput';
@@ -93,7 +91,7 @@ const calculatePriceDiff = ({ currentPrice, historyPrice, selectedPrice }) => {
   return { currentTotalCost, isSkyrocketed };
 };
 const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
-  const exchangeRate = useRecoilValue(exchangeRateAtom);
+  const convertToBasePrice = useRecoilValue(exchangeRateReverseSelector);
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const selectedDate = useRecoilValue(selectedDateAtom);
   const buyPrice = useRecoilValue(buyPriceAtom);
@@ -102,7 +100,6 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
   const setScenarioData = useSetRecoilState(scenarioDataAtom);
   const setSearchHistory = useSetRecoilState(searchHistoryAtom);
   const [isSubmited, setIsSubmited] = useState(false);
-  const currencyConverted = useCurrencyConverter();
   const [year, month, day] = selectedDate ? [selectedDate.getFullYear().toString(),
     (selectedDate.getMonth() + 1).toString(), selectedDate.getDate().toString()] : ['0000', '00', '0'];
 
@@ -136,11 +133,10 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
 
   useEffect(() => {
     if (!historyPrice) return; // historyPrice에 대한 api 요청 응답이 안왔을 때
-    const changePriceToUSD = localeCurrency === BASE_CURRENCY ? buyPrice : buyPrice / exchangeRate[`USDTO${localeCurrency}`];
     const scenarioDataResult = {
       currentPrice: selectedCoin.current_price,
       historyPrice,
-      selectedPrice: changePriceToUSD,
+      selectedPrice: buyPrice,
     };
 
     const scenarioInputData = calculatePriceDiff(
@@ -151,7 +147,7 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
     const newScenarioData = {
       input: {
         date: { year, month, day },
-        price: changePriceToUSD,
+        price: buyPrice,
         cryptoId: selectedCoin.id,
         image: selectedCoin.image,
       },
@@ -197,7 +193,14 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
           <BuyPriceInput />
           <div css={addPriceButtonContainerStyle}>
             {addButtonData.map((value) => {
-              return <AddPriceButton key={value} value={value} />;
+              const convertedValue = convertToBasePrice(value, localeCurrency);
+              return (
+                <AddPriceButton
+                  key={value}
+                  value={value}
+                  convertedValue={convertedValue}
+                />
+              );
             })}
           </div>
         </div>

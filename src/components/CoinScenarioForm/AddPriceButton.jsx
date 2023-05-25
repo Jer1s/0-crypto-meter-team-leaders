@@ -1,13 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-// import useFormatPriceToSign from 'hooks/useFormatPriceToSign';
-import useFormattedPrice from 'hooks/useFormattedPrice';
 import PropTypes from 'prop-types';
-import useCurrencyConverter from 'hooks/useCurrencyConverter';
 import { buyPriceAtom } from 'recoils/scenarioInputData/scenarioInputDataAtom';
 import { useSetRecoilState } from 'recoil';
 import useFormatPriceToSign from 'hooks/useFormatPriceToSign';
-import exchangeRateSelector from 'recoils/exchangeRate/exchangeRateSelector';
 
 const buttonStyle = css`
   padding : 0.6rem 1.2rem;
@@ -29,15 +25,12 @@ const buttonStyle = css`
   }
 `;
 
-const AddPriceButton = ({ value }) => {
+const AddPriceButton = ({ value, convertedValue }) => {
   const setBuyPrice = useSetRecoilState(buyPriceAtom);
-  const convertCurrency = useCurrencyConverter();
-  // const formatPrice = useFormattedPrice();
   const formatPrice = useFormatPriceToSign();
 
   const handleClickPlusPrice = () => {
-    setBuyPrice((prev) => { return prev + value; });
-    // setBuyPrice((prev) => { return prev + convertCurrency(value); });
+    setBuyPrice((prev) => { return prev + convertedValue; });
   };
   return (
     <button type="button" css={buttonStyle} onClick={handleClickPlusPrice}>{formatPrice(value)}</button>
@@ -46,6 +39,7 @@ const AddPriceButton = ({ value }) => {
 
 AddPriceButton.propTypes = {
   value: PropTypes.number.isRequired,
+  convertedValue: PropTypes.number.isRequired,
 };
 
 export default AddPriceButton;

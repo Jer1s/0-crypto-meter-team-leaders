@@ -4,6 +4,7 @@ import { css } from '@emotion/react';
 import localeCurrencySelector from 'recoils/localeCurrency/localeCurrencySelector';
 import { buyPriceAtom } from 'recoils/scenarioInputData/scenarioInputDataAtom';
 import { useRecoilValue, useRecoilState } from 'recoil';
+import exchangeRateReverseSelector from 'recoils/exchangeRate/exchangeRateReverseSelector';
 import { coinScenarioInputStyle } from './coinScenarioInputStyle';
 
 const buyPriceInputStyle = (buyPrice) => {
@@ -15,6 +16,7 @@ const buyPriceInputStyle = (buyPrice) => {
 };
 const BuyPriceInput = () => {
   const [buyPrice, setBuyPrice] = useRecoilState(buyPriceAtom);
+  const convertPriceToBase = useRecoilValue(exchangeRateReverseSelector);
 
   const { currencyUnit, currencySign } = useRecoilValue(localeCurrencySelector);
 
@@ -27,7 +29,7 @@ const BuyPriceInput = () => {
     const { value } = event.target;
     const numberTypeValue = Number(value.replace(/,/g, ''));
     if (validateInput(numberTypeValue)) {
-      setBuyPrice(numberTypeValue);
+      setBuyPrice(convertPriceToBase(numberTypeValue));
     }
   };
 
