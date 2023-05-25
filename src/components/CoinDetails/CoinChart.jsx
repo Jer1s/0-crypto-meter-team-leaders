@@ -18,6 +18,7 @@ import useResponsiveView from 'hooks/useResponsiveView';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import { useQuery } from '@tanstack/react-query';
 import useInitialTerm from 'hooks/useInitialTerm';
+import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
 const PRO_API_KEY = import.meta.env.VITE_X_CG_PRO_API_KEY;
@@ -78,8 +79,6 @@ const tooltipStyle = css`
     height: 1.8rem;
     padding: 0;
   }
-  
-   
 `;
 
 // eslint-disable-next-line consistent-return
@@ -107,12 +106,16 @@ const CoinChart = () => {
     viewportType = 4;
   }
 
+  const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const data = useRecoilValue(scenarioDataAtom);
   const [selectedTerm, setSelectedTerm] = useInitialTerm(data);
   const [selectedType, setSelectedType] = useState({ text: '코인 가격', term: 'prices' });
   const { input, output } = data;
-  const { cryptoId } = input;
-  const { isSkyrocketed } = output;
+  const { cryptoId, pastPrice } = input;
+  const { price } = output;
+  const isSkyrocketed = Number.isNaN(price[localeCurrency] - pastPrice[localeCurrency])
+    ? null
+    : price[localeCurrency] - pastPrice[localeCurrency] > 0;
 
   const getChart = async () => {
     const response = await fetch(`${PRO_BASE_URL}/coins/${cryptoId}/market_chart?vs_currency=usd&days=${selectedTerm.term}`, {

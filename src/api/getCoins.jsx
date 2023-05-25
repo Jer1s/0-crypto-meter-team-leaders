@@ -7,9 +7,9 @@ export const getCoinsMarkets = async (page = 1) => {
   return data;
 };
 
-export const getCoinsHistory = async ({ dateItem = '01-01-2023', cryptoIdItem = 'bitcoin' }) => {
+export const getCoinCurrentData = async (cryptoId = 'bitcoin') => {
   const { data } = await api.get(
-    `/coins/${cryptoIdItem}/history?date=${dateItem}&localization=ko&x_cg_pro_api_key=CG-ReEFUZC8FpbDTSJ6AmbKy3m1`,
+    `coins/${cryptoId}?localization=false&tickers=false&community_data=false&developer_data=false&sparkline=false&x_cg_pro_api_key=${import.meta.env.VITE_X_CG_PRO_API_KEY}`,
   );
   return data;
 };

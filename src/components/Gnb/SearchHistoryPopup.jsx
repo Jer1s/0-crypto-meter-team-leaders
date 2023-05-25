@@ -1,15 +1,17 @@
 /** @jsxImportSource @emotion/react */
+import { useEffect, useState } from 'react';
 import { css } from '@emotion/react';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import searchHistoryAtom from 'recoils/searchHistory/searchHistoryAtom';
-import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
-import PropTypes from 'prop-types';
-// import { useQuery } from '@tanstack/react-query';
-// import { getCoinsHistory } from 'api/getCoins';
-// import api from 'api';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
+import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
+import useCoinCurrentData from 'hooks/useCoinCurrentData';
+import PropTypes from 'prop-types';
 import defaultCryptoImage from 'assets/crypto-image-default.svg';
 import formatPrice from 'utils/formatPrice';
+import getCurrentDate from 'utils/getCurrentDate';
+import exchangeRateAtom from 'recoils/exchangeRate/exchangeRateAtom';
+import { BASE_CURRENCY } from 'utils/constants';
 import { navButtonStyle } from './navButtonStyle';
 
 const popupStyle = css`
@@ -165,12 +167,44 @@ const decrementStyle = css`
 const SearchHistoryPopup = ({ setShowPopup }) => {
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const searchHistory = useRecoilValue(searchHistoryAtom);
+  const setScenarioData = useSetRecoilState(scenarioDataAtom);
   const resetSearchHistoryAtom = useResetRecoilState(searchHistoryAtom);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedCrpytoId, setSelectedCryptoId] = useState('bitcoin');
+  const exchangeRate = useRecoilValue(exchangeRateAtom);
+  const { data, refetch } = useCoinCurrentData(selectedCrpytoId);
 
   const resetSearchHistory = () => {
     resetSearchHistoryAtom();
     localStorage.removeItem('searchHistory');
   };
+
+  const handleClick = async (item) => {
+    setSelectedItem(item);
+    setSelectedCryptoId(item.input.cryptoId);
+    await refetch();
+    setShowPopup(false);
+  };
+
+  useEffect(() => {
+    if (data && selectedItem) {
+      const price = data?.market_data?.current_price;
+      const newScenarioData = {
+        input: selectedItem.input,
+        output: {
+          date: getCurrentDate(),
+          price: {
+            USD: price,
+            KRW: price * exchangeRate[`${BASE_CURRENCY}TOKRW`],
+            JPY: price * exchangeRate[`${BASE_CURRENCY}TOJPY`],
+            EUR: price * exchangeRate[`${BASE_CURRENCY}TOEUR`],
+            CNY: price * exchangeRate[`${BASE_CURRENCY}TOCNY`],
+          },
+        },
+      };
+      setScenarioData(newScenarioData);
+    }
+  }, [data, selectedItem, setScenarioData, exchangeRate]);
 
   return (
     <div css={[navButtonStyle, popupStyle]}>
@@ -181,7 +215,7 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
       <div css={historyItemsStyle}>
         {searchHistory.slice(0).reverse().map((item) => {
           const {
-            date: inputDate, pastPrice, cryptoAmount, cryptoId, cryptoName, image,
+            date: inputDate, pastPrice, cryptoName, image,
           } = item.input;
           const {
             year: inputYear, month: inputMonth, day: inputDay,
@@ -202,11 +236,9 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
           return (
             <button
               type="button"
-              // onClick={() => {
-              //   return handleClick({
-              //     day, month, year, cryptoId,
-              //   });
-              // }}
+              onClick={() => {
+                return handleClick(item);
+              }}
               key={item.id}
               css={historyItemStyle}
             >
