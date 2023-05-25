@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import useViewportType from 'hooks/useResponsiveView';
 import PropTypes from 'prop-types';
-import { waitForNone } from 'recoil';
 
 const BottomSheetStyle = css`
   padding: 6.4rem 5.4rem 5.6rem; 
