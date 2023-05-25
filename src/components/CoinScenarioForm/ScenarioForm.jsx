@@ -84,7 +84,25 @@ const fetchHistoryData = async (date, cointype) => {
 
 const calculatePriceDiff = (scenarioDataResult, exchangeRate) => {
   const { currentPrice, historyPrice, buyPrice } = scenarioDataResult;
-
+  if (Number.isNaN(currentPrice)) {
+    return {
+      pastPrice: {
+        USD: null, KRW: null, JPY: null, EUR: null, CNY: null,
+      },
+      price: {
+        USD: null, KRW: null, JPY: null, EUR: null, CNY: null,
+      },
+    };
+  } if (!(currentPrice || historyPrice || buyPrice)) {
+    return {
+      pastPrice: {
+        USD: 0, KRW: 0, JPY: 0, EUR: 0, CNY: 0,
+      },
+      price: {
+        USD: 0, KRW: 0, JPY: 0, EUR: 0, CNY: 0,
+      },
+    };
+  }
   const {
     USD, KRW, JPY, EUR, CNY,
   } = historyPrice;
