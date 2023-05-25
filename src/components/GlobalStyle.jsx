@@ -37,6 +37,7 @@ const style = css`
   body {
     margin: 0;
     background-color: var(--background);
+    word-break: keep-all;
     font-family: "Pretendard", sans-serif;
     font-size: 1.6rem;
     color: var(--black);

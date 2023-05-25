@@ -46,6 +46,18 @@ const strongText = css`
   color: var(--white);
 `;
 
+const lineStyle = css`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 1.1rem;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+`;
+
 const ScenarioDescription = ({
   onBottomSheetClick,
 }) => {
@@ -68,23 +80,27 @@ const ScenarioDescription = ({
   return (
     <h1 css={headingStyle}>
       <div css={containerStyle}>
-        <button type="button" css={strongText} onClick={onBottomSheetClick}>
-          내가 만약
-        </button>
-        <button type="button" onClick={onBottomSheetClick}>
-          <span css={strongText}>
-            {`${year}년 ${month}월 ${day}일`}
-          </span>
-          에
-        </button>
-        <button type="button" onClick={onBottomSheetClick}>
-          <span css={strongText}>{formattedPrice}</span>
-          으로
-        </button>
-        <button type="button" onClick={onBottomSheetClick}>
-          <span css={strongText}>{selectedCoin.name}</span>
-          을 샀다면,
-        </button>
+        <div css={lineStyle}>
+          <button type="button" css={strongText} onClick={onBottomSheetClick}>
+            내가 만약
+          </button>
+          <button type="button" onClick={onBottomSheetClick}>
+            <span css={strongText}>
+              {`${year}년 ${month}월 ${day}일`}
+            </span>
+            에
+          </button>
+        </div>
+        <div css={lineStyle}>
+          <button type="button" onClick={onBottomSheetClick}>
+            <span css={strongText}>{formattedPrice}</span>
+            으로
+          </button>
+          <button type="button" onClick={onBottomSheetClick}>
+            <span css={strongText}>{selectedCoin.name}</span>
+            을 샀다면,
+          </button>
+        </div>
       </div>
     </h1>
 
