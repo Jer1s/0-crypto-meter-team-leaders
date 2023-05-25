@@ -15,8 +15,8 @@ import { coinScenarioInputStyle } from './coinScenarioInputStyle';
 
 const validationHistoryPriceStyle = css`
   color: var(--primary-red);
-  font-size: 1.2rem;
-  font-weight: 500;
+  font-size: 1.6rem;
+  font-weight: 700;
   height: auto;
   letter-spacing: -0.025rem;
   margin-top: 0.68rem;
