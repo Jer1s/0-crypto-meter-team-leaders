@@ -8,7 +8,7 @@ import useExchangeRate from 'hooks/useExchangeRate';
 
 const HomePage = () => {
   useAtomStorageSync();
-  useExchangeRate();
+  // useExchangeRate();
 
   return (
     <>

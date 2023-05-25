@@ -6,7 +6,7 @@ const useInitialTerm = (data) => {
   let initialValue = {};
   useEffect(() => {
     const inputDate = new Date(input.date.year, input.date.month - 1, input.date.day).getTime();
-    const outputDate = new Date(output.outputDate.year, output.outputDate.month - 1, output.outputDate.day).getTime();
+    const outputDate = new Date(output.date.year, output.date.month - 1, output.date.day).getTime();
     const timeDiff = parseInt((outputDate - inputDate) / 1000 / 60 / 60); // 단위 시간
 
     switch (true) {

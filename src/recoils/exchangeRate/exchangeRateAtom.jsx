@@ -3,10 +3,10 @@ import { atom } from 'recoil';
 const exchangeRateAtom = atom({
   key: 'exchangeRate',
   default: {
-    USDTOKRW: 1320,
+    USDTOKRW: 1329.35,
     USDTOEUR: 0.93,
-    USDTOJPY: 139,
-    USDTOCNY: 7,
+    USDTOJPY: 139.55,
+    USDTOCNY: 7.07,
   },
 });
 

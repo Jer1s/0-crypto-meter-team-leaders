@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
+import { useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import useFormattedPrice from 'hooks/useFormattedPrice';
 import PropTypes from 'prop-types';
 import orderNone from 'assets/order-none.svg';
 import orderAscending from 'assets/order-ascending.svg';
 import orderDesending from 'assets/order-desending.svg';
-import { useEffect, useState } from 'react';
 import cryptoDefaultImage from 'assets/crypto-default.svg';
 import PriceChangeChip from './PriceChangeChip';
 
