@@ -54,7 +54,7 @@ const chipContainerStyle = css`
 `;
 
 const tooltipStyle = css`
-  width: 10rem;
+  min-width: 10rem;
   height: 3.7rem;
   padding: 0.3rem 0.7rem;
   margin: 0;
