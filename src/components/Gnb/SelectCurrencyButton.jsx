@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
-import invertedTriangle from 'assets/inverted-triangle.svg';
-import Triangle from 'assets/triangle.svg';
-import localeCurrencySelector from 'recoils/localeCurrency/localeCurrencySelector';
 import { useRecoilValue } from 'recoil';
+import localeCurrencySelector from 'recoils/localeCurrency/localeCurrencySelector';
+import Triangle from 'assets/triangle.svg';
+import invertedTriangle from 'assets/inverted-triangle.svg';
 import { navButtonStyle } from './navButtonStyle';
 import SelectCurrencyPopup from './SelectCurrencyPopup';
 
@@ -16,7 +16,7 @@ const containerStyle = css`
 const buttonStyle = css`
   display: flex;
   align-items: center;
-  width: 9rem;
+  width: 9.5rem;
   padding: 1.1rem 1rem 1.1rem 1.5rem;
 
   @media (max-width: 767px) {
