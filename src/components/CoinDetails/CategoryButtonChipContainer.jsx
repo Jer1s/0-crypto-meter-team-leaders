@@ -28,6 +28,7 @@ CategoryButtonChipContainer.propTypes = {
     text: PropTypes.string.isRequired,
   }),
   setSelected: PropTypes.func.isRequired,
+  width: PropTypes.string.isRequired,
 };
 
 export default CategoryButtonChipContainer;

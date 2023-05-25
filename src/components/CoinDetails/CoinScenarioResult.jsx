@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import useFormattedPrice from 'hooks/useFormattedPrice';
 import { useRecoilValue } from 'recoil';
+import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
+import formatPrice from 'utils/formatPrice';
 
 const ScenarioDescriptionStyle = css`
   margin-top: 4.8rem;
@@ -30,17 +31,13 @@ const currentPriceStyle = ({ isSkyrocketed }) => {
   return css`
     display: inline-block;
     margin-right: 1rem;
-    color: ${isSkyrocketed === null ? 'var(--gray5)' : isSkyrocketed ? 'var(--primary)' : 'var(--primary-red'};
+    color: ${isSkyrocketed === null ? 'var(--gray5)' : isSkyrocketed ? 'var(--primary)' : 'var(--primary-red)'};
+    text-decoration : ${isSkyrocketed === null ? 'line-through' : 'none'};
   `;
 };
 
 const zeroStyle = css`
   color: var(--gray5);
-`;
-
-const nullStyle = css`
-  color: var(--gray5);
-  text-decoration: line-through;
 `;
 
 const currentDateStyle = css`
@@ -51,23 +48,28 @@ const currentDateStyle = css`
 const today = new Date();
 
 const CoinScenarioResult = () => {
+  const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const scenarioData = useRecoilValue(scenarioDataAtom);
-  const { date, price } = scenarioData.input;
-  const { outputPrice, isSkyrocketed } = scenarioData.output;
-  const func = useFormattedPrice();
+
+  const { input, output } = scenarioData;
+  const { date, pastPrice } = input;
+  const { price } = output;
+  const isSkyrocketed = Number.isNaN(price[localeCurrency] - pastPrice[localeCurrency])
+    ? null
+    : price[localeCurrency] - pastPrice[localeCurrency] > 0;
 
   return (
     <>
       <p css={ScenarioDescriptionStyle}>
-        {`${date.year}년 ${date.month}월 ${date.day}일에 ${func(price)}으로 샀다면 오늘`}
+        {`${date.year}년 ${date.month}월 ${date.day}일에 ${formatPrice(pastPrice[localeCurrency], localeCurrency)}으로 샀다면 오늘`}
       </p>
       <p css={resultStyle}>
         <span
           css={[currentPriceStyle({ isSkyrocketed }),
-            (outputPrice === null && nullStyle), (outputPrice === 0)
-          && zeroStyle]}
+            (price[localeCurrency] === 0)
+            && zeroStyle]}
         >
-          {outputPrice === null ? '0원' : func(outputPrice)}
+          {price[localeCurrency] === null ? '0원' : formatPrice(price[localeCurrency], localeCurrency)}
         </span>
         입니다.
       </p>

@@ -1,12 +1,17 @@
 /** @jsxImportSource @emotion/react */
+import { useEffect, useState } from 'react';
 import { css } from '@emotion/react';
-import {
-  useRecoilValue, useResetRecoilState, useSetRecoilState,
-} from 'recoil';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import searchHistoryAtom from 'recoils/searchHistory/searchHistoryAtom';
-import useFormattedPrice from 'hooks/useFormattedPrice';
+import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
+import useCoinCurrentData from 'hooks/useCoinCurrentData';
 import PropTypes from 'prop-types';
+import defaultCryptoImage from 'assets/crypto-image-default.svg';
+import formatPrice from 'utils/formatPrice';
+import getCurrentDate from 'utils/getCurrentDate';
+import exchangeRateAtom from 'recoils/exchangeRate/exchangeRateAtom';
+import { BASE_CURRENCY } from 'utils/constants';
 import { navButtonStyle } from './navButtonStyle';
 
 const popupStyle = css`
@@ -86,7 +91,7 @@ const historyItemStyle = css`
   gap: 0.6rem 1.2rem;
   padding: 2rem 2.4rem;
   width: 100%;
-  height: 8.1rem;
+  height: 8.3rem;
   cursor: pointer;
   border: 0;
   text-align: start;
@@ -107,10 +112,6 @@ const historyItemStyle = css`
   gap: 0.4rem 1.2rem;
   padding: 1.6rem 2rem;
   height: 9.2rem;
-
-  & > *:nth-of-type(3) {
-    width: auto;
-  }
 }
 `;
 
@@ -164,20 +165,46 @@ const decrementStyle = css`
 `;
 
 const SearchHistoryPopup = ({ setShowPopup }) => {
+  const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const searchHistory = useRecoilValue(searchHistoryAtom);
-  const resetSearchHistoryAtom = useResetRecoilState(searchHistoryAtom);
   const setScenarioData = useSetRecoilState(scenarioDataAtom);
-  const formatPrice = useFormattedPrice();
+  const resetSearchHistoryAtom = useResetRecoilState(searchHistoryAtom);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedCrpytoId, setSelectedCryptoId] = useState('bitcoin');
+  const exchangeRate = useRecoilValue(exchangeRateAtom);
+  const { data, refetch } = useCoinCurrentData(selectedCrpytoId);
 
   const resetSearchHistory = () => {
     resetSearchHistoryAtom();
     localStorage.removeItem('searchHistory');
   };
 
-  const recalculateHistory = (item) => {
-    setScenarioData(item);
+  const handleClick = async (item) => {
+    setSelectedItem(item);
+    setSelectedCryptoId(item.input.cryptoId);
+    await refetch();
     setShowPopup(false);
   };
+
+  useEffect(() => {
+    if (data && selectedItem) {
+      const price = data?.market_data?.current_price?.usd;
+      const newScenarioData = {
+        input: selectedItem.input,
+        output: {
+          date: getCurrentDate(),
+          price: {
+            USD: price,
+            KRW: price * exchangeRate[`${BASE_CURRENCY}TOKRW`],
+            JPY: price * exchangeRate[`${BASE_CURRENCY}TOJPY`],
+            EUR: price * exchangeRate[`${BASE_CURRENCY}TOEUR`],
+            CNY: price * exchangeRate[`${BASE_CURRENCY}TOCNY`],
+          },
+        },
+      };
+      setScenarioData(newScenarioData);
+    }
+  }, [data, selectedItem, setScenarioData, exchangeRate]);
 
   return (
     <div css={[navButtonStyle, popupStyle]}>
@@ -188,26 +215,38 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
       <div css={historyItemsStyle}>
         {searchHistory.slice(0).reverse().map((item) => {
           const {
-            year, month, day,
-          } = item.input.date;
+            date: inputDate, pastPrice, cryptoName, image,
+          } = item.input;
+          const {
+            year: inputYear, month: inputMonth, day: inputDay,
+          } = inputDate;
+          const { price: outputPrice, date: outputDate } = item.output;
           const {
             year: outputYear, month: outputMonth, day: outputDay,
-          } = item.output.outputDate;
-          const { price, image, cryptoId, cryptoName } = item.input;
-          const { outputPrice, isSkyrocketed } = item.output;
-          const formattedPreviousPrice = formatPrice(price);
-          const formattedResultPrice = formatPrice(outputPrice);
-          let priceStyle = zeroStyle;
-          if (outputPrice !== 0) {
-            priceStyle = (isSkyrocketed === true) ? incrementStyle : decrementStyle;
+          } = outputDate;
+          const formattedInputPrice = formatPrice(pastPrice[localeCurrency], localeCurrency);
+          const formattedOutputPrice = formatPrice(outputPrice[localeCurrency], localeCurrency);
+
+          let priceStyle = (outputPrice[localeCurrency] > pastPrice[localeCurrency])
+            ? incrementStyle
+            : decrementStyle;
+          if (outputPrice[localeCurrency] === pastPrice[localeCurrency]) {
+            priceStyle = zeroStyle;
           }
           return (
-            <button type="button" onClick={() => { return recalculateHistory(item); }} key={cryptoId} css={historyItemStyle}>
+            <button
+              type="button"
+              onClick={() => {
+                return handleClick(item);
+              }}
+              key={item.id}
+              css={historyItemStyle}
+            >
               <div css={symoblContainer}>
-                <img src={image} css={symbolStyle} alt="USDT Symbol" />
+                <img src={image || defaultCryptoImage} css={symbolStyle} alt="SYMBOL" />
               </div>
               <div css={scenarioDataStyle}>
-                {`만약 ${year}년 ${month}월 ${day}일에 ${formattedPreviousPrice}으로`}
+                {`만약 ${inputYear}년 ${inputMonth}월 ${inputDay}일에 ${formattedInputPrice}으로`}
               </div>
               <div css={scenarioResultStyle}>
                 <div>
@@ -216,7 +255,7 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
                 <div>
                   {`${outputYear}년 ${outputMonth}월 ${outputDay}일에는 `}
                   <span css={priceStyle}>
-                    {formattedResultPrice}
+                    {formattedOutputPrice}
                   </span>
                   {' 입니다.'}
                 </div>

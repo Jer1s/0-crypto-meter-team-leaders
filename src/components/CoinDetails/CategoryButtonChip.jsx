@@ -52,6 +52,7 @@ CategoryButtonChip.propTypes = {
   termItem: PropTypes.shape({
     text: PropTypes.string.isRequired,
   }),
+  width: PropTypes.string.isRequired,
 };
 
 export default CategoryButtonChip;
