@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import { selectedDateAtom, buyPriceAtom, selectedCoinAtom } from 'recoils/scenarioInputData/scenarioInputDataAtom';
 import { useQuery } from '@tanstack/react-query';
@@ -22,10 +22,6 @@ const formStyle = css`
   flex-direction: column;
   justify-content: space-between;
   gap: 5.5rem;
-
-  @media (max-width: 1199px) {
-    display: none;
-  }
 `;
 
 const submitButtonStyle = css`
@@ -87,7 +83,6 @@ const fetchHistoryData = async (date, cointype) => {
 const calculatePriceDiff = ({ currentPrice, historyPrice, selectedPrice }) => {
   const currentTotalCost = (selectedPrice / historyPrice) * currentPrice;
   const isSkyrocketed = (selectedPrice - currentTotalCost) <= 0;
-
   return { currentTotalCost, isSkyrocketed };
 };
 const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
@@ -97,9 +92,10 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
   const buyPrice = useRecoilValue(buyPriceAtom);
   const selectedCoin = useRecoilValue(selectedCoinAtom);
   const [isHistoryPriceValid, setIsHistoryPriceValid] = useState(true);
-  const setScenarioData = useSetRecoilState(scenarioDataAtom);
+  const [scenarioData, setScenarioData] = useRecoilState(scenarioDataAtom);
   const setSearchHistory = useSetRecoilState(searchHistoryAtom);
   const [isSubmited, setIsSubmited] = useState(false);
+
   const [year, month, day] = selectedDate ? [selectedDate.getFullYear().toString(),
     (selectedDate.getMonth() + 1).toString(), selectedDate.getDate().toString()] : ['0000', '00', '0'];
 
@@ -107,7 +103,7 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
     ? [5000, 10000, 50000, 100000]
     : [10, 50, 100, 500, 1000];
 
-  const { data, refetch } = useQuery(
+  const { data, refetch, loading } = useQuery(
     ['coinsHistory'],
     () => { return fetchHistoryData(`${day}-${month}-${year}`, selectedCoin.id); },
     { enabled: false }, // 초기 로드 비활성화
@@ -131,19 +127,24 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
     setIsHistoryPriceValid(false);
   };
 
+  const [scenarioInputData, setScenarioInputData] = useState({});
+
   useEffect(() => {
-    if (!historyPrice) return; // historyPrice에 대한 api 요청 응답이 안왔을 때
+    if (!data && !loading) {
+      if (!historyPrice) return;
+    } // historyPrice에 대한 api 요청 응답이 안왔을 때
     const scenarioDataResult = {
       currentPrice: selectedCoin.current_price,
       historyPrice,
       selectedPrice: buyPrice,
     };
-
-    const scenarioInputData = calculatePriceDiff(
+    const temp = calculatePriceDiff(
       scenarioDataResult,
     );
-    const { currentTotalCost, isSkyrocketed } = scenarioInputData;
+    setScenarioInputData(temp);
+  }, [isSubmited]);
 
+  useEffect(() => {
     const newScenarioData = {
       input: {
         date: { year, month, day },
@@ -152,15 +153,19 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
         image: selectedCoin.image,
       },
       output: {
-        outputPrice: currentTotalCost,
-        isSkyrocketed,
+        outputPrice: scenarioInputData.currentTotalCost,
+        isSkyrocketed: scenarioInputData.isSkyrocketed,
         outputDate: getCurrentDate(),
       },
     };
 
     setScenarioData(newScenarioData);
-    setSearchHistory((prevHistory) => { return [...prevHistory, newScenarioData]; });
-  }, [historyPrice, isSubmited]);
+  }, [scenarioInputData]);
+
+  useEffect(() => {
+    if (Object.keys(scenarioInputData).length === 0) { return; }
+    setSearchHistory((prevHistory) => { return [...prevHistory, scenarioData]; });
+  }, [scenarioData]);
 
   useEffect(() => {
     if (!data) return; // historyPrice에 대한 api 요청 응답이 안왔을 때
@@ -175,7 +180,6 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
     event.preventDefault();
     await refetch();
     setIsSubmited(!isSubmited);
-    // setIsBottomSheetOpen(!isBottomSheetOpen);
   };
 
   useEffect(() => {
