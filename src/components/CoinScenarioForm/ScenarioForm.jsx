@@ -22,10 +22,6 @@ const formStyle = css`
   flex-direction: column;
   justify-content: space-between;
   gap: 5.5rem;
-
-  /* @media (max-width: 1199px) {
-    display: none;
-  } */
 `;
 
 const submitButtonStyle = css`
