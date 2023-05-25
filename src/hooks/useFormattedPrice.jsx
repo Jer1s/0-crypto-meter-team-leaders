@@ -7,6 +7,7 @@ const useFormattedPrice = (ignoreException) => {
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const { currencyUnit, currencySign } = useRecoilValue(localeCurrencySelector);
   const convertPrice = useRecoilValue(exchangeRateSelector);
+
   return (price) => {
     const convertedPrice = Number.isNaN(
       convertPrice(price, localeCurrency),

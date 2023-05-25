@@ -16,7 +16,7 @@ const useKakaoShare = (containerId, key) => {
         objectType: 'feed',
         content: {
           title: 'Cryptometer',
-          description: '화성 갈끄니까!!!',
+          description: '라고 할 때 살걸',
           imageUrl:
             'https://tago.kr/images/sub/TG300-D02_img01.png',
           link: {
@@ -24,7 +24,6 @@ const useKakaoShare = (containerId, key) => {
             mobileWebUrl: window.location.href,
           },
         },
-
         social: {
           likeCount: 77,
           commentCount: 55,

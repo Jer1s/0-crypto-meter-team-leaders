@@ -4,7 +4,7 @@ import CoinScenarioForm from 'components/CoinScenarioForm';
 import CryptoMarketCap from 'components/CryptoMarketCap';
 import Gnb from 'components/Gnb';
 import useAtomStorageSync from 'hooks/useAtomStorageSync';
-import useExchangeRate from 'hooks/useExchangeRate';
+// import useExchangeRate from 'hooks/useExchangeRate';
 
 const HomePage = () => {
   useAtomStorageSync();

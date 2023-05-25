@@ -18,11 +18,15 @@ const useFormatPriceToSign = (ignoreException) => {
       formattedPrice = Number(formattedPrice).toFixed(2);
     }
 
-    if (!ignoreException && localeCurrency === 'KRW') {
-      return `${formattedPrice}${currencyUnit}`;
-    }
-    if (!ignoreException && localeCurrency === 'CNY') {
-      return `${formattedPrice}${currencySign}`;
+    if (!ignoreException) {
+      switch (localeCurrency) {
+        case 'KRW':
+          return `${formattedPrice}${currencyUnit}`;
+        case 'CNY':
+          return `${formattedPrice}${currencySign}`;
+        default:
+          break;
+      }
     }
 
     return `${currencySign}${formattedPrice}`;
