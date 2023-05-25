@@ -97,7 +97,7 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
   const [isSubmited, setIsSubmited] = useState(false);
 
   const [year, month, day] = selectedDate ? [selectedDate.getFullYear().toString(),
-    (selectedDate.getMonth() + 1).toString(), selectedDate.getDate().toString()] : ['0000', '00', '0'];
+  (selectedDate.getMonth() + 1).toString(), selectedDate.getDate().toString()] : ['0000', '00', '0'];
 
   const addButtonData = localeCurrency === 'KRW'
     ? [5000, 10000, 50000, 100000]
