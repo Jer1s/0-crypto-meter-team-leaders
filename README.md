@@ -20,47 +20,42 @@ The application can be accessed at [https://cryptometer.netlify.app/](https://cr
 ├─ .eslintrc.cjs
 ├─ LICENSE.md
 ├─ README.md
-├─ cryptoMockData.json
 ├─ index.html
 ├─ jsconfig.json
 ├─ package-lock.json
 ├─ package.json
 ├─ public
 │  ├─ favicon.svg
-│  └─ logo.svg
+│  ├─ logo.svg
+│  ├─ robots.txt
+│  └─ sitemap.xml
 ├─ src
 │  ├─ App.jsx
 │  ├─ api
-│  │  └─ mockDataAPI.jsx
+│  │  ├─ getCoins.jsx
+│  │  └─ index.jsx
 │  ├─ assets /
 │  ├─ components
 │  │  ├─ CoinDetails
 │  │  │  ├─ CategoryButtonChip.jsx
 │  │  │  ├─ CategoryButtonChipContainer.jsx
 │  │  │  ├─ CoinChart.jsx
-│  │  │  ├─ CoinChart.module.css
 │  │  │  ├─ CoinScenarioResult.jsx
 │  │  │  ├─ KakaoShareButton.jsx
-│  │  │  ├─ TermList
-│  │  │  │  ├─ bitcoin.js
-│  │  │  │  ├─ dayCoinList.json
-│  │  │  │  ├─ maxCoinList.js
-│  │  │  │  ├─ monthCoinList.js
-│  │  │  │  ├─ weekCoinList.js
-│  │  │  │  └─ yearCoinList.js
-│  │  │  ├─ index.jsx
-│  │  │  └─ mock.js
+│  │  │  └─ index.jsx
 │  │  ├─ CoinScenarioForm
 │  │  │  ├─ AddPriceButton.jsx
+│  │  │  ├─ BottomSheet.jsx
 │  │  │  ├─ BuyPriceInput.jsx
 │  │  │  ├─ CoinTypeDropDown.jsx
 │  │  │  ├─ DateInput.jsx
 │  │  │  ├─ ScenarioDescription.jsx
-│  │  │  ├─ coinDropDownMockData.json
+│  │  │  ├─ ScenarioForm.jsx
 │  │  │  ├─ coinScenarioInputStyle.jsx
 │  │  │  └─ index.jsx
 │  │  ├─ CryptoMarketCap
 │  │  │  ├─ CryptoMarketCapList.jsx
+│  │  │  ├─ PaginationButtons.jsx
 │  │  │  ├─ PriceChangeChip.jsx
 │  │  │  └─ index.jsx
 │  │  ├─ GlobalStyle.jsx
@@ -76,24 +71,36 @@ The application can be accessed at [https://cryptometer.netlify.app/](https://cr
 │  │  └─ MainContainer.jsx
 │  ├─ hooks
 │  │  ├─ useAtomStorageSync.jsx
-│  │  ├─ useFetch.jsx
+│  │  ├─ useCoinCurrentData.jsx
+│  │  ├─ useCoinsMarkets.jsx
+│  │  ├─ useCurrencyConverter.jsx
+│  │  ├─ useExchangeRate.jsx
+│  │  ├─ useFormatPriceToSign.jsx
 │  │  ├─ useFormattedPrice.jsx
+│  │  ├─ useInitialTerm.jsx
 │  │  ├─ useKakaoShare.jsx
 │  │  └─ useResponsiveView.jsx
 │  ├─ main.jsx
 │  ├─ pages
 │  │  └─ HomePage.jsx
 │  ├─ recoils
+│  │  ├─ exchangeRate
+│  │  │  ├─ exchangeRateAtom.jsx
+│  │  │  ├─ exchangeRateReverseSelector.jsx
+│  │  │  └─ exchangeRateSelector.jsx
 │  │  ├─ localeCurrency
 │  │  │  ├─ localeCurrencyAtom.jsx
 │  │  │  └─ localeCurrencySelector.jsx
 │  │  ├─ scenarioData
 │  │  │  └─ scenarioDataAtom.jsx
+│  │  ├─ scenarioInputData
+│  │  │  └─ scenarioInputDataAtom.jsx
 │  │  └─ searchHistory
 │  │     └─ searchHistoryAtom.jsx
 │  └─ utils
+│     ├─ calculatePriceDiff.jsx
 │     ├─ constants.jsx
-│     ├─ currencyConverter.jsx
+│     ├─ formatPrice.jsx
 │     ├─ getCurrentDate.jsx
 │     └─ parseMarketCapData.jsx
 └─ vite.config.js
