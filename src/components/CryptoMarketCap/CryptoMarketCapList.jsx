@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import orderNone from 'assets/order-none.svg';
 import orderAscending from 'assets/order-ascending.svg';
 import orderDesending from 'assets/order-desending.svg';
-import cryptoDefaultImage from 'assets/crypto-default.svg';
+import cryptoDefaultImage from 'assets/crypto-image-default.svg';
 import PriceChangeChip from './PriceChangeChip';
 
 const listStyle = css`
