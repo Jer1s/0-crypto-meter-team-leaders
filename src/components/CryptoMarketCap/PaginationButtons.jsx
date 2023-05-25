@@ -3,6 +3,8 @@ import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
 import lt from 'assets/lt.svg';
 import gt from 'assets/gt.svg';
+import useViewportType from 'hooks/useResponsiveView';
+import { useEffect, useState } from 'react';
 
 const containerStyle = css`
   display: flex;
@@ -36,6 +38,17 @@ const currentPageStyle = css`
 `;
 
 const PaginationButtons = ({ totalPages, currentPage, onPageChange }) => {
+  const viewportType = useViewportType();
+  const [pageRange, setPageRange] = useState(5);
+
+  useEffect(() => {
+    if (viewportType === 'Mobile') {
+      setPageRange(3);
+    } else {
+      setPageRange(5);
+    }
+  }, [viewportType]);
+
   const range = (start, end) => {
     return Array.from({ length: end - start + 1 }, (_, i) => { return start + i; });
   };
@@ -62,12 +75,12 @@ const PaginationButtons = ({ totalPages, currentPage, onPageChange }) => {
 
     // 현재 페이지 주변의 페이지 버튼
     const prevButtons = range(
-      Math.max(2, currentPage - 5),
+      Math.max(2, currentPage - pageRange),
       Math.min(currentPage - 1, totalPages - 1),
     );
     const nextButtons = range(
       Math.max(currentPage + 1, 2),
-      Math.min(currentPage + 5, totalPages - 1),
+      Math.min(currentPage + pageRange, totalPages - 1),
     );
 
     if (prevButtons.length > 0 && prevButtons[0] !== 2) {

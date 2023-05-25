@@ -8,7 +8,7 @@ export const LOCALE_CURRENCY = Object.freeze({
     currencySign: '$',
   },
   JPY: {
-    currencyUnit: 'YEN',
+    currencyUnit: 'JPY',
     currencySign: '￥',
   },
   CNY: {
