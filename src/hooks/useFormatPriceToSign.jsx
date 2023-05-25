@@ -1,15 +1,13 @@
 import { useRecoilValue } from 'recoil';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import localeCurrencySelector from 'recoils/localeCurrency/localeCurrencySelector';
-import useCurrencyConverter from 'hooks/useCurrencyConverter ';
 
-const useFormattedPrice = (ignoreException) => {
+// 환율 계산 없이 UI만 반환하는 hook
+const useFormatPriceToSign = (ignoreException) => {
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const { currencyUnit, currencySign } = useRecoilValue(localeCurrencySelector);
-  const convertCurrency = useCurrencyConverter();
   return (price) => {
-    const convertedPrice = convertCurrency(price);
-    const formattedPrice = convertedPrice?.toLocaleString();
+    const formattedPrice = price?.toLocaleString();
 
     if (!ignoreException && localeCurrency === 'KRW') {
       return `${formattedPrice}${currencyUnit}`;
@@ -19,4 +17,4 @@ const useFormattedPrice = (ignoreException) => {
   };
 };
 
-export default useFormattedPrice;
+export default useFormatPriceToSign;

@@ -1,11 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+// import useFormatPriceToSign from 'hooks/useFormatPriceToSign';
 import useFormattedPrice from 'hooks/useFormattedPrice';
 import PropTypes from 'prop-types';
-import convertCurrency from 'utils/convertCurrency';
-import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
+import useCurrencyConverter from 'hooks/useCurrencyConverter';
 import { buyPriceAtom } from 'recoils/scenarioInputData/scenarioInputDataAtom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
+import useFormatPriceToSign from 'hooks/useFormatPriceToSign';
 
 const buttonStyle = css`
   padding : 0.6rem 1.2rem;
@@ -29,11 +30,13 @@ const buttonStyle = css`
 
 const AddPriceButton = ({ value }) => {
   const setBuyPrice = useSetRecoilState(buyPriceAtom);
+  const convertCurrency = useCurrencyConverter();
+  // const formatPrice = useFormattedPrice();
+  const formatPrice = useFormatPriceToSign();
 
-  const localeCurrency = useRecoilValue(localeCurrencyAtom);
-  const formatPrice = useFormattedPrice();
   const handleClickPlusPrice = () => {
-    setBuyPrice((prev) => { return prev + convertCurrency(value, localeCurrency); });
+    setBuyPrice((prev) => { return prev + value; });
+    // setBuyPrice((prev) => { return prev + convertCurrency(value); });
   };
   return (
     <button type="button" css={buttonStyle} onClick={handleClickPlusPrice}>{formatPrice(value)}</button>

@@ -41,7 +41,7 @@ const zeroStyle = css`
 const nullStyle = css`
   color: var(--gray5);
   text-decoration: line-through;
-`
+`;
 
 const currentDateStyle = css`
   color: var(--gray4);
@@ -53,7 +53,7 @@ const today = new Date();
 const CoinScenarioResult = () => {
   const scenarioData = useRecoilValue(scenarioDataAtom);
   const { date, price } = scenarioData.input;
-  const { outputPrice, isSkyrocketed, outputDate } = scenarioData.output;
+  const { outputPrice, isSkyrocketed } = scenarioData.output;
   const func = useFormattedPrice();
 
   return (
@@ -62,7 +62,9 @@ const CoinScenarioResult = () => {
         {`${date.year}년 ${date.month}월 ${date.day}일에 ${func(price)}으로 샀다면 오늘`}
       </p>
       <p css={resultStyle}>
-        <span css={[currentPriceStyle({ isSkyrocketed }), (outputPrice === null && nullStyle), (outputPrice === 0) && zeroStyle]}>
+        <span css={[currentPriceStyle({ isSkyrocketed }),
+          (outputPrice === null && nullStyle), (outputPrice === 0) && zeroStyle]}
+        >
           {outputPrice === null ? '0원' : func(outputPrice)}
         </span>
         입니다.

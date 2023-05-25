@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
-import exchangeRate from 'recoils/exchangeRate/exchangeRate';
+import exchangeRate from 'recoils/exchangeRate/exchangeRateAtom';
 
 const RATEEXCHANGE = import.meta.env.VITE_RATEEXCHANGE_API_KEY;
 

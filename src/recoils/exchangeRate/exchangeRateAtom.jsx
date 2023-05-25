@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-const exchangeRate = atom({
+const exchangeRateAtom = atom({
   key: 'exchangeRate',
   default: {
     USDTOKRW: 1000,
@@ -10,4 +10,4 @@ const exchangeRate = atom({
   },
 });
 
-export default exchangeRate;
+export default exchangeRateAtom;
