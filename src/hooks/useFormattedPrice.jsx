@@ -19,8 +19,6 @@ const useFormattedPrice = (ignoreException) => {
       formattedPrice = Number(formattedPrice).toFixed(2);
     }
 
-    console.log(formattedPrice);
-
     if (!ignoreException && localeCurrency === 'KRW') {
       return `${formattedPrice}${currencyUnit}`;
     }
