@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import {
@@ -18,6 +18,7 @@ import useResponsiveView from 'hooks/useResponsiveView';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import { useQuery } from '@tanstack/react-query';
 import useInitialTerm from 'hooks/useInitialTerm';
+import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
 const PRO_API_KEY = import.meta.env.VITE_X_CG_PRO_API_KEY;
@@ -79,17 +80,32 @@ const tooltipStyle = css`
     padding: 0;
   }
   
-   
-`;
+  
+  `;
 
 // eslint-disable-next-line consistent-return
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
-    const { filteredDate, price } = payload[0].payload;
+    const { filteredDate, price, localeCurrency } = payload[0].payload;
+    let coinSign = '';
+    if (localeCurrency === 'KRW') {
+      coinSign = '₩';
+    } else if (localeCurrency === 'USD') {
+      coinSign = '$';
+    } else if (localeCurrency === 'JPY') {
+      coinSign = '￥';
+    } else if (localeCurrency === 'CNY') {
+      coinSign = '元';
+    } else if (localeCurrency === 'EUR') {
+      coinSign = '€';
+    }
     return (
       <div css={tooltipStyle}>
         <p>{filteredDate}</p>
-        <p>{`₩${parseInt(price.toFixed(0)).toLocaleString()}`}</p>
+        <p>
+          {coinSign}
+          {parseInt(price.toFixed(0)).toLocaleString()}
+        </p>
       </div>
     );
   }
@@ -108,6 +124,8 @@ const CoinChart = () => {
   }
 
   const data = useRecoilValue(scenarioDataAtom);
+  const localeCurrency = useRecoilValue(localeCurrencyAtom);
+
   const [selectedTerm, setSelectedTerm] = useInitialTerm(data);
   const [selectedType, setSelectedType] = useState({ text: '코인 가격', term: 'prices' });
   const { input, output } = data;
@@ -155,13 +173,14 @@ const CoinChart = () => {
     return `${value}원`;
   };
 
-  const convertCoinNestedArrayToObject = useCallback(coinPriceList[type]?.map((item) => {
+  const convertCoinNestedArrayToObject = (coinPriceList[type]?.map((item) => {
     return {
       date: fomattingTerm(item[0]),
       price: item[1],
       filteredDate: moment(item[0]).format('YYYY년 M월 D일'),
+      localeCurrency,
     };
-  }), [coinPriceList, selectedTerm, selectedType]);
+  }));
 
   return (
     <div css={containerStyle}>
