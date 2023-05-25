@@ -229,5 +229,4 @@ const CoinTypeDropDown = () => {
     </div>
   );
 };
-
 export default CoinTypeDropDown;

@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import getCurrentDate from 'utils/getCurrentDate';
 import searchHistoryAtom from 'recoils/searchHistory/searchHistoryAtom';
+import exchangeRateReverseSelector from 'recoils/exchangeRate/exchangeRateReverseSelector';
 import AddPriceButton from './AddPriceButton';
 import CoinTypeDropDown from './CoinTypeDropDown';
 import BuyPriceInput from './BuyPriceInput';
@@ -90,6 +91,7 @@ const calculatePriceDiff = ({ currentPrice, historyPrice, selectedPrice }) => {
   return { currentTotalCost, isSkyrocketed };
 };
 const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
+  const convertPriceToBase = useRecoilValue(exchangeRateReverseSelector);
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const selectedDate = useRecoilValue(selectedDateAtom);
   const buyPrice = useRecoilValue(buyPriceAtom);
@@ -98,12 +100,11 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
   const setScenarioData = useSetRecoilState(scenarioDataAtom);
   const setSearchHistory = useSetRecoilState(searchHistoryAtom);
   const [isSubmited, setIsSubmited] = useState(false);
-
   const [year, month, day] = selectedDate ? [selectedDate.getFullYear().toString(),
     (selectedDate.getMonth() + 1).toString(), selectedDate.getDate().toString()] : ['0000', '00', '0'];
 
   const addButtonData = localeCurrency === 'KRW'
-    ? [5, 10, 50, 100]
+    ? [5000, 10000, 50000, 100000]
     : [10, 50, 100, 500, 1000];
 
   const { data, refetch } = useQuery(
@@ -112,7 +113,7 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
     { enabled: false }, // 초기 로드 비활성화
   );
 
-  const historyPrice = data?.market_data?.current_price?.krw;
+  const historyPrice = data?.market_data?.current_price?.usd;
 
   useEffect(() => {
   }, [isHistoryPriceValid]);
@@ -132,7 +133,6 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
 
   useEffect(() => {
     if (!historyPrice) return; // historyPrice에 대한 api 요청 응답이 안왔을 때
-
     const scenarioDataResult = {
       currentPrice: selectedCoin.current_price,
       historyPrice,
@@ -193,7 +193,14 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
           <BuyPriceInput />
           <div css={addPriceButtonContainerStyle}>
             {addButtonData.map((value) => {
-              return <AddPriceButton key={value} value={value} />;
+              const convertedValue = convertPriceToBase(value, localeCurrency);
+              return (
+                <AddPriceButton
+                  key={value}
+                  value={value}
+                  convertedValue={convertedValue}
+                />
+              );
             })}
           </div>
         </div>
