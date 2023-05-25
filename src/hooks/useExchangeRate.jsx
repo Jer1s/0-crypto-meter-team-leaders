@@ -3,12 +3,10 @@ import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import exchangeRateAtom from 'recoils/exchangeRate/exchangeRateAtom';
 
-const RATEEXCHANGE = import.meta.env.VITE_RATEEXCHANGE_API_KEY;
-
 const useExchangeRate = () => {
   const setExchangeRate = useSetRecoilState(exchangeRateAtom);
   const fetchExchangeRate = async () => {
-    const response = await fetch(`https://api.currencyfreaks.com/v2.0/rates/latest?apikey=${RATEEXCHANGE}`); // 환율 요청
+    const response = await fetch(`https://api.currencyfreaks.com/v2.0/rates/latest?apikey=${import.meta.env.VITE_RATEEXCHANGE_API_KEY}`); // 환율 요청
     return response.json();
   };
 
