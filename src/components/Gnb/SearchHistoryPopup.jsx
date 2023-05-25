@@ -8,9 +8,9 @@ import searchHistoryAtom from 'recoils/searchHistory/searchHistoryAtom';
 import useFormattedPrice from 'hooks/useFormattedPrice';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import PropTypes from 'prop-types';
-import { useQuery } from '@tanstack/react-query';
-import { getCoinsHistory } from 'api/getCoins';
-import api from 'api';
+// import { useQuery } from '@tanstack/react-query';
+// import { getCoinsHistory } from 'api/getCoins';
+// import api from 'api';
 import { navButtonStyle } from './navButtonStyle';
 
 const popupStyle = css`
@@ -181,26 +181,25 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
     localStorage.removeItem('searchHistory');
   };
 
-  const fetchHistory = async () => {
-    const { data } = await api.get(
-      `/coins/${cryptoIdItem}`,
-    );
-    return data;
-  };
+  // const fetchHistory = async () => {
+  //   const { data } = await api.get(
+  //     `/coins/${cryptoIdItem}`,
+  //   );
+  //   return data;
+  // };
 
-  const { data, isLoading, refetch } = useQuery('coinsHistory', fetchHistory, {
-    enable: false,
-  });
-  console.log(data);
+  // const { data, isLoading, refetch } = useQuery('coinsHistory', fetchHistory, {
+  //   enable: false,
+  // });
 
-  const handleClick = async ({
-    day, month, year, cryptoId,
-  }) => {
-    const formattedDate = `${day}-${month}-${year}`;
-    setDateItem(formattedDate);
-    setCryptoIdItem(cryptoId);
-    await refetch();
-  };
+  // const handleClick = async ({
+  //   day, month, year, cryptoId,
+  // }) => {
+  //   const formattedDate = `${day}-${month}-${year}`;
+  //   setDateItem(formattedDate);
+  //   setCryptoIdItem(cryptoId);
+  //   await refetch();
+  // };
   // const recalculateHistory = (item) => {
   //   setScenarioData(item);
   //   setShowPopup(false);
@@ -220,9 +219,9 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
         <button type="button" onClick={resetSearchHistory}>기록 모두 지우기</button>
       </div>
       <div css={historyItemsStyle}>
-        {searchHistory.map((item) => {
+        {searchHistory.slice(0).reverse().map((item) => {
           const {
-            price, image, cryptoId, cryptoName, date,
+            price, image, cryptoName, date,
           } = item.input;
           const {
             year, month, day,
@@ -240,11 +239,11 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
           return (
             <button
               type="button"
-              onClick={() => {
-                return handleClick({
-                  day, month, year, cryptoId,
-                });
-              }}
+              // onClick={() => {
+              //   return handleClick({
+              //     day, month, year, cryptoId,
+              //   });
+              // }}
               key={item.id}
               css={historyItemStyle}
             >

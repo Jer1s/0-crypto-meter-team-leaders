@@ -1,15 +1,17 @@
 import { useRecoilValue } from 'recoil';
-import exchangeRateSelector from 'recoils/exchangeRate/exchangeRateSelector';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import localeCurrencySelector from 'recoils/localeCurrency/localeCurrencySelector';
+import exchangeRateSelector from 'recoils/exchangeRate/exchangeRateSelector';
 
 const useFormattedPrice = (ignoreException) => {
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const { currencyUnit, currencySign } = useRecoilValue(localeCurrencySelector);
-  const convertCurrency = useRecoilValue(exchangeRateSelector);
-
+  const convertPrice = useRecoilValue(exchangeRateSelector);
   return (price) => {
-    const convertedPrice = convertCurrency(price, localeCurrency);
+    const convertedPrice = Number.isNaN(
+      convertPrice(price, localeCurrency),
+    )
+      ? 0 : convertPrice(price, localeCurrency);
     let formattedPrice = convertedPrice?.toLocaleString();
     let checkingdecimal = formattedPrice;
     checkingdecimal = (checkingdecimal * 100) % 100;

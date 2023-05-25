@@ -10,6 +10,7 @@ import whiteInvertedTriangleIcon from 'assets/white-inverted-triangle.svg';
 import invertedTriangleIcon from 'assets/inverted-triangle.svg';
 import ko from 'date-fns/locale/ko';
 import { selectedDateAtom } from 'recoils/scenarioInputData/scenarioInputDataAtom';
+import PropTypes from 'prop-types';
 import { coinScenarioInputStyle } from './coinScenarioInputStyle';
 
 const validationHistoryPriceStyle = css`
@@ -58,3 +59,7 @@ const DateInput = ({ isHistoryPriceValid }) => {
   );
 };
 export default DateInput;
+
+DateInput.propTypes = {
+  isHistoryPriceValid: PropTypes.bool,
+};

@@ -1,13 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
 import useFormattedPrice from 'hooks/useFormattedPrice';
-import { BASE_CURRENCY } from 'utils/constants';
-import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import { useRecoilValue } from 'recoil';
 import { selectedDateAtom, buyPriceAtom, selectedCoinAtom } from 'recoils/scenarioInputData/scenarioInputDataAtom';
-import exchangeRateSelector from 'recoils/exchangeRate/exchangeRateSelector';
 
 const containerStyle = css`
   color: var(--gray5);
@@ -61,16 +58,15 @@ const lineStyle = css`
 const ScenarioDescription = ({
   onBottomSheetClick,
 }) => {
-  const convertCurrency = useRecoilValue(exchangeRateSelector);
   const price = useRecoilValue(buyPriceAtom);
+  const [formattedPrice, setFormattedPrice] = useState('');
   const selectedDate = useRecoilValue(selectedDateAtom);
   const selectedCoin = useRecoilValue(selectedCoinAtom);
   const formatPrice = useFormattedPrice();
-  const localeCurrency = useRecoilValue(localeCurrencyAtom);
-  const convertedPrice = localeCurrency === BASE_CURRENCY
-    ? price
-    : convertCurrency(price, localeCurrency);
-  const formattedPrice = formatPrice(convertedPrice);
+
+  useEffect(() => {
+    setFormattedPrice(formatPrice(price));
+  }, [price, formatPrice]);
 
   const [year, month, day] = selectedDate
     ? [selectedDate.getFullYear().toString(),
