@@ -6,6 +6,7 @@ import orderNone from 'assets/order-none.svg';
 import orderAscending from 'assets/order-ascending.svg';
 import orderDesending from 'assets/order-desending.svg';
 import { useEffect, useState } from 'react';
+import cryptoDefaultImage from 'assets/crypto-default.svg';
 import PriceChangeChip from './PriceChangeChip';
 
 const listStyle = css`
@@ -248,17 +249,20 @@ const CryptoMarketCapList = ({ cryptoList, clickHandlers, order }) => {
         const marketCap = item.marketCap ? formatPrice(item.marketCap) : '-';
         const totalVolume = item.totalVolume ? formatPrice(item.totalVolume) : '-';
         const volumePerPrice = item.volumePerPrice ? item.volumePerPrice.toLocaleString() : '-';
+        const image = item.image || cryptoDefaultImage;
+        const name = item.name || '-';
+        const symbol = item.symbol || '-';
         return (
           <li key={item.id} css={itemStyle}>
             <div>
               {item.marketCapRank || '-'}
             </div>
             <div css={cryptoNameStyle}>
-              <img src={item.image} alt={`${item.id} Symbol`} css={imageStyle} />
+              <img src={image} alt={`${item.id} Symbol`} css={imageStyle} />
               <div>
-                {item.name}
+                {name}
                 <div css={secondLineStyle}>
-                  {item.symbol}
+                  {symbol}
                 </div>
               </div>
             </div>
@@ -273,7 +277,7 @@ const CryptoMarketCapList = ({ cryptoList, clickHandlers, order }) => {
                 {totalVolume}
               </div>
               <div css={secondLineStyle} style={{ textAlign: 'right' }}>
-                {`${volumePerPrice} ${item.symbol}`}
+                {`${volumePerPrice} ${symbol}`}
               </div>
             </div>
             <div>
