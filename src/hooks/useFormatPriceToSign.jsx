@@ -18,6 +18,8 @@ const useFormatPriceToSign = (ignoreException) => {
       formattedPrice = Number(formattedPrice).toFixed(2);
     }
 
+    formattedPrice = new Intl.NumberFormat().format(formattedPrice);
+
     if (!ignoreException) {
       switch (localeCurrency) {
         case 'KRW':
