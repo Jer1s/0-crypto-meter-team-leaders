@@ -106,7 +106,6 @@ The application can be accessed at [https://cryptometer.netlify.app/](https://cr
 - src/assets/: This folder is for storing static asset files.
 - src/components/: This folder is for storing react components including style components.
 - src/pages/: This folder is for storing custom hook components.
-- src/pages/: This folder is for storing page components.
 - src/recoils/: This folder is for recoil atoms and selectors.
 - src/utils/: This folder is for storing utility functions and constants.
 
