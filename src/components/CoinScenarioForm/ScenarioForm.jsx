@@ -195,6 +195,11 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!selectedDate) {
+      handleHistoryPriceValidation();
+      return;
+    }
+
     await refetch();
     setIsSubmited(!isSubmited);
   };
