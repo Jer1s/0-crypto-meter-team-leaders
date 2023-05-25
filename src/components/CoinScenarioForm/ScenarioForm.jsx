@@ -2,6 +2,7 @@
 import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
 import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import { selectedDateAtom, buyPriceAtom, selectedCoinAtom } from 'recoils/scenarioInputData/scenarioInputDataAtom';
 import { useQuery } from '@tanstack/react-query';
@@ -10,6 +11,8 @@ import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import getCurrentDate from 'utils/getCurrentDate';
 import searchHistoryAtom from 'recoils/searchHistory/searchHistoryAtom';
 import exchangeRateReverseSelector from 'recoils/exchangeRate/exchangeRateReverseSelector';
+import { BASE_CURRENCY } from 'utils/constants';
+import exchangeRateAtom from 'recoils/exchangeRate/exchangeRateAtom';
 import AddPriceButton from './AddPriceButton';
 import CoinTypeDropDown from './CoinTypeDropDown';
 import BuyPriceInput from './BuyPriceInput';
@@ -132,7 +135,6 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
   };
 
   const [scenarioInputData, setScenarioInputData] = useState({});
-  // const changePriceToUSD = localeCurrency === BASE_CURRENCY ? buyPrice : buyPrice / exchangeRate[`USDTO${localeCurrency}`];
 
   useEffect(() => {
     if (!data && !loading) {
