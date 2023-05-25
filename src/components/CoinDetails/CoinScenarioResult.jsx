@@ -40,11 +40,6 @@ const zeroStyle = css`
   color: var(--gray5);
 `;
 
-const nullStyle = css`
-  color: var(--gray5);
-  text-decoration: line-through;
-`;
-
 const currentDateStyle = css`
   color: var(--gray4);
   margin: 0;
@@ -58,8 +53,8 @@ const CoinScenarioResult = () => {
   const { input, output } = scenarioData;
   const { date, pastPrice } = input;
   const { price } = output;
-  console.log(price[localeCurrency], pastPrice[localeCurrency]);
-  const isSkyrocketed = isNaN(price[localeCurrency] - pastPrice[localeCurrency]) ? null : price[localeCurrency] - pastPrice[localeCurrency] > 0;
+  const isSkyrocketed = Number.isNaN(price[localeCurrency] - pastPrice[localeCurrency])
+    ? null : price[localeCurrency] - pastPrice[localeCurrency] > 0;
 
   return (
     <>

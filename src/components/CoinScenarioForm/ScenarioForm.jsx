@@ -1,17 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
-import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import { selectedDateAtom, buyPriceAtom, selectedCoinAtom } from 'recoils/scenarioInputData/scenarioInputDataAtom';
 import { useQuery } from '@tanstack/react-query';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
 import getCurrentDate from 'utils/getCurrentDate';
 import searchHistoryAtom from 'recoils/searchHistory/searchHistoryAtom';
 import exchangeRateReverseSelector from 'recoils/exchangeRate/exchangeRateReverseSelector';
 import exchangeRateAtom from 'recoils/exchangeRate/exchangeRateAtom';
-import { BASE_CURRENCY } from 'utils/constants';
+import { calculatePriceDiff } from 'utils/calculatePriceDiff';
 import AddPriceButton from './AddPriceButton';
 import CoinTypeDropDown from './CoinTypeDropDown';
 import BuyPriceInput from './BuyPriceInput';
@@ -82,53 +82,6 @@ const fetchHistoryData = async (date, cointype) => {
   return data;
 };
 
-const calculatePriceDiff = (scenarioDataResult, exchangeRate) => {
-  const { currentPrice, historyPrice, buyPrice } = scenarioDataResult;
-  if (Number.isNaN(currentPrice)) {
-    return {
-      pastPrice: {
-        USD: null, KRW: null, JPY: null, EUR: null, CNY: null,
-      },
-      price: {
-        USD: null, KRW: null, JPY: null, EUR: null, CNY: null,
-      },
-    };
-  } if (!(currentPrice || historyPrice || buyPrice)) {
-    return {
-      pastPrice: {
-        USD: 0, KRW: 0, JPY: 0, EUR: 0, CNY: 0,
-      },
-      price: {
-        USD: 0, KRW: 0, JPY: 0, EUR: 0, CNY: 0,
-      },
-    };
-  }
-  const {
-    USD, KRW, JPY, EUR, CNY,
-  } = historyPrice;
-  const amount = (buyPrice / USD);
-  const pastPrice = {
-    USD: amount * USD, KRW: KRW * USD, JPY: JPY * USD, EUR: EUR * USD, CNY: CNY * USD,
-  };
-  const usdPrice = amount * currentPrice;
-  const exchangedRate = (targetCurrency) => {
-    return exchangeRate[`${BASE_CURRENCY}TO${targetCurrency}`];
-  };
-  const price = {
-    USD: usdPrice,
-    KRW: usdPrice * exchangedRate('KRW'),
-    JPY: usdPrice * exchangedRate('JPY'),
-    EUR: usdPrice * exchangedRate('EUR'),
-    CNY: usdPrice * exchangedRate('CNY'),
-  };
-  // const currentTotalCost =amount * currentPrice;
-  // const isSkyrocketed = (buyPrice - currentTotalCost) <= 0;
-  return {
-    pastPrice,
-    price,
-  };
-  // return { currentTotalCost, isSkyrocketed };
-};
 const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
   const convertPriceToBase = useRecoilValue(exchangeRateReverseSelector);
   const exchangeRate = useRecoilValue(exchangeRateAtom);
@@ -155,15 +108,16 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
     { enabled: false }, // 초기 로드 비활성화
   );
 
-  const historyPrice = {
-    USD: data?.market_data?.current_price?.usd,
-    KRW: data?.market_data?.current_price?.krw,
-    JPY: data?.market_data?.current_price?.jpy,
-    CNY: data?.market_data?.current_price?.cny,
-    EUR: data?.market_data?.current_price?.eur,
-  };
-  useEffect(() => {
-  }, [isHistoryPriceValid]);
+  const historyPrice = useMemo(() => {
+    return {
+      USD: data?.market_data?.current_price?.usd,
+      KRW: data?.market_data?.current_price?.krw,
+      JPY: data?.market_data?.current_price?.jpy,
+      CNY: data?.market_data?.current_price?.cny,
+      EUR: data?.market_data?.current_price?.eur,
+    };
+  }, [data]);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsHistoryPriceValid(true);
@@ -188,28 +142,32 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
     const scenarioDataResult = {
       currentPrice: selectedCoin.current_price,
       historyPrice,
-      selectedPrice: buyPrice,
+      buyPrice,
     };
 
-    setScenarioOutputData(calculatePriceDiff( // output.price 계산 하는 로직
-      scenarioDataResult, exchangeRate));
+    setScenarioOutputData(
+      // output.price 계산 하는 로직
+      calculatePriceDiff(scenarioDataResult, exchangeRate, localeCurrency),
+    );
   }, [isSubmited]);
 
   // scenarioData set
 
   useEffect(() => {
+    if (Object.keys(scenarioOutputData).length === 0) { return; }
+
     const newScenarioData = {
       input: {
         date: { year, month, day },
         pastPrice: scenarioOutputData.pastPrice,
         buyPrice,
         cryptoId: selectedCoin.id,
-        cryptoName: selectedCoin.Name,
+        cryptoName: selectedCoin.name,
         image: selectedCoin.image,
       },
       output: {
         price: scenarioOutputData.price,
-        outputDate: getCurrentDate(),
+        date: getCurrentDate(),
       },
     };
 
@@ -241,9 +199,12 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
   };
 
   useEffect(() => {
-    if (historyPrice) {
-      setIsBottomSheetOpen(!isBottomSheetOpen);
-    }
+  }, [historyPrice]);
+
+  useEffect(() => {
+    if (!(historyPrice.USD || historyPrice.KRW
+      || historyPrice.JPY || historyPrice.CNY || historyPrice.EUR)) return;
+    setIsBottomSheetOpen(!isBottomSheetOpen);
   }, [historyPrice]);
 
   return (
