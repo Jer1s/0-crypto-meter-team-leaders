@@ -5,13 +5,14 @@ import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import searchHistoryAtom from 'recoils/searchHistory/searchHistoryAtom';
 import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
-import useCoinCurrentData from 'hooks/useCoinCurrentData';
 import PropTypes from 'prop-types';
 import defaultCryptoImage from 'assets/crypto-image-default.svg';
 import formatPrice from 'utils/formatPrice';
 import getCurrentDate from 'utils/getCurrentDate';
 import exchangeRateAtom from 'recoils/exchangeRate/exchangeRateAtom';
 import { BASE_CURRENCY } from 'utils/constants';
+import { useQuery } from '@tanstack/react-query';
+import { getCoinCurrentData } from 'api/getCoins';
 import { navButtonStyle } from './navButtonStyle';
 
 const popupStyle = css`
@@ -172,7 +173,7 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedCrpytoId, setSelectedCryptoId] = useState('');
   const exchangeRate = useRecoilValue(exchangeRateAtom);
-  const { data, refetch } = useCoinCurrentData(selectedCrpytoId);
+  const { data, refetch } = useQuery(['coin', selectedCrpytoId], () => { return getCoinCurrentData(selectedCrpytoId); });
 
   const resetSearchHistory = () => {
     resetSearchHistoryAtom();
@@ -187,7 +188,7 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
   };
 
   useEffect(() => {
-    if (data) {
+    if (data && selectedItem) {
       const price = data?.market_data?.current_price?.usd;
       const newScenarioData = {
         input: selectedItem.input,
@@ -204,7 +205,7 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
       };
       setScenarioData(newScenarioData);
     }
-  }, [data]);
+  }, [data, selectedItem]);
 
   return (
     <div css={[navButtonStyle, popupStyle]}>
