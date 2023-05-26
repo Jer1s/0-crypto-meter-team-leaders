@@ -21,8 +21,6 @@ const containerStyle = css`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 1.1rem;
-
   }
 
   @media (max-width: 768px) {
