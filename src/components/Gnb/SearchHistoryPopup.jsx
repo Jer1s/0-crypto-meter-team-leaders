@@ -135,7 +135,6 @@ const scenarioResultStyle = css`
   letter-spacing: -0.3px;
 
   @media (max-width: 767px) { 
-    width: 25.9rem;  
     font-size: 1.4rem;
     line-height: 2rem;
   }
