@@ -131,7 +131,7 @@ const CoinChart = () => {
   const { price } = output;
   const isSkyrocketed = Number.isNaN(price[localeCurrency] - pastPrice[localeCurrency])
     ? null
-    : price[localeCurrency] - pastPrice[localeCurrency] > 0;
+    : price[localeCurrency] - pastPrice[localeCurrency] >= 0;
 
   const getChart = async () => {
     const response = await fetch(`${PRO_BASE_URL}/coins/${cryptoId}/market_chart?vs_currency=usd&days=${selectedTerm.term}`, {
