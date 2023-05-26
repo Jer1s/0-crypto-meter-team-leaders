@@ -50,6 +50,7 @@ const today = new Date();
 const CoinScenarioResult = () => {
   const localeCurrency = useRecoilValue(localeCurrencyAtom);
   const scenarioData = useRecoilValue(scenarioDataAtom);
+  console.log(scenarioData);
 
   const { input, output } = scenarioData;
   const { date, pastPrice } = input;

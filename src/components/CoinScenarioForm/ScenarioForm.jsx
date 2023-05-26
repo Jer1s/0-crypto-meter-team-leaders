@@ -160,7 +160,7 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
       input: {
         date: { year, month, day },
         pastPrice: scenarioOutputData.pastPrice,
-        buyPrice,
+        cryptoAmount: buyPrice / historyPrice.USD,
         cryptoId: selectedCoin.id,
         cryptoName: selectedCoin.name,
         image: selectedCoin.image,
