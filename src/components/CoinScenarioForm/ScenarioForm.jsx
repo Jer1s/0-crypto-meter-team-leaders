@@ -96,7 +96,7 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
   const [isSubmited, setIsSubmited] = useState(false);
 
   const [year, month, day] = selectedDate ? [selectedDate.getFullYear().toString(),
-    (selectedDate.getMonth() + 1).toString(), selectedDate.getDate().toString()] : ['0000', '00', '0'];
+  (selectedDate.getMonth() + 1).toString(), selectedDate.getDate().toString()] : ['0000', '00', '0'];
 
   const addButtonData = localeCurrency === 'KRW'
     ? [5000, 10000, 50000, 100000]
@@ -139,6 +139,8 @@ const ScenarioForm = ({ isBottomSheetOpen, setIsBottomSheetOpen }) => {
       if (!(historyPrice.USD || historyPrice.KRW
         || historyPrice.JPY || historyPrice.CNY || historyPrice.EUR)) return;
     } // historyPrice에 대한 api 요청 응답이 안왔을 때
+    console.log(historyPrice);
+
     const scenarioDataResult = {
       currentPrice: selectedCoin.current_price,
       historyPrice,
