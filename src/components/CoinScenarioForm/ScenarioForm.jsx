@@ -73,7 +73,7 @@ const addPriceButtonContainerStyle = css`
 
 const fetchHistoryData = async (date, cointype) => {
   const response = await fetch(
-    `${import.meta.env.VITE_PRO_BASE_URL}/coins/${cointype}/history?date=${date}&localization=ko`,
+    `${import.meta.env.VITE_BASE_URL}/coins/${cointype}/history?date=${date}&localization=ko`,
   );
   if (!response.ok) {
     throw new Error('Failed to fetch data');

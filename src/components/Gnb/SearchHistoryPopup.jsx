@@ -188,7 +188,7 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
   };
 
   useEffect(() => {
-    if (data) {
+    if (data && selectedItem) {
       const price = data?.market_data?.current_price?.usd;
       const newScenarioData = {
         input: selectedItem.input,
