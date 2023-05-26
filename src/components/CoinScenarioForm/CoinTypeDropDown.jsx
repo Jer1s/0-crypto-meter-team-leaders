@@ -11,8 +11,8 @@ import { selectedCoinAtom } from 'recoils/scenarioInputData/scenarioInputDataAto
 import { useRecoilState } from 'recoil';
 import { coinScenarioInputStyle } from './coinScenarioInputStyle';
 
-const PRO_BASE_URL = process.env.VITE_PRO_BASE_URL;
-const PRO_API_KEY = process.env.VITE_X_CG_PRO_API_KEY;
+const PRO_BASE_URL = import.meta.env.VITE_PRO_BASE_URL;
+const PRO_API_KEY = import.meta.env.VITE_X_CG_PRO_API_KEY;
 
 const dropDownBoxStyle = css`
   position: relative;
