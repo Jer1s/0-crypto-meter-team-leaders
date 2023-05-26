@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useViewportType = () => {
+const useResponsiveView = () => {
   const [viewportType, setViewportType] = useState('');
 
   useEffect(() => {
@@ -31,4 +31,4 @@ const useViewportType = () => {
   return viewportType;
 };
 
-export default useViewportType;
+export default useResponsiveView;

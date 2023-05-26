@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
 import lt from 'assets/lt.svg';
 import gt from 'assets/gt.svg';
-import useViewportType from 'hooks/useResponsiveView';
+import useResponsiveView from 'hooks/useResponsiveView';
 import { useEffect, useState } from 'react';
 
 const containerStyle = css`
@@ -38,7 +38,7 @@ const currentPageStyle = css`
 `;
 
 const PaginationButtons = ({ totalPages, currentPage, onPageChange }) => {
-  const viewportType = useViewportType();
+  const viewportType = useResponsiveView();
   const [pageRange, setPageRange] = useState(5);
 
   useEffect(() => {

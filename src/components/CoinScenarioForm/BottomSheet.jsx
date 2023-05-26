@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import useViewportType from 'hooks/useResponsiveView';
+import useResponsiveView from 'hooks/useResponsiveView';
 import PropTypes from 'prop-types';
 
 const BottomSheetStyle = css`
@@ -34,7 +34,7 @@ const BottomSheet = ({
   setIsBottomSheetOpen,
   children,
 }) => {
-  const viewportType = useViewportType();
+  const viewportType = useResponsiveView();
 
   const heightLookup = {
     Tablet: '60rem',

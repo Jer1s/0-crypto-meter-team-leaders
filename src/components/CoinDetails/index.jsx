@@ -124,7 +124,7 @@ const CoinDetails = () => {
   }, [isCopy]);
 
   const shareFacebook = () => {
-    window.open('https://www.facebook.com/sharer/sharer.php?u=https://naver.com/');
+    window.open('https://www.facebook.com/sharer/sharer.php?u=https://cryptometer.netlify.app/');
   };
 
   return (
