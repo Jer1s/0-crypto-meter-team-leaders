@@ -184,6 +184,8 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
     setSelectedCryptoId(item.input.cryptoId);
     await refetch();
     setShowPopup(false);
+    // async라서 setSeletedItem -> refetch sequence가 지켜져야
+    // body scroll lock (무한스크롤링부분)
   };
 
   useEffect(() => {
