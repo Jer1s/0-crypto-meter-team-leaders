@@ -7,9 +7,7 @@ const useResponsiveView = () => {
     const handleResize = () => {
       const { innerWidth } = window;
       let type = '';
-      if (innerWidth < 440) {
-        type = 'SuperMobile';
-      } else if (innerWidth < 768) {
+      if (innerWidth < 768) {
         type = 'Mobile';
       } else if (innerWidth < 1199) {
         type = 'Tablet';

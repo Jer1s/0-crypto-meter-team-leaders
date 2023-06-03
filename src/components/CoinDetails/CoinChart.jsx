@@ -129,7 +129,7 @@ const CoinChart = () => {
   const { input, output } = data;
   const { cryptoId, pastPrice } = input;
   const { price } = output;
-  const isSkyrocketed = Number.isNaN(price[localeCurrency] - pastPrice[localeCurrency])
+  const isSkyrocketed = Number.isNaN(price[localeCurrency] - pastPrice[localeCurrency]) || price[localeCurrency] - pastPrice[localeCurrency] === 0
     ? null
     : price[localeCurrency] - pastPrice[localeCurrency] > 0;
 
@@ -171,7 +171,10 @@ const CoinChart = () => {
     if (value >= 10000) {
       return `${value / 10000}만`;
     }
-    return `${value}원`;
+    if (localeCurrency === 'KRW') {
+      return `${value}원`;
+    }
+    return value;
   };
 
   const convertCoinNestedArrayToObject = (coinPriceList[type]?.map((item) => {
