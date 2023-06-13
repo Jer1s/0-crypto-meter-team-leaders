@@ -5,7 +5,7 @@
       "@/*": ["src/*"],
       "api/*": ["src/api/*"],
       "assets/*": ["src/assets/*"],
-      "components/*": ["src/components/*"],
+      "features/*": ["src/features/*"],
       "hooks/*": ["src/hooks/*"],
       "pages/*": ["src/pages/*"],
       "recoils/*": ["src/recoils/*"],

@@ -1,15 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import { useState, useEffect } from 'react';
-import styled from '@emotion/styled';
-import facebook from 'assets/facebook.svg';
-import share from 'assets/share.svg';
-import MainContainer from 'components/MainContainer';
-import CoinScenarioResult from 'components/CoinDetails/CoinScenarioResult';
-import { useRecoilValue } from 'recoil';
-import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
-import CoinChart from './CoinChart';
-import KakaoShareButton from './KakaoShareButton';
+import { css } from "@emotion/react";
+import { useState, useEffect } from "react";
+import styled from "@emotion/styled";
+import facebook from "assets/facebook.svg";
+import share from "assets/share.svg";
+import MainContainer from "features/MainContainer";
+import CoinScenarioResult from "features/CoinDetails/CoinScenarioResult";
+import { useRecoilValue } from "recoil";
+import scenarioDataAtom from "recoils/scenarioData/scenarioDataAtom";
+import CoinChart from "./CoinChart";
+import KakaoShareButton from "./KakaoShareButton";
 
 const CoinInfo = styled.div`
   display: flex;
@@ -68,30 +68,30 @@ const toolTipStyle = css`
   text-align: center;
 
   &:after {
-  border-color: var(--gray3) transparent;
-  border-style: solid;
-  border-width: 0 0.6rem 0.8rem 0.65rem;
-  content: '';
-  display: block;
-  left: 0.55rem;
-  position: absolute;
-  top: -0.7rem;
-  width: 0;
-  z-index: 1;
-}
+    border-color: var(--gray3) transparent;
+    border-style: solid;
+    border-width: 0 0.6rem 0.8rem 0.65rem;
+    content: "";
+    display: block;
+    left: 0.55rem;
+    position: absolute;
+    top: -0.7rem;
+    width: 0;
+    z-index: 1;
+  }
 
   &:before {
-  border-color: var(--gray3) transparent;
-  border-style: solid;
-  border-width: 0 0.6rem 0.8rem 0.65rem;
-  content: '';
-  display: block;
-  left: 0.5rem;
-  position: absolute;
-  top: -0.7rem;
-  width: 0;
-  z-index: 0;
-}
+    border-color: var(--gray3) transparent;
+    border-style: solid;
+    border-width: 0 0.6rem 0.8rem 0.65rem;
+    content: "";
+    display: block;
+    left: 0.5rem;
+    position: absolute;
+    top: -0.7rem;
+    width: 0;
+    z-index: 0;
+  }
 `;
 
 const Button = styled.button`
@@ -124,7 +124,9 @@ const CoinDetails = () => {
   }, [isCopy]);
 
   const shareFacebook = () => {
-    window.open('https://www.facebook.com/sharer/sharer.php?u=https://cryptometer.netlify.app/');
+    window.open(
+      "https://www.facebook.com/sharer/sharer.php?u=https://cryptometer.netlify.app/"
+    );
   };
 
   return (
@@ -132,7 +134,7 @@ const CoinDetails = () => {
       <div key="headerContent">
         <CoinInfo>
           <img src={image} alt="Coin Icon" />
-          <p style={{ height: '3.1rem' }}>{cryptoName}</p>
+          <p style={{ height: "3.1rem" }}>{cryptoName}</p>
         </CoinInfo>
         <SocialIconGroup>
           <KakaoShareButton />

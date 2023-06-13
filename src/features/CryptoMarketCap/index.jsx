@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { useCallback, useEffect, useState } from 'react';
-import { css } from '@emotion/react';
-import { useQueryClient } from '@tanstack/react-query';
-import MainContainer from 'components/MainContainer';
-import useCoinsMarkets from 'hooks/useCoinsMarkets';
-import { getCoinsMarkets } from 'api/getCoins';
-import parseMarketCapData from 'utils/parseMarketCapData';
-import { TOTAL_PAGES } from 'utils/constants';
-import CryptoMarketCapList from './CryptoMarketCapList';
-import PaginationButtons from './PaginationButtons';
+import { useCallback, useEffect, useState } from "react";
+import { css } from "@emotion/react";
+import { useQueryClient } from "@tanstack/react-query";
+import MainContainer from "features/MainContainer";
+import useCoinsMarkets from "hooks/useCoinsMarkets";
+import { getCoinsMarkets } from "api/getCoins";
+import parseMarketCapData from "utils/parseMarketCapData";
+import { TOTAL_PAGES } from "utils/constants";
+import CryptoMarketCapList from "./CryptoMarketCapList";
+import PaginationButtons from "./PaginationButtons";
 
 const headerStyle = css`
   margin: 0;
@@ -31,30 +31,28 @@ const tableMarginStyle = css`
 const CryptoMarketCap = () => {
   const queryClient = useQueryClient();
   const [currentPage, setCurrentPage] = useState(1);
-  const {
-    status, data, error, isPreviousData,
-  } = useCoinsMarkets(currentPage);
+  const { status, data, error, isPreviousData } = useCoinsMarkets(currentPage);
 
   const [cryptoList, setCryptoList] = useState([]);
-  const [order, setOrder] = useState('marketCapRank');
+  const [order, setOrder] = useState("marketCapRank");
 
   const sortedCryptoList = cryptoList.sort((a, b) => {
     let orderVal = order;
     let isAscending = false;
 
-    if (orderVal.endsWith('Ascend')) {
-      orderVal = orderVal.slice(0, -'Ascend'.length);
+    if (orderVal.endsWith("Ascend")) {
+      orderVal = orderVal.slice(0, -"Ascend".length);
       isAscending = true;
     }
 
-    if (orderVal.endsWith('Rank')) {
-      orderVal = orderVal.slice(0, -'Rank'.length);
+    if (orderVal.endsWith("Rank")) {
+      orderVal = orderVal.slice(0, -"Rank".length);
     }
 
     const valueA = a[orderVal];
     const valueB = b[orderVal];
 
-    if (typeof valueA === 'number' && typeof valueB === 'number') {
+    if (typeof valueA === "number" && typeof valueB === "number") {
       return isAscending ? valueA - valueB : valueB - valueA; // 숫자 비교
     }
 
@@ -72,59 +70,59 @@ const CryptoMarketCap = () => {
 
   const clickHandlers = {
     marketCapRankSort: () => {
-      if (order === 'marketCapRank') {
-        setOrder('marketCapRankAscend');
+      if (order === "marketCapRank") {
+        setOrder("marketCapRankAscend");
       } else {
-        setOrder('marketCapRank');
+        setOrder("marketCapRank");
       }
     },
     nameSort: () => {
-      if (order === 'name') {
-        setOrder('nameAscend');
+      if (order === "name") {
+        setOrder("nameAscend");
       } else {
-        setOrder('name');
+        setOrder("name");
       }
     },
     currentPriceSort: () => {
-      if (order === 'currentPrice') {
-        setOrder('currentPriceAscend');
+      if (order === "currentPrice") {
+        setOrder("currentPriceAscend");
       } else {
-        setOrder('currentPrice');
+        setOrder("currentPrice");
       }
     },
     marketCapSort: () => {
-      if (order === 'marketCap') {
-        setOrder('marketCapAscend');
+      if (order === "marketCap") {
+        setOrder("marketCapAscend");
       } else {
-        setOrder('marketCap');
+        setOrder("marketCap");
       }
     },
     totalVolumeSort: () => {
-      if (order === 'totalVolume') {
-        setOrder('totalVolumeAscend');
+      if (order === "totalVolume") {
+        setOrder("totalVolumeAscend");
       } else {
-        setOrder('totalVolume');
+        setOrder("totalVolume");
       }
     },
     pc1hSort: () => {
-      if (order === 'pc1h') {
-        setOrder('pc1hAscend');
+      if (order === "pc1h") {
+        setOrder("pc1hAscend");
       } else {
-        setOrder('pc1h');
+        setOrder("pc1h");
       }
     },
     pc24hSort: () => {
-      if (order === 'pc24h') {
-        setOrder('pc24hAscend');
+      if (order === "pc24h") {
+        setOrder("pc24hAscend");
       } else {
-        setOrder('pc24h');
+        setOrder("pc24h");
       }
     },
     pc7dSort: () => {
-      if (order === 'pc7d') {
-        setOrder('pc7dscend');
+      if (order === "pc7d") {
+        setOrder("pc7dscend");
       } else {
-        setOrder('pc7d');
+        setOrder("pc7d");
       }
     },
   };
@@ -143,8 +141,10 @@ const CryptoMarketCap = () => {
   useEffect(() => {
     if (!isPreviousData && currentPage < 101) {
       queryClient.prefetchQuery({
-        queryKey: ['coinsMarkets', currentPage + 1],
-        queryFn: () => { return getCoinsMarkets(currentPage + 1); },
+        queryKey: ["coinsMarkets", currentPage + 1],
+        queryFn: () => {
+          return getCoinsMarkets(currentPage + 1);
+        },
       });
     }
   }, [isPreviousData, currentPage, queryClient]);
@@ -160,12 +160,10 @@ const CryptoMarketCap = () => {
       </div>
       <div key="bodyContent">
         <div css={tableMarginStyle}>
-          {status === 'loading' ? (
+          {status === "loading" ? (
             <div>Loading...</div>
-          ) : status === 'error' ? (
-            <div>
-              {`Error: ${error.message}`}
-            </div>
+          ) : status === "error" ? (
+            <div>{`Error: ${error.message}`}</div>
           ) : (
             <CryptoMarketCapList
               cryptoList={sortedCryptoList}

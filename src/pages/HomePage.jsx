@@ -1,9 +1,9 @@
-import HomePageLayout from 'components/HomePageLayout';
-import CoinDetails from 'components/CoinDetails';
-import CoinScenarioForm from 'components/CoinScenarioForm';
-import CryptoMarketCap from 'components/CryptoMarketCap';
-import Gnb from 'components/Gnb';
-import useAtomStorageSync from 'hooks/useAtomStorageSync';
+import HomePageLayout from "features/HomePageLayout";
+import CoinDetails from "features/CoinDetails";
+import CoinScenarioForm from "features/CoinScenarioForm";
+import CryptoMarketCap from "features/CryptoMarketCap";
+import Gnb from "features/Gnb";
+import useAtomStorageSync from "hooks/useAtomStorageSync";
 // import useExchangeRate from 'hooks/useExchangeRate';
 
 const HomePage = () => {
