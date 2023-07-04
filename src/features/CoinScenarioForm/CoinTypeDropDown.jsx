@@ -11,8 +11,9 @@ import { selectedCoinAtom } from 'recoils/scenarioInputData/scenarioInputDataAto
 import { useRecoilState } from 'recoil';
 import { coinScenarioInputStyle } from './coinScenarioInputStyle';
 
-const PRO_BASE_URL = import.meta.env.VITE_PRO_BASE_URL;
-const PRO_API_KEY = import.meta.env.VITE_X_CG_PRO_API_KEY;
+// const PRO_BASE_URL = import.meta.env.VITE_PRO_BASE_URL;
+// const PRO_API_KEY = import.meta.env.VITE_X_CG_PRO_API_KEY;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const dropDownBoxStyle = css`
   position: relative;
@@ -105,12 +106,7 @@ const dropDownItemStyle = css`
 
 const fetchItems = async ({ pageParam = 1 }) => {
   const response = await fetch(
-    `${PRO_BASE_URL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=${pageParam}&sparkline=false&locale=en`,
-    {
-      headers: {
-        'x-cg-pro-api-key': PRO_API_KEY,
-      },
-    },
+    `${BASE_URL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=${pageParam}&sparkline=false&locale=en`,
   );
   return response.json();
 };
