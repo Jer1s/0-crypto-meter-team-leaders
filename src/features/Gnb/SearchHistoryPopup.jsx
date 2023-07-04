@@ -187,6 +187,7 @@ const SearchHistoryPopup = ({ setShowPopup }) => {
   useEffect(() => {
     if (data) {
       refetch();
+      setShowPopup(false);
     }
   }, [selectedCrpytoId]);
 
