@@ -18,7 +18,7 @@ const containerStyle = css`
   button {
     cursor: pointer;
     border: none;
-    padding: 0.2 0.75rem;
+    padding: 0.2rem 0.75rem;
 
     img {
       width: 1.2rem;
