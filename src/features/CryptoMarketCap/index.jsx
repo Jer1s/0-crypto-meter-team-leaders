@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { useCallback, useEffect, useState } from "react";
-import { css } from "@emotion/react";
-import { useQueryClient } from "@tanstack/react-query";
-import MainContainer from "features/MainContainer";
-import useCoinsMarkets from "hooks/useCoinsMarkets";
-import { getCoinsMarkets } from "api/getCoins";
-import parseMarketCapData from "utils/parseMarketCapData";
-import { TOTAL_PAGES } from "utils/constants";
-import CryptoMarketCapList from "./CryptoMarketCapList";
-import PaginationButtons from "./PaginationButtons";
+import { useCallback, useEffect, useState } from 'react';
+import { css } from '@emotion/react';
+import { useQueryClient } from '@tanstack/react-query';
+import MainContainer from 'features/MainContainer';
+import useCoinsMarkets from 'hooks/useCoinsMarkets';
+import { getCoinsMarkets } from 'api/getCoins';
+import parseMarketCapData from 'utils/parseMarketCapData';
+import { TOTAL_PAGES } from 'utils/constants';
+import CryptoMarketCapList from './CryptoMarketCapList';
+import PaginationButtons from './PaginationButtons';
 
 const headerStyle = css`
   margin: 0;
