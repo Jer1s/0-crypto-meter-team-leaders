@@ -155,10 +155,10 @@ const CryptoMarketCap = () => {
 
   return (
     <MainContainer>
-      <div key='headerContent'>
+      <div key="headerContent">
         <h2 css={headerStyle}>전체 암호화폐 시세</h2>
       </div>
-      <div key='bodyContent'>
+      <div key="bodyContent">
         <div css={tableMarginStyle}>
           {status === 'loading' ? (
             <div>Loading...</div>
