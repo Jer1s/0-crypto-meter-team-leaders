@@ -3,7 +3,7 @@ import { useRef, useEffect, useState } from 'react';
 const useInitialTerm = (data) => {
   const [selectedTerm, setSelectedTerm] = useState({ text: '전체', term: 'max' });
   const { input, output } = data;
-  const initialValue = useRef({});
+  const initialValue = useRef({ text: '전체', term: 'max' });
   useEffect(() => {
     const inputDate = new Date(input.date.year, input.date.month - 1, input.date.day).getTime();
     const outputDate = new Date(output.date.year, output.date.month - 1, output.date.day).getTime();
@@ -30,7 +30,7 @@ const useInitialTerm = (data) => {
         // 1년 이상
         initialValue.current = { text: '전체', term: 'max' };
     }
-    setSelectedTerm(initialValue);
+    setSelectedTerm(initialValue.current);
   }, [data]);
 
   return [selectedTerm, setSelectedTerm];
