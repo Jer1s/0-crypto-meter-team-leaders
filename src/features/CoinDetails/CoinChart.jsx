@@ -228,7 +228,7 @@ const CoinChart = () => {
             axisLine={false}
             tickLine={false}
             tick={viewportType === 'Desktop' ? { fontSize: 14 } : viewportType === 'Tablet' ? { fontSize: 14 } : { fontSize: 10 }}
-            interval={(convertCoinNestedArrayToObject?.length / viewportType) >> 0}
+            interval={Math.floor(convertCoinNestedArrayToObject?.length / viewportType)}
             domain={['auto', 'auto']}
           />
           <YAxis
