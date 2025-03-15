@@ -108,6 +108,7 @@ const fetchItems = async ({ pageParam = 1 }) => {
     `${PRO_BASE_URL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=${pageParam}&sparkline=false&locale=en`,
     {
       headers: {
+        'accept': 'application/json',
         'x-cg-pro-api-key': PRO_API_KEY,
       },
     },

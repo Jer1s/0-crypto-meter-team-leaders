@@ -17,6 +17,9 @@ import CoinTypeDropDown from './CoinTypeDropDown';
 import BuyPriceInput from './BuyPriceInput';
 import DateInput from './DateInput';
 
+const PRO_API_KEY = import.meta.env.VITE_X_CG_PRO_API_KEY;
+const PRO_BASE_URL = import.meta.env.VITE_PRO_BASE_URL;
+
 const formStyle = css`
   position: static;
   height: 100%;
@@ -73,7 +76,12 @@ const addPriceButtonContainerStyle = css`
 
 const fetchHistoryData = async (date, cointype) => {
   const response = await fetch(
-    `${import.meta.env.VITE_PRO_BASE_URL}/coins/${cointype}/history?date=${date}&localization=ko`,
+    `${PRO_BASE_URL}/coins/${cointype}/history?date=${date}&localization=ko`, {
+      headers: {
+        'accept': 'application/json',
+        'x-cg-pro-api-key': PRO_API_KEY,
+      },
+    },
   );
   if (!response.ok) {
     throw new Error('Failed to fetch data');
