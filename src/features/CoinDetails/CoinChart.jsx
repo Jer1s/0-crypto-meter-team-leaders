@@ -22,9 +22,8 @@ import localeCurrencyAtom from 'recoils/localeCurrency/localeCurrencyAtom';
 import exchangeRateSelector from 'recoils/exchangeRate/exchangeRateSelector';
 import CategoryButtonChipContainer from './CategoryButtonChipContainer';
 
-// const PRO_API_KEY = import.meta.env.VITE_X_CG_PRO_API_KEY;
-// const PRO_BASE_URL = import.meta.env.VITE_PRO_BASE_URL;
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const PRO_API_KEY = import.meta.env.VITE_X_CG_PRO_API_KEY;
+const PRO_BASE_URL = import.meta.env.VITE_PRO_BASE_URL;
 
 const termList = [{ text: '전체', term: 'max' }, { text: '1년', term: '365' }, { text: '1개월', term: '30' }, { text: '1주', term: '7' }, { text: '1일', term: '1' }];
 const typeList = [{ text: '코인 가격', term: 'prices' }, { text: '시가총액', term: 'market_caps' }, { text: '총 거래량', term: 'total_volumes' }];
@@ -136,9 +135,12 @@ const CoinChart = () => {
     : price[localeCurrency] - pastPrice[localeCurrency] > 0;
 
   const getChart = async () => {
-    const response = await fetch(
-      `${BASE_URL}/coins/${cryptoId}/market_chart?vs_currency=usd&days=${selectedTerm.term}`,
-    );
+    const response = await fetch(`${PRO_BASE_URL}/coins/${cryptoId}/market_chart?vs_currency=usd&days=${selectedTerm.term}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-cg-pro-api-key': PRO_API_KEY,
+      },
+    });
     return response.json();
   };
 
@@ -221,12 +223,10 @@ const CoinChart = () => {
           <XAxis
             dataKey="date"
             tickSize={0}
-            // eslint-disable-next-line no-nested-ternary
             dx={viewportType === 'Desktop' ? 40 : viewportType === 'Tablet' ? 40 : 20}
             dy={10}
             axisLine={false}
             tickLine={false}
-            // eslint-disable-next-line no-nested-ternary
             tick={viewportType === 'Desktop' ? { fontSize: 14 } : viewportType === 'Tablet' ? { fontSize: 14 } : { fontSize: 10 }}
             interval={(convertCoinNestedArrayToObject?.length / viewportType) >> 0}
             domain={['auto', 'auto']}

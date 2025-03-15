@@ -1,15 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import { useState, useEffect } from "react";
-import styled from "@emotion/styled";
-import facebook from "assets/facebook.svg";
-import share from "assets/share.svg";
-import MainContainer from "features/MainContainer";
-import CoinScenarioResult from "features/CoinDetails/CoinScenarioResult";
-import { useRecoilValue } from "recoil";
-import scenarioDataAtom from "recoils/scenarioData/scenarioDataAtom";
-import CoinChart from "./CoinChart";
-import KakaoShareButton from "./KakaoShareButton";
+import { css } from '@emotion/react';
+import { useState, useEffect } from 'react';
+import styled from '@emotion/styled';
+import facebook from 'assets/facebook.svg';
+import share from 'assets/share.svg';
+import MainContainer from 'features/MainContainer';
+import CoinScenarioResult from 'features/CoinDetails/CoinScenarioResult';
+import { useRecoilValue } from 'recoil';
+import scenarioDataAtom from 'recoils/scenarioData/scenarioDataAtom';
+import CoinChart from './CoinChart';
+import KakaoShareButton from './KakaoShareButton';
 
 const CoinInfo = styled.div`
   display: flex;
@@ -125,7 +125,7 @@ const CoinDetails = () => {
 
   const shareFacebook = () => {
     window.open(
-      "https://www.facebook.com/sharer/sharer.php?u=https://cryptometer.netlify.app/"
+      'https://www.facebook.com/sharer/sharer.php?u=https://cryptometer.netlify.app/',
     );
   };
 
@@ -134,7 +134,7 @@ const CoinDetails = () => {
       <div key="headerContent">
         <CoinInfo>
           <img src={image} alt="Coin Icon" />
-          <p style={{ height: "3.1rem" }}>{cryptoName}</p>
+          <p style={{ height: '3.1rem' }}>{cryptoName}</p>
         </CoinInfo>
         <SocialIconGroup>
           <KakaoShareButton />

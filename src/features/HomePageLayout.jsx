@@ -64,7 +64,7 @@ const HomePageLayout = ({ children }) => {
   return (
     <main css={layoutStyle}>
       {children.map((child) => {
-        areturn (
+        return (
           <div css={child.key === 'sideBar' ? sidebarStyle : mainStyle} key={child.key}>
             {child}
           </div>

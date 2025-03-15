@@ -1,9 +1,11 @@
-import { Suspense, lazy, useEffect, useState } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { RecoilRoot } from "recoil";
-import GlobalStyle from "features/GlobalStyle";
-import HomePage from "pages/HomePage";
+import {
+  Suspense, lazy, useEffect, useState,
+} from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { RecoilRoot } from 'recoil';
+import GlobalStyle from 'features/GlobalStyle';
+import HomePage from 'pages/HomePage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,7 +17,7 @@ const queryClient = new QueryClient({
 });
 
 const ReactQueryDevtoolsProduction = lazy(async () => {
-  return import("@tanstack/react-query-devtools/production").then((d) => {
+  return import('@tanstack/react-query-devtools/production').then((d) => {
     return {
       default: d.ReactQueryDevtools,
     };

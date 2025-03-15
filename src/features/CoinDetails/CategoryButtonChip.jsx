@@ -45,8 +45,8 @@ const CategoryButtonChip = ({
 
 CategoryButtonChip.propTypes = {
   selectedTerm: PropTypes.shape({
-    text: PropTypes.string.isRequired,
-    term: PropTypes.string.isRequired,
+    text: PropTypes.string,
+    term: PropTypes.string,
   }).isRequired,
   setSelectedTerm: PropTypes.func.isRequired,
   termItem: PropTypes.shape({

@@ -31,7 +31,9 @@ const tableMarginStyle = css`
 const CryptoMarketCap = () => {
   const queryClient = useQueryClient();
   const [currentPage, setCurrentPage] = useState(1);
-  const { status, data, error, isPreviousData } = useCoinsMarkets(currentPage);
+  const {
+    status, data, error, isPreviousData,
+  } = useCoinsMarkets(currentPage);
 
   const [cryptoList, setCryptoList] = useState([]);
   const [order, setOrder] = useState('marketCapRank');

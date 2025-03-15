@@ -24,8 +24,8 @@ const CategoryButtonChipContainer = ({
 CategoryButtonChipContainer.propTypes = {
   list: PropTypes.array,
   selected: PropTypes.shape({
-    term: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
+    term: PropTypes.string,
+    text: PropTypes.string,
   }),
   setSelected: PropTypes.func.isRequired,
   width: PropTypes.string.isRequired,
